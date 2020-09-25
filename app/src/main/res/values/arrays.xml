@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="week">
+        <item >level_achieved_1</item>
+        <item >level_achieved_2</item>
+        <item >level_achieved_3</item>
+        <item >level_achieved_4</item>
+        <item >level_achieved_5</item>
+        <item >level_achieved_6</item>
+        <item >level_achieved_7</item>
+        <item >level_achieved_8</item>
+        <item >level_achieved_9</item>
+        <item >level_achieved_10</item>
+        <item >level_achieved</item>
+        <item >tuorial_completion</item>
+        <item >house_upgrade</item>
+        <item >house_200times</item>
+        <item >building_upgrade</item>
+        <item >vehicle_refit</item>
+        <item >celebrity_per100</item>
+        <item >week_card</item>
+        <item >permanent_card</item>
+        <item >first_pay</item>
+        <item >single_shot</item>
+        <item >ten_shots</item>
+        <item >daily_gift</item>
+        <item >in_guild</item>
+        <item >vip2</item>
+        <item >auto_pve</item>
+        <item >rank_top20</item>
+        <item >rank_top21–50</item>
+        <item >rank_top51–200</item>
+        <item >loaded_0%</item>
+        <item >loaded_middle%</item>
+        <item >loaded_100%</item>
+    </string-array>
+</resources>

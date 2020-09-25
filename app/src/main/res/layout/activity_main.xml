@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fl_main"
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|top"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/game_login"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="登录"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_switch_account"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="切换账号"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+
+            <Spinner
+                android:id="@+id/even_sp"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:dropDownWidth="230dp"
+                android:entries="@array/week">
+
+            </Spinner>
+
+
+            <TextView
+                android:id="@+id/game_send_affb"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="发送事件"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_systemshare"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="调用系统分享"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_qufu"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="进入区服页"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_createrole"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="进入创建角色"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_in"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="进入游戏"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_showbind"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="显示绑定页面"
+                android:textColor="@android:color/white" />
+
+
+            <EditText
+                android:id="@+id/game_translation_targettext"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="输入待翻译语句"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/game_translation"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="翻译"
+                android:textColor="@android:color/white" />
+
+
+            <EditText
+                android:id="@+id/game_order"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="输入商品名称"
+                android:paddingLeft="10dp"
+                android:text="测试"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/game_price"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="输入商品价格"
+                android:paddingLeft="10dp"
+                android:text="0.99"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/game_productid"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="输入商品id"
+                android:paddingLeft="10dp"
+                android:text="8001"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/game_pay"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="调用支付"
+                android:textColor="@android:color/white" />
+
+
+
+            <TextView
+                android:id="@+id/game_share"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="分享"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_create"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="创建角色"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_tutorial"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="完成新手引导"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/game_etlevel"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="输入等级"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/game_level"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="等级回传"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_load_fb_initad"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="重新loadFB插页广告"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/game_google_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="google横幅广告"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/game_google_init"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="google插页广告"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/game_google_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="google视频广告"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/game_fb_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="fb横幅广告"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/game_fb_init"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="fb插页广告"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/game_fb_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="fb视频广告"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/game_fb_failed"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="fb广告加载失败"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/game_fb_init_re"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="fb广告重新加载"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/game_gg_failed"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="GG广告加载失败"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/game_gg_init_re"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lion_btn_bg"
+                    android:gravity="center"
+                    android:text="GG广告重新加载"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/game_show_ad"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="显示广告"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_showlogs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center" />
+
+
+            <TextView
+                android:id="@+id/game_create_deeplink"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="跳转客服"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_get_pay_list"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="获取商品列表"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

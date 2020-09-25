@@ -1,0 +1,128 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.immortaltaoists.en"
+        minSdkVersion 17
+        targetSdkVersion 29
+        versionCode 41
+        versionName "1.4.5"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['../assets', 'src/main/assets', 'src/main/assets/']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    //指定jdk版本
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(name: 'Globalsdk_1.3', ext: 'aar')
+    implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
+    implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // Add dependency crashlytics
+
+    // Check for v11.4.2 or higher
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+
+    // (Recommended) Add Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+
+    // Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.12'
+    // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    api 'com.google.gms:google-services:4.3.3'
+    api 'com.google.android.gms:play-services-analytics:17.0.0'
+    api 'com.google.android.gms:play-services-auth:17.0.0'
+    api 'com.facebook.android:facebook-android-sdk:5.0.0'
+    api 'org.apache.httpcomponents:httpcore:4.4.10'
+    api 'com.google.android.gms:play-services-ads:19.0.0'
+    implementation 'com.google.ads.mediation:applovin:9.11.2.0'
+    implementation 'com.google.ads.mediation:unity:3.4.2.0'
+    implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
+    implementation 'com.google.ads.mediation:vungle:6.7.0.0'
+    implementation 'com.mintegral.thrid.adapter:admob_adapter:2.2.7'
+    implementation 'com.mintegral.msdk:videojs:14.3.01'
+    implementation 'com.mintegral.msdk:mtgjscommon:14.3.01'
+    implementation 'com.mintegral.msdk:playercommon:14.3.01'
+    implementation 'com.mintegral.msdk:reward:14.3.01'
+    implementation 'com.mintegral.msdk:videocommon:14.3.01'
+    implementation 'com.mintegral.msdk:common:14.3.01'
+    implementation 'com.mintegral.msdk:alphab:14.3.01'
+
+    api 'androidx.multidex:multidex:2.0.1'
+    //noinspection GradleCompatible
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    // Required Dependency by Audience Network SDK
+    api 'com.facebook.android:audience-network-sdk:5.6.0'
+    api 'com.alibaba:fastjson:1.1.70.android'
+    //firebase
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.annotation:annotation:1.1.0'
+    api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.core:core:1.2.0'
+    api 'com.google.firebase:firebase-core:17.2.3'
+    api 'com.google.firebase:firebase-iid:20.1.0'
+    api 'android.arch.work:work-runtime:1.0.1'
+    api 'com.google.firebase:firebase-messaging:20.1.1'
+    api 'com.google.guava:guava:28.0-jre'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    // Add the dependency for the Performance Monitoring library
+    api 'com.google.firebase:firebase-perf:19.0.5'
+    //Dynamic-links
+    api 'com.google.firebase:firebase-dynamic-links:19.1.0'
+    api 'com.google.firebase:firebase-analytics:17.2.3'
+    implementation 'com.braintreepayments.api:braintree:2.+'
+    //谷歌支付
+    implementation 'com.android.billingclient:billing:3.0.0'
+
+
+    //推特登陆和分享相关
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    api 'com.linecorp:linesdk:5.0.1'
+    implementation 'com.google.ads.mediation:facebook:5.8.0.0'
+
+
+}
+
+apply plugin: 'io.fabric'
+// Apply the Performance Monitoring plugin
+apply plugin: 'com.google.firebase.firebase-perf'
+
+apply plugin: 'com.google.gms.google-services'

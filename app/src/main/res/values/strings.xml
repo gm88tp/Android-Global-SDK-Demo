@@ -1,0 +1,6 @@
+<resources>
+    <!--    to-do-->
+    <string name="facebook_app_id">facebook_app_id</string>
+    <string name="fb_login_protocol_scheme">fbfacebook_app_id</string>
+    <string name="app_name">"GMDEMO"</string>
+</resources>

@@ -1,0 +1,19 @@
+<config>
+    <gmsdk appId="1679" appMode="debug" sdkVersion="1.3" />
+    <host url="https://mdemo.hkpctimes.com" />
+    <!--    <host url="https://m-xmjen.hkpctimes.com" />-->
+    <google
+        billing="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApzg1S2ZxpPnGgd9n6oFb3e0OgCuyGO84gUG+Y4p3Lsl1ONe74540Z6SE1rJbUHzJEUwYyRzKHYwPzYi0UyFiI109lQEqicA04RCzQZmUtxH3UsMbmO4NGX97kEQsa6D+o0akvDh1WPMNaS9XIJPw6VWvVJkLp5OADX3es9eBPbhruZa7Lr0gnZDG689P/BL5jSA7TpRhju5ZsETVbgtXO+yhdbO8qD9Bjm2ZeeVLDmgyGj9s9fgzY9tifA0QVYjgFv9OEtk0UAB9vDmqxXN9sPLgKi1QGJT8zDkZ1SnW8hg0Jy7uwpoFFuLydxrzVQCuRNcLfo0cztNA/KI5L//O2QIDAQAB" />
+    <google clientId="636297321157-teit40f0rndq0je3ek688smtr02npehr.apps.googleusercontent.com" />
+    <line channel="1653436611" />
+    <appflyers key="g7ZP9TqQ4S8AF9zeQD9Koe" />
+    <googlead cpkey="ca-app-pub-7496069579613989~9608341644" />
+    <googlead adkey="ca-app-pub-7496069579613989/8386420007" />
+    <fbad adkey="1137373959766493_1137376023099620" />
+    <twitter comsumerkey="SALb45SZfATPS8ILSYAvnB4ic"
+        comsumersecret="lGoFe4yYVug52LcNiAptoABgb14k5seN9XMJq6L0ggSzUmIevP" />
+    <fbpage pageurl="fb://page/107228963954619" />
+    <cafe id="29898282" clientId="OIhCJ9vYFH6BndmzZC9l" clientSecret="HTTlhK3V4l"/>
+    <!--   是否需要ESgame标识-->
+    <esgame confirm="0" />
+</config>
