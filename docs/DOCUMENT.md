@@ -30,82 +30,81 @@ multiDexEnabled true
     }
 ``` 
 引入以下依赖：
-    ```
+```
+implementation fileTree(dir: 'libs', include: ['*.jar'])
+implementation(name: 'Globalsdk_1.2.18', ext: 'aar')
+implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
+implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
+implementation 'androidx.appcompat:appcompat:1.0.0'
+implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+// Add dependency crashlytics
+// Check for v11.4.2 or higher
+implementation 'com.google.firebase:firebase-core:17.2.0'
 
-      implementation fileTree(dir: 'libs', include: ['*.jar'])
-      implementation(name: 'Globalsdk_1.2.18', ext: 'aar')
-      implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
-      implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
-      implementation 'androidx.appcompat:appcompat:1.0.0'
-      implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-      // Add dependency crashlytics
-      // Check for v11.4.2 or higher
-      implementation 'com.google.firebase:firebase-core:17.2.0'
-  
-      // (Recommended) Add Analytics
-      implementation 'com.google.firebase:firebase-analytics:17.2.0'
-  
-      implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-  
-      // Required -- JUnit 4 framework
-      testImplementation 'junit:junit:4.12'
-      // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
-      testImplementation 'org.mockito:mockito-core:2.19.0'
-      androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-      androidTestImplementation 'androidx.test:runner:1.2.0'
-      androidTestImplementation 'androidx.test:rules:1.2.0'
-      api 'com.google.gms:google-services:4.3.3'
-      api 'com.google.android.gms:play-services-analytics:17.0.0'
-      api 'com.google.android.gms:play-services-auth:17.0.0'
-      api 'com.facebook.android:facebook-android-sdk:5.0.0'
-      api 'org.apache.httpcomponents:httpcore:4.4.10'
-      api 'com.google.android.gms:play-services-ads:19.0.0'
-      implementation 'com.google.ads.mediation:applovin:9.11.2.0'
-      implementation 'com.google.ads.mediation:unity:3.4.2.0'
-      implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
-      implementation 'com.google.ads.mediation:vungle:6.7.0.0'
-      implementation 'com.mintegral.thrid.adapter:admob_adapter:2.2.7'
-      implementation 'com.mintegral.msdk:videojs:14.3.01'
-      implementation 'com.mintegral.msdk:mtgjscommon:14.3.01'
-      implementation 'com.mintegral.msdk:playercommon:14.3.01'
-      implementation 'com.mintegral.msdk:reward:14.3.01'
-      implementation 'com.mintegral.msdk:videocommon:14.3.01'
-      implementation 'com.mintegral.msdk:common:14.3.01'
-      implementation 'com.mintegral.msdk:alphab:14.3.01'    
-      api 'androidx.multidex:multidex:2.0.1'
-      //noinspection GradleCompatible
-      api 'androidx.recyclerview:recyclerview:1.1.0'
-      // Required Dependency by Audience Network SDK
-      api 'com.facebook.android:audience-network-sdk:5.6.0'
-      api 'com.alibaba:fastjson:1.1.70.android'
-      //firebase
-      api 'androidx.appcompat:appcompat:1.1.0'
-      api 'androidx.annotation:annotation:1.1.0'
-      api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
-      api 'androidx.legacy:legacy-support-v4:1.0.0'
-      api 'androidx.core:core:1.2.0'
-      api 'com.google.firebase:firebase-core:17.2.3'
-      api 'com.google.firebase:firebase-iid:20.1.0'
-      api 'android.arch.work:work-runtime:1.0.1'
-      api 'com.google.firebase:firebase-messaging:20.1.1'
-      api 'com.google.guava:guava:28.0-jre'
-      api 'androidx.constraintlayout:constraintlayout:1.1.3'
-    
-      // Add the dependency for the Performance Monitoring library
-      api 'com.google.firebase:firebase-perf:19.0.5'
-      //Dynamic-links
-      api 'com.google.firebase:firebase-dynamic-links:19.1.0'
-      api 'com.google.firebase:firebase-analytics:17.2.3'
-      implementation 'com.braintreepayments.api:braintree:2.+'
-      //谷歌支付
-      implementation 'com.android.billingclient:billing:3.0.0'
-      //推特登陆和分享相关
-      implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
-      implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
-      implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
-      api 'com.linecorp:linesdk:5.0.1'
-      implementation 'com.google.ads.mediation:facebook:5.8.0.0'
-    ```
+// (Recommended) Add Analytics
+implementation 'com.google.firebase:firebase-analytics:17.2.0'
+
+implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+// Required -- JUnit 4 framework
+testImplementation 'junit:junit:4.12'
+// Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
+testImplementation 'org.mockito:mockito-core:2.19.0'
+androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+androidTestImplementation 'androidx.test:runner:1.2.0'
+androidTestImplementation 'androidx.test:rules:1.2.0'
+api 'com.google.gms:google-services:4.3.3'
+api 'com.google.android.gms:play-services-analytics:17.0.0'
+api 'com.google.android.gms:play-services-auth:17.0.0'
+api 'com.facebook.android:facebook-android-sdk:5.0.0'
+api 'org.apache.httpcomponents:httpcore:4.4.10'
+api 'com.google.android.gms:play-services-ads:19.0.0'
+implementation 'com.google.ads.mediation:applovin:9.11.2.0'
+implementation 'com.google.ads.mediation:unity:3.4.2.0'
+implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
+implementation 'com.google.ads.mediation:vungle:6.7.0.0'
+implementation 'com.mintegral.thrid.adapter:admob_adapter:2.2.7'
+implementation 'com.mintegral.msdk:videojs:14.3.01'
+implementation 'com.mintegral.msdk:mtgjscommon:14.3.01'
+implementation 'com.mintegral.msdk:playercommon:14.3.01'
+implementation 'com.mintegral.msdk:reward:14.3.01'
+implementation 'com.mintegral.msdk:videocommon:14.3.01'
+implementation 'com.mintegral.msdk:common:14.3.01'
+implementation 'com.mintegral.msdk:alphab:14.3.01'    
+api 'androidx.multidex:multidex:2.0.1'
+//noinspection GradleCompatible
+api 'androidx.recyclerview:recyclerview:1.1.0'
+// Required Dependency by Audience Network SDK
+api 'com.facebook.android:audience-network-sdk:5.6.0'
+api 'com.alibaba:fastjson:1.1.70.android'
+//firebase
+api 'androidx.appcompat:appcompat:1.1.0'
+api 'androidx.annotation:annotation:1.1.0'
+api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+api 'androidx.legacy:legacy-support-v4:1.0.0'
+api 'androidx.core:core:1.2.0'
+api 'com.google.firebase:firebase-core:17.2.3'
+api 'com.google.firebase:firebase-iid:20.1.0'
+api 'android.arch.work:work-runtime:1.0.1'
+api 'com.google.firebase:firebase-messaging:20.1.1'
+api 'com.google.guava:guava:28.0-jre'
+api 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+// Add the dependency for the Performance Monitoring library
+api 'com.google.firebase:firebase-perf:19.0.5'
+//Dynamic-links
+api 'com.google.firebase:firebase-dynamic-links:19.1.0'
+api 'com.google.firebase:firebase-analytics:17.2.3'
+implementation 'com.braintreepayments.api:braintree:2.+'
+//谷歌支付
+implementation 'com.android.billingclient:billing:3.0.0'
+//推特登陆和分享相关
+implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
+implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
+api 'com.linecorp:linesdk:5.0.1'
+implementation 'com.google.ads.mediation:facebook:5.8.0.0'
+```
 在工程级别的build.gradle 文件内增加以下插件
   
 ```
@@ -170,7 +169,7 @@ allprojects {
 ```
 
 ## 2.相关资源引入
-###创建assets文件夹。拷贝资源内的GMConfig.xml，
+### 创建assets文件夹。拷贝资源内的GMConfig.xml
 1）请修改gmsdk标签内的 appId参数，为运营提供的游戏id。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
@@ -178,16 +177,16 @@ allprojects {
 5）如果游戏是韩国版本，需要修改café标签内的相关参数为运营提供的参数。
 6）请修改host标签内的url链接为正式服链接，地址为https://m-xmjen.hkpctimes.com。
 
-###拷贝运营提供的google-services.json文件
+### 拷贝运营提供的google-services.json文件
 
 拷贝运营提供的google-services.json文件到工程级别的主目录。如果是android studio开发，拷贝到app目录下即可
-**请注意，该文件请使用运营提供的文件，不要使用demo中的json文件**
+**请注意，不要漏加**
 
-###添加libs下相关aar依赖
+### 添加libs下相关aar依赖
 
 请添加并引入libs内的全部aar依赖
 
-###清单文件内容添加
+### 清单文件内容添加
 
 添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供
 ```
@@ -238,7 +237,7 @@ android:networkSecurityConfig="@xml/network_security_config"
 
 ```
 
-###资源文件添加
+### 资源文件添加
 
 在项目的values文件夹内，添加如下的strings：
 ```
@@ -249,7 +248,7 @@ android:networkSecurityConfig="@xml/network_security_config"
 
 ## 3.SDK方法文档
 
-###3.1Application内的初始化
+### 3.1Application内的初始化
 
 首先使项目中的Application继承PSDKApplication，若项目无Application，请自定义创建，并在清单文件中注册。(参考demo)
 在Application的onCreate方法中实现以下：
@@ -263,7 +262,7 @@ AudienceNetworkAds.initialize(this);
 MultiDex.install(this);
 ```
 
-###3.2MainActivity内的初始化
+### 3.2MainActivity内的初始化
 
 在MainActivity(游戏主Activity)的onCreate方法内实现以下(监听回调根据所需添加)：
 ```
@@ -347,7 +346,7 @@ MSDK.setCallBack(new GMCallback() {
         GMSDK.initMainActivity(OverSeaGameActivity.this);
 ```
 
-###3.3发起登录
+### 3.3发起登录
 当游戏收到初始化成功后，可发起登录
 接口定义：
 ```
@@ -359,7 +358,7 @@ JSONObject loginResult = new JSONObject(String.valueOf(msg.obj));
 String token = loginResult.getString("token");
 ```
 
-###3.4发起支付
+### 3.4发起支付
 当游戏内需发起支付时，应调用此接口
 接口定义：
 ```
@@ -395,7 +394,7 @@ payinfo.put("extra", System.currentTimeMillis() / 1000 + "");
 GMSDK.doPay(payJson);
 ```
 
-###3.5角色变更接口
+### 3.5角色变更接口
 当游戏内角色状态变化时，应调用此接口
 接口定义：
 ```
@@ -424,7 +423,7 @@ GMSDK.doSpot(spotJson.toString())
 
 ```
 
-###3.6发起分享接口
+### 3.6发起分享接口
 当游戏需要拉起分享的时候，应调用此接口
 接口定义：
 ```
@@ -455,7 +454,7 @@ try {
 GMSDK.doShare(shareinfo.toString());
 ```
 
-###3.7调起广告接口
+### 3.7调起广告接口
 当游戏需要拉起广告的时候，应调用此接口
 接口定义：
 ```
@@ -473,7 +472,7 @@ String extra = "{"adType":"13","info":"infos"}";
 ADSDK.getInstance().doShowAD(extra);
 ```
 
-###3.8游戏绑定账号接口
+### 3.8游戏绑定账号接口
 游戏内需提供显示绑定账号页面的入口，点击入口时调用此接口
 接口定义：
 ```
@@ -485,7 +484,7 @@ GMSDK.showBind();
 ```
 调用后会给游戏对应的回调
 
-###3.9查询绑定账号接口
+### 3.9查询绑定账号接口
 游戏内需查询当前账号绑定状态时时调用此接口
 接口定义：
 ```
@@ -497,7 +496,7 @@ GMSDK.doQueryBind();
 ```
 调用后会给游戏对应的回调
 
-###3.10打开外部网页接口
+### 3.10打开外部网页接口
 当游戏需要通过外部浏览器打开一个网页时，可以使用此方法，包括但不限定打开Facebook粉丝页，Lobi，Twitter，巴哈姆特等
 接口定义：
 ```
@@ -507,7 +506,7 @@ GMSDK.doOpenURLbyWeb(String url);
 | --- | ------ | --------- |
 | url | string | 需要打开的网页地址 |
 
-###3.11查询当前游戏需要展示给用户查看的货币
+### 3.11查询当前游戏需要展示给用户查看的货币
 多语言环境下，当游戏需要查询当前游戏需要展示给用户查看的货币时调用次接口查询
 接口定义：
 ```
@@ -544,7 +543,7 @@ String purchaselist = "{"1001":"$0.99","1002":"$4.99"}";
 | productId | string | 商品id                    |
 | price     | string | 商品当前价格 带货币符号   ￥6/$0.99 |
 
-###3.12生命周期接入
+### 3.12生命周期接入
 需要在游戏主Activity内重写以下生命周期方法并接入
 ```
 //重写的方法为
@@ -579,7 +578,7 @@ GMSDK.onBackPressed();
 ## 4.SDK方法选接文档
 
 以下接口为选接接口，按需求接入
-###4.1打开客服中心
+### 4.1打开客服中心
 
 当游戏内需提供显示打开客服中心页面的入口，点击入口时调用此接口
 接口定义：
@@ -591,7 +590,7 @@ GMSDK.showServiceCenter();
 GMSDK.showServiceCenter();
 ```
 
-###4.2游戏内行为打点
+### 4.2游戏内行为打点
 
 当游戏内发生相关行为后，应调用此接口，入需接入运营会提供打点表进行接入
 接口定义：
@@ -608,7 +607,7 @@ GMSDK.doEventInfo(String eventInfo);
 GMSDK.doEventInfo(eventInfo);
 ```
 
-###4.3将文字存入剪贴板
+### 4.3将文字存入剪贴板
 
 当游戏需要将文字存入剪贴板时，可以调用此方法
 接口定义：
