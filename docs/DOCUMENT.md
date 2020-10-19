@@ -63,14 +63,7 @@ implementation 'com.google.ads.mediation:applovin:9.11.2.0'
 implementation 'com.google.ads.mediation:unity:3.4.2.0'
 implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
 implementation 'com.google.ads.mediation:vungle:6.7.0.0'
-implementation 'com.mintegral.thrid.adapter:admob_adapter:2.2.7'
-implementation 'com.mintegral.msdk:videojs:14.3.01'
-implementation 'com.mintegral.msdk:mtgjscommon:14.3.01'
-implementation 'com.mintegral.msdk:playercommon:14.3.01'
-implementation 'com.mintegral.msdk:reward:14.3.01'
-implementation 'com.mintegral.msdk:videocommon:14.3.01'
-implementation 'com.mintegral.msdk:common:14.3.01'
-implementation 'com.mintegral.msdk:alphab:14.3.01'    
+implementation 'com.google.android.play:core:1.8.0'
 api 'androidx.multidex:multidex:2.0.1'
 //noinspection GradleCompatible
 api 'androidx.recyclerview:recyclerview:1.1.0'
@@ -170,7 +163,7 @@ allprojects {
 
 ## 2.相关资源引入
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
-1）请修改gmsdk标签内的 appId参数，为运营提供的游戏id。
+1）请修改gmsdk标签内的 appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
@@ -180,7 +173,7 @@ allprojects {
 ### 拷贝运营提供的google-services.json文件
 
 拷贝运营提供的google-services.json文件到工程级别的主目录。如果是android studio开发，拷贝到app目录下即可
-**请注意，不要漏加**
+**请注意，不要漏加，漏加会影响运行、登录、支付**
 
 ### 添加libs下相关aar依赖
 
@@ -244,7 +237,7 @@ android:networkSecurityConfig="@xml/network_security_config"
 <string name="facebook_app_id">facebook_app_id</string>
 <string name="fb_login_protocol_scheme">fbfacebook_app_id</string>
 ```
-**请注意，请将facebook_app_id，替换为运营提供的id**
+**请注意，请将facebook_app_id，替换为运营提供的id，fb_login_protocol_scheme中须保留fb开头**
 
 ## 3.SDK方法文档
 
@@ -264,7 +257,7 @@ MultiDex.install(this);
 
 ### 3.2MainActivity内的初始化
 
-在MainActivity(游戏主Activity)的onCreate方法内实现以下(监听回调根据所需添加)：
+SDK使用统一的Callback，在MainActivity(游戏主Activity)的onCreate方法内实现以下(监听回调根据所需添加)：
 ```
 MSDK.setCallBack(new GMCallback() {
             @Override
@@ -357,6 +350,7 @@ GMSDK.doLogin();
 JSONObject loginResult = new JSONObject(String.valueOf(msg.obj));
 String token = loginResult.getString("token");
 ```
+请使用token调用后端接口获得用户标识，收到回调的token，建议通过服务端验证token，获取用户id，详情查看服务端文档
 
 ### 3.4发起支付
 当游戏内需发起支付时，应调用此接口
@@ -366,18 +360,20 @@ GMSDK.doPay(Map<String, String> payJson)
 ```
 **payJson参数**
 
-| 字段          | 类型     | 说明                                 |
-| ----------- | ------ | ---------------------------------- |
-| productName | string | 商品名称，会显示在相应支付界面上                   |
-| price       | float  | 商品价格，单位：美元                         |
-| extra       | string | 订单透传参数，这些参数会在支付回调时一并回传给CP，请CP自行解析  |
-| payStage    | string | 额外支付参数（默认为商品ID）                    |
-| roleId      | string | 待支付角色ID                            |
-| serverId    | string | 待支付角色区服名称或者ID                      |
-| productId   | string | 商品ID                               |
-| notifyUrl   | string | 支付通知地址，没有的话请不要传递该参数(请求信息内不需要该参数为空) |
-| fromNoLimitPay   | int | 是否是来自任意金额项的充值(1:是来自任意项的充值 不是的情况可以忽略此字段)       
+| 字段           | 类型     | 说明                                 |
+| ------------ | ------ | ---------------------------------- |
+| productId    | string | 商品ID                               |
+| productName  | string | 商品名称，会显示在相应支付界面上                   |
+| productPrice | float  | 商品价格       |
+| extra        | string | 订单透传参数，这些参数会在支付回调时一并回传给CP，请CP自行解析  |
+| roleId       | string | 待支付角色ID                            |
+| roleName     | string | 待支付角色名                             |
+| serverId     | string | 待支付角色区服ID                          |
+| serverName   | string | 待支付角色区服名称                          |
+| notifyUrl    | string | 支付通知地址，没有的话请不要传递该参数(请求信息内不需要该参数为空) |
+     
 
+**请注意，productName、productId需按照计费表内数据传入，否则不会调起支付界面**
 
 调用示例：
 ```
@@ -405,6 +401,7 @@ GMSDK.doSpot(String spotJson)
 | spotType | string | 事件类型，取值为：1：创建角色   2：完成新手引导 3：玩家等级变化后上传 4:玩家选择完区服                                      |
 | extra    | json   | 这是角色具体信息，格式为Json，包括4种信息：roleId: 角色ID, roleName： 角色名，roleServer：  角色区服，roleLevel： 角色等级 |
 
+**请注意，玩家选择完区服上报必须接入，否则会影响SDK功能，其余上报不接入会影响打点数据准确性**
 调用示例：
 ```
 JSONObject spotJson = new JSONObject();
@@ -432,8 +429,8 @@ GMSDK.share(String shareInfo)
 **shareInfo 示例**
 | 字段        | 类型     | 说明               |
 | --------- | ------ | ---------------- |
-| shareID   | int    | 分享内容Id(怪猫运营提供)   |
-| shareName | string | 分享内容Name(怪猫运营提供) |
+| shareID   | int    | 分享内容Id(运营提供)   |
+| shareName | string | 分享内容Name(运营提供) |
 | uName     | string | 分享者游戏名           |
 | server    | string | 分享者所在区服          |
 | code      | string | 邀请码(可供接受分享者使用等)  |
@@ -592,7 +589,7 @@ GMSDK.showServiceCenter();
 
 ### 4.2游戏内行为打点
 
-当游戏内发生相关行为后，应调用此接口，入需接入运营会提供打点表进行接入
+当游戏内发生相关行为后，应调用此接口，如需接入运营会提供打点表进行接入
 接口定义：
 ```
 GMSDK.doEventInfo(String eventInfo);
@@ -600,7 +597,7 @@ GMSDK.doEventInfo(String eventInfo);
 
 | 字段        | 类型     | 说明               |
 | --------- | ------ | ---------------- |
-| eventInfo | string | 行为事件名(该值由怪猫运营提供) |
+| eventInfo | string | 行为事件名(该值由运营提供) |
 
 调用示例：
 ```
@@ -622,4 +619,56 @@ GMSDK.doSetPasteboard(String extra);
 调用示例：
 ```
 GMSDK.doEventInfo(extra);
+```
+### 4.4获取当前手机系统语言和地区
+
+当游戏需要区分当前手机系统语言时，可以调用此方法来获取
+接口定义：
+```
+GMSDK.doLanguage();
+```
+
+调用示例：
+```
+String language = GMSDK.doLanguage();
+```
+响应：
+返回示例: "zh-CN"。
+
+其中，前半部分表示语言，zh代表中文，后半部分代码地区，CN代表中国。如果只要按语言判断，请只判断前半部分，如果只需按地区判断，请只判断后半部分。因为一种语言会在多个地区出现，一个地区也会有多种语言。
+
+语言码的ISO标准：[ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+
+地区码的ISO标准：[ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
+
+
+### 4.5翻译文本
+
+当游戏需要对任何语言进行翻译时，调用以下方法，该方法会返回源语言对应当前手机语言的翻译
+接口定义：
+```
+GMSDK.translation2Text(String extra,String sourceText);
+```
+
+| 字段         | 类型     | 说明                  |
+| ---------- | ------ | ------------------- |
+| sourceText | string | 源语言，待翻译的语句          |
+| extra      | string | 当前语句的唯一标识，在返回的时候会透传 |
+
+在翻译结束后，会给游戏相应的回调
+
+调用示例：
+```
+GMSDK.translation2Text(extra, Hello);
+```
+当翻译成功时，会返回一个Json字符串，形式如下：
+
+```json
+{"targetText":"hello","extra":"test1"}
+```
+
+当翻译失败时，会返回一个Json字符串，形式如下：
+
+```json
+{"errorno":"error","extra":"test1"}
 ```
