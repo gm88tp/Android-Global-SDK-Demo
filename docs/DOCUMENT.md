@@ -169,7 +169,7 @@ allprojects {
 ### 拷贝运营提供的google-services.json文件
 
 拷贝运营提供的google-services.json文件到工程级别的主目录。如果是android studio开发，拷贝到app目录下即可
-**请注意，demo中没有添加google-services.json，如果要运行demo需要漏加，漏加会影响运行、登录**
+**请注意，demo中没有添加google-services.json，如果要运行demo需要填加，漏加会影响运行、登录**
 
 ### 添加libs下相关aar依赖
 
