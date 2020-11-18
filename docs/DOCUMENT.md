@@ -427,6 +427,7 @@ GMSDK.share(String shareInfo)
 ```
 
 **shareInfo 示例**
+
 | 字段        | 类型     | 说明               |
 | --------- | ------ | ---------------- |
 | shareID   | int    | 分享内容Id(运营提供)   |
