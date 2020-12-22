@@ -1,21 +1,16 @@
-# GM88 Android海外游戏1.3.2版本SDK 对接文档
+# GM88 Android海外游戏1.3.4版本SDK 对接文档
 
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入***
 
 ## 1.相关依赖引入
 
-在工程级别的build.gradle文件 的 android->defalutConfig 内加入以下代码
- 
-```
-multiDexEnabled true
-```
 
 在工程级别的build.gradle 的android 内加入以下代码
 ```
    defaultConfig{
         minSdkVersion 17
-        targetSdkVersion 28
+        targetSdkVersion 29
         multiDexEnabled true
     }
     sourceSets {
@@ -31,72 +26,71 @@ multiDexEnabled true
 ``` 
 引入以下依赖：
 ```
-implementation fileTree(dir: 'libs', include: ['*.jar'])
-implementation(name: 'Globalsdk_1.3.2', ext: 'aar')
-implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
-implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
-implementation 'androidx.appcompat:appcompat:1.0.0'
-implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-// Add dependency crashlytics
-implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-implementation 'com.google.firebase:firebase-analytics:17.6.0'
-// Check for v11.4.2 or higher
-implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(name: 'Globalsdk_1.3.4', ext: 'aar')
+    implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
+    implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.12'
+    // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    api 'com.google.gms:google-services:4.3.3'
+    api 'com.google.android.gms:play-services-analytics:17.0.0'
+    api 'com.google.android.gms:play-services-auth:17.0.0'
+    api 'com.facebook.android:facebook-android-sdk:5.0.0'
+    api 'org.apache.httpcomponents:httpcore:4.4.10'
+    api 'com.google.android.gms:play-services-ads:19.0.0'
+    implementation 'com.google.ads.mediation:applovin:9.11.2.0'
+    implementation 'com.google.ads.mediation:facebook:5.8.0.0'
+    implementation 'com.google.ads.mediation:unity:3.4.2.0'
+    implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
+    implementation 'com.google.ads.mediation:vungle:6.7.0.0'
+    implementation 'com.google.android.play:core:1.8.0'
+    api 'androidx.multidex:multidex:2.0.1'
+    //noinspection GradleCompatible
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    // Required Dependency by Audience Network SDK
+    api 'com.facebook.android:audience-network-sdk:5.6.0'
+    api 'com.alibaba:fastjson:1.1.70.android'
+    //firebase
+    // Add dependency crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    // Check for v11.4.2 or higher
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    // (Recommended) Add Analytics
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.annotation:annotation:1.1.0'
+    api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.core:core:1.2.0'
+    api 'com.google.firebase:firebase-core:17.2.3'
+    api 'com.google.firebase:firebase-iid:20.1.0'
+    api 'android.arch.work:work-runtime:1.0.1'
+    api 'com.google.firebase:firebase-messaging:20.1.2'
+    api 'com.google.guava:guava:28.0-jre'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // Add the dependency for the Performance Monitoring library
+    api 'com.google.firebase:firebase-perf:19.0.5'
+    //Dynamic-links
+    api 'com.google.firebase:firebase-dynamic-links:19.1.0'
+    api 'com.google.firebase:firebase-analytics:17.2.3'
+    implementation 'com.braintreepayments.api:braintree:2.+'
+    //谷歌支付
+    implementation 'com.android.billingclient:billing:3.0.2'
 
-// (Recommended) Add Analytics
-implementation platform('com.google.firebase:firebase-bom:25.12.0')
-
-// Required -- JUnit 4 framework
-testImplementation 'junit:junit:4.12'
-// Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
-testImplementation 'org.mockito:mockito-core:2.19.0'
-androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-androidTestImplementation 'androidx.test:runner:1.2.0'
-androidTestImplementation 'androidx.test:rules:1.2.0'
-api 'com.google.gms:google-services:4.3.3'
-api 'com.google.android.gms:play-services-analytics:17.0.0'
-api 'com.google.android.gms:play-services-auth:17.0.0'
-api 'com.facebook.android:facebook-android-sdk:5.0.0'
-api 'org.apache.httpcomponents:httpcore:4.4.10'
-api 'com.google.android.gms:play-services-ads:19.0.0'
-implementation 'com.google.ads.mediation:applovin:9.11.2.0'
-implementation 'com.google.ads.mediation:unity:3.4.2.0'
-implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
-implementation 'com.google.ads.mediation:vungle:6.7.0.0'
-implementation 'com.google.android.play:core:1.8.0'
-api 'androidx.multidex:multidex:2.0.1'
-//noinspection GradleCompatible
-api 'androidx.recyclerview:recyclerview:1.1.0'
-// Required Dependency by Audience Network SDK
-api 'com.facebook.android:audience-network-sdk:5.6.0'
-api 'com.alibaba:fastjson:1.1.70.android'
-//firebase
-api 'androidx.appcompat:appcompat:1.1.0'
-api 'androidx.annotation:annotation:1.1.0'
-api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
-api 'androidx.legacy:legacy-support-v4:1.0.0'
-api 'androidx.core:core:1.2.0'
-api 'com.google.firebase:firebase-core:17.2.3'
-api 'com.google.firebase:firebase-iid:20.1.0'
-api 'android.arch.work:work-runtime:1.0.1'
-api 'com.google.firebase:firebase-messaging:20.1.1'
-api 'com.google.guava:guava:28.0-jre'
-api 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-// Add the dependency for the Performance Monitoring library
-api 'com.google.firebase:firebase-perf:19.0.5'
-//Dynamic-links
-api 'com.google.firebase:firebase-dynamic-links:19.1.0'
-api 'com.google.firebase:firebase-analytics:17.2.3'
-implementation 'com.braintreepayments.api:braintree:2.+'
-//谷歌支付
-implementation 'com.android.billingclient:billing:3.0.0'
-//推特登陆和分享相关
-implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
-implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
-implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
-api 'com.linecorp:linesdk:5.0.1'
-implementation 'com.google.ads.mediation:facebook:5.8.0.0'
+    //推特登陆和分享相关
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    //line
+    api 'com.linecorp:linesdk:5.0.1'
 ```
 在工程级别的build.gradle 文件内增加以下插件
   
@@ -159,7 +153,7 @@ allprojects {
 
 ## 2.相关资源引入
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
-1）请修改gmsdk标签内的 appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id。
+1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
@@ -169,7 +163,7 @@ allprojects {
 ### 拷贝运营提供的google-services.json文件
 
 拷贝运营提供的google-services.json文件到工程级别的主目录。如果是android studio开发，拷贝到app目录下即可
-**请注意，demo中没有添加google-services.json，如果要运行demo需要填加，漏加会影响运行、登录**
+**请注意，demo中没有添加google-services.json，漏加会影响运行、登录**
 
 ### 添加libs下相关aar依赖
 
@@ -179,10 +173,6 @@ allprojects {
 
 添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供
 ```
-    <uses-library
-        android:name="org.apache.http.legacy"
-        android:required="false" />
-
     <meta-data
         android:name="com.facebook.sdk.ApplicationId"
         android:value="@string/facebook_app_id" />
@@ -213,6 +203,14 @@ allprojects {
 在application节点内添加：
 ```
 android:networkSecurityConfig="@xml/network_security_config"
+```
+并在xml下创建network_securitdefalutConfigy_config.xml文件，xml内添加
+```
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>
 ```
 
 在启动activity下添加：
@@ -494,18 +492,7 @@ GMSDK.doQueryBind();
 ```
 调用后会给游戏对应的回调
 
-### 3.10打开外部网页接口
-当游戏需要通过外部浏览器打开一个网页时，可以使用此方法，包括但不限定打开Facebook粉丝页，Lobi，Twitter，巴哈姆特等
-接口定义：
-```
-GMSDK.doOpenURLbyWeb(String url);
-```
-
-| 字段  | 类型     | 说明        |
-| --- | ------ | --------- |
-| url | string | 需要打开的网页地址 |
-
-### 3.11查询当前游戏需要展示给用户查看的货币
+### 3.10查询当前游戏需要展示给用户查看的货币
 多语言环境下，当游戏需要查询当前游戏需要展示给用户查看的货币时调用次接口查询
 接口定义：
 ```
@@ -543,7 +530,7 @@ String purchaselist = "{"1001":"$0.99","1002":"$4.99"}";
 | productId | string | 商品id                    |
 | price     | string | 商品当前价格 带货币符号   ￥6/$0.99 |
 
-### 3.12生命周期接入
+### 3.11生命周期接入
 需要在游戏主Activity内重写以下生命周期方法并接入
 ```
 //重写的方法为
@@ -578,19 +565,7 @@ GMSDK.onBackPressed();
 ## 4.SDK方法选接文档
 
 以下接口为选接接口，按需求接入
-### 4.1打开客服中心
-
-当游戏内需提供显示打开客服中心页面的入口，点击入口时调用此接口
-接口定义：
-```
-GMSDK.showServiceCenter();
-```
-调用示例：
-```
-GMSDK.showServiceCenter();
-```
-
-### 4.2游戏内行为打点
+### 4.1游戏内行为打点
 
 当游戏内发生相关行为后，应调用此接口，如需接入运营会提供打点表进行接入
 接口定义：
@@ -607,7 +582,7 @@ GMSDK.doEventInfo(String eventInfo);
 GMSDK.doEventInfo(eventInfo);
 ```
 
-### 4.3将文字存入剪贴板
+### 4.2将文字存入剪贴板
 
 当游戏需要将文字存入剪贴板时，可以调用此方法
 接口定义：
@@ -623,7 +598,7 @@ GMSDK.doSetPasteboard(String extra);
 ```
 GMSDK.doEventInfo(extra);
 ```
-### 4.4获取当前手机系统语言和地区
+### 4.3获取当前手机系统语言和地区
 
 当游戏需要区分当前手机系统语言时，可以调用此方法来获取
 接口定义：
@@ -645,7 +620,7 @@ String language = GMSDK.doLanguage();
 地区码的ISO标准：[ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
 
 
-### 4.5翻译文本
+### 4.4翻译文本
 
 当游戏需要对任何语言进行翻译时，调用以下方法，该方法会返回源语言对应当前手机语言的翻译
 接口定义：
@@ -674,4 +649,42 @@ GMSDK.translation2Text(extra, Hello);
 
 ```json
 {"errorno":"error","extra":"test1"}
+```
+
+### 4.5打开外部网页接口（外部浏览器打开）
+当游戏需要通过外部浏览器打开一个网页时，可以使用此方法，包括但不限定打开Facebook粉丝页，Lobi，Twitter，巴哈姆特等
+调用示例：
+```
+GMSDK.doOpenURLbyWeb(String url);
+```
+
+| 字段  | 类型     | 说明        |
+| --- | ------ | --------- |
+| url | string | 需要打开的外部网页地址 |
+
+### 4.6打开webview网页接口（webview打开）
+当游戏需要通过webview打开一个网页时，可以使用此方法，请注意打开的url需要为https协议
+调用示例：
+```
+GMSDK.doOpenURLbyWebView(String url);
+```
+
+| 字段  | 类型     | 说明        |
+| --- | ------ | --------- |
+| url | string | 需要打开的webview网页地址 |
+
+### 4.7打开SDK客服中心界面
+
+当游戏内需要显示打开客服中心页面的入口，点击入口时调用此接口
+调用示例：
+```
+GMSDK.showServiceCenter();
+```
+
+### 4.8打开SDK常见问题界面
+
+当游戏内需要显示打开常见问题界面的入口，点击入口时调用此接口
+调用示例：
+```
+GMSDK.showQuestions();
 ```

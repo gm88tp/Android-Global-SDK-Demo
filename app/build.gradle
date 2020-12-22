@@ -38,27 +38,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'Globalsdk_1.3.2', ext: 'aar')
+    implementation(name: 'Globalsdk_1.3.4', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    // Add dependency crashlytics
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
-    // Check for v11.4.2 or higher
-    implementation 'com.google.firebase:firebase-core:17.2.0'
-
-    // (Recommended) Add Analytics
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
-
-
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.12'
     // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
     testImplementation 'org.mockito:mockito-core:2.19.0'
-
-
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
@@ -69,11 +57,11 @@ dependencies {
     api 'org.apache.httpcomponents:httpcore:4.4.10'
     api 'com.google.android.gms:play-services-ads:19.0.0'
     implementation 'com.google.ads.mediation:applovin:9.11.2.0'
+    implementation 'com.google.ads.mediation:facebook:5.8.0.0'
     implementation 'com.google.ads.mediation:unity:3.4.2.0'
     implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
     implementation 'com.google.ads.mediation:vungle:6.7.0.0'
     implementation 'com.google.android.play:core:1.8.0'
-
     api 'androidx.multidex:multidex:2.0.1'
     //noinspection GradleCompatible
     api 'androidx.recyclerview:recyclerview:1.1.0'
@@ -81,6 +69,13 @@ dependencies {
     api 'com.facebook.android:audience-network-sdk:5.6.0'
     api 'com.alibaba:fastjson:1.1.70.android'
     //firebase
+    // Add dependency crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    // Check for v11.4.2 or higher
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    // (Recommended) Add Analytics
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
     api 'androidx.appcompat:appcompat:1.1.0'
     api 'androidx.annotation:annotation:1.1.0'
     api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
@@ -89,7 +84,7 @@ dependencies {
     api 'com.google.firebase:firebase-core:17.2.3'
     api 'com.google.firebase:firebase-iid:20.1.0'
     api 'android.arch.work:work-runtime:1.0.1'
-    api 'com.google.firebase:firebase-messaging:20.1.1'
+    api 'com.google.firebase:firebase-messaging:20.1.2'
     api 'com.google.guava:guava:28.0-jre'
     api 'androidx.constraintlayout:constraintlayout:1.1.3'
 
@@ -100,17 +95,15 @@ dependencies {
     api 'com.google.firebase:firebase-analytics:17.2.3'
     implementation 'com.braintreepayments.api:braintree:2.+'
     //谷歌支付
-    implementation 'com.android.billingclient:billing:3.0.0'
+    implementation 'com.android.billingclient:billing:3.0.2'
 
 
     //推特登陆和分享相关
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
     implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    //line
     api 'com.linecorp:linesdk:5.0.1'
-    implementation 'com.google.ads.mediation:facebook:5.8.0.0'
-
-
 }
 
 apply plugin: 'com.google.firebase.firebase-perf'
