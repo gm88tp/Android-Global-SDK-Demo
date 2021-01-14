@@ -764,6 +764,7 @@ GMSDK.showQuestions();
 
 ### 4.9查询预注册状态，申请发放预注册奖励
 
+预注册奖励为游戏在Google Play申请的提前开放游戏预约下载功能，申请预注册的用户在游戏正式开放下载后，需要发放一份预注册奖励。
 该方法仅适用于游戏在谷歌启用了预注册功能。
 
 #### 4.9.1 查询预注册状态
@@ -772,7 +773,7 @@ GMSDK.showQuestions();
 GMSDK.checkRegistrationType();
 ```
 
-调用该方法后，可在最开始注册的接口回调内收到该手机上登录的Google Play账号的预注册状态。
+游戏首先需要调用该方法来查询手机上登录的Google Play账号的预注册状态。
 
 GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS ：表示当前登录的Google Play账号已申请了预注册奖励，且该奖励暂未领取。
 
@@ -784,4 +785,4 @@ GMActionCode.ACTION_REGISTERATION_CHECK_FAILED ： 表示当前登录的Google P
 GMSDK.sendRegistrationGift(String servierId,String roleId)
 ```
 
-申请发放预注册奖励只能在收到预注册查询成功后调用(即：GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS)，调用该方法时，请携带当前登录用户所在的区服ID和角色ID。该方法仅供客户端调用来启动预注册奖励发放流程，具体的预注册奖励发放，请后续对接服务端接口。
+申请发放预注册奖励只能在收到预注册查询成功后调用(即：GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS)，否则会抛出异常。调用该方法时，请携带当前登录用户所在的区服ID和角色ID。该方法仅供客户端调用来启动预注册奖励发放流程，具体的预注册奖励发放，请后续对接服务端接口。
