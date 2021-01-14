@@ -1,12 +1,11 @@
-# GM88 Android海外游戏1.3.4版本SDK 对接文档
-
+# GM88 Android海外游戏1.3.5版本SDK 对接文档
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入***
 
 ## 1.相关依赖引入
 
-
 在工程级别的build.gradle 的android 内加入以下代码
+
 ```
    defaultConfig{
         minSdkVersion 17
@@ -23,11 +22,13 @@
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-``` 
+```
+
 引入以下依赖：
+
 ```
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'Globalsdk_1.3.4', ext: 'aar')
+    implementation(name: 'Globalsdk_1.3.5', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -92,8 +93,9 @@
     //line
     api 'com.linecorp:linesdk:5.0.1'
 ```
+
 在工程级别的build.gradle 文件内增加以下插件
-  
+
 ```
     apply plugin: 'com.google.gms.google-services'
     apply plugin: 'com.google.firebase.crashlytics'
@@ -152,13 +154,16 @@ allprojects {
 ```
 
 ## 2.相关资源引入
+
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
+
 1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
 5）如果游戏是韩国版本，需要修改café标签内的相关参数为运营提供的参数。
 6）出正式包时请修改host标签内的url链接为正式服链接，地址为https://m-xmjen.hkpctimes.com。
+7）如果游戏需要启用预注册奖励功能，请修改register标签下的item_id和item_price值，相关参数由运营提供
 
 ### 拷贝运营提供的google-services.json文件
 
@@ -172,6 +177,7 @@ allprojects {
 ### 清单文件内容添加
 
 添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供
+
 ```
     <meta-data
         android:name="com.facebook.sdk.ApplicationId"
@@ -201,10 +207,13 @@ allprojects {
 ```
 
 在application节点内添加：
+
 ```
 android:networkSecurityConfig="@xml/network_security_config"
 ```
+
 并在xml下创建network_securitdefalutConfigy_config.xml文件，xml内添加
+
 ```
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
@@ -214,6 +223,7 @@ android:networkSecurityConfig="@xml/network_security_config"
 ```
 
 在启动activity下添加：
+
 ```
     <intent-filter>
         <action android:name="android.intent.action.VIEW" />
@@ -221,16 +231,17 @@ android:networkSecurityConfig="@xml/network_security_config"
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="@string/fb_login_protocol_scheme" />
     </intent-filter>
-
 ```
 
 ### 资源文件添加
 
 在项目的values文件夹内，添加如下的strings：
+
 ```
 <string name="facebook_app_id">facebook_app_id</string>
 <string name="fb_login_protocol_scheme">fbfacebook_app_id</string>
 ```
+
 **请注意，请将facebook_app_id，替换为运营提供的id，fb_login_protocol_scheme中须保留fb开头**
 
 ## 3.SDK方法文档
@@ -239,12 +250,15 @@ android:networkSecurityConfig="@xml/network_security_config"
 
 首先使项目中的Application继承PSDKApplication，若项目无Application，请自定义创建，并在清单文件中注册。(参考demo)
 在Application的onCreate方法中实现以下：
+
 ```
 GMSDK.initApplication(this);
 FirebaseApp.initializeApp(this);
 AudienceNetworkAds.initialize(this);
 ```
+
 在Application的attachBaseContext方法中实现以下：
+
 ```
 MultiDex.install(this);
 ```
@@ -252,6 +266,7 @@ MultiDex.install(this);
 ### 3.2MainActivity内的初始化
 
 SDK使用统一的Callback，在MainActivity(游戏主Activity)的onCreate方法内实现以下(监听回调根据所需添加)：
+
 ```
 MSDK.setCallBack(new GMCallback() {
             @Override
@@ -276,7 +291,7 @@ MSDK.setCallBack(new GMCallback() {
 
                         break;
                     case GMActionCode.ACTION_GAME_EXIT://退出游戏
-                        finish();
+                 
                         break;
                     case GMActionCode.ACTION_LOGOUT_FAILED://登出失败，一般不会出现，出现代表有问题
 
@@ -321,9 +336,16 @@ MSDK.setCallBack(new GMCallback() {
 
                         break;
                     case GMActionCode.ACTION_TRANSLATION_SUCCESS://翻译成功
-                        break;
                     
+                        break;
                     case GMActionCode.ACTION_TRANSLATION_FAILED://翻译失败
+                    
+                        break;
+                    case GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS://预注册查询成功
+                    
+                        break;
+                    case GMActionCode.ACTION_REGISTERATION_CHECK_FAILED://预注册查询失败
+                    
                         break;
                     default:
                         break;
@@ -334,42 +356,50 @@ MSDK.setCallBack(new GMCallback() {
 ```
 
 ### 3.3发起登录
+
 当游戏收到初始化成功后，可发起登录
 接口定义：
+
 ```
 GMSDK.doLogin();
 ```
+
 登录成功或者失败，都可以在回调中得到结果。返回token，示例:
+
 ```
 JSONObject loginResult = new JSONObject(String.valueOf(msg.obj));
 String token = loginResult.getString("token");
 ```
+
 请使用token调用后端接口获得用户标识，收到回调的token，建议通过服务端验证token，获取用户id，详情查看服务端文档
 
 ### 3.4发起支付
+
 当游戏内需发起支付时，应调用此接口
 接口定义：
+
 ```
 GMSDK.doPay(Map<String, String> payJson)
 ```
+
 **payJson参数**
 
 | 字段           | 类型     | 说明                                 |
 | ------------ | ------ | ---------------------------------- |
 | productId    | string | 商品ID                               |
 | productName  | string | 商品名称，会显示在相应支付界面上                   |
-| productPrice | float  | 商品价格       |
+| productPrice | float  | 商品价格                               |
 | extra        | string | 订单透传参数，这些参数会在支付回调时一并回传给CP，请CP自行解析  |
 | roleId       | string | 待支付角色ID                            |
 | roleName     | string | 待支付角色名                             |
 | serverId     | string | 待支付角色区服ID                          |
 | serverName   | string | 待支付角色区服名称                          |
 | notifyUrl    | string | 支付通知地址，没有的话请不要传递该参数(请求信息内不需要该参数为空) |
-     
 
 **请注意，productName、productId需按照计费表内数据传入，否则不会创建订单**
 
 调用示例：
+
 ```
 Map<String, String> payinfo = new HashMap<>();
 payinfo.put("productName", "1001-60元寶");
@@ -385,19 +415,22 @@ GMSDK.doPay(payJson);
 ```
 
 ### 3.5角色变更接口
+
 当游戏内角色状态变化时，应调用此接口
 接口定义：
+
 ```
 GMSDK.doSpot(String spotJson)
 ```
 
-| 字段       | 类型     | 说明                                                                                    |
-| -------- | ------ | ------------------------------------------------------------------------------------- |
-| spotType | string | 事件类型，取值为：1：创建角色   2：完成新手引导 3：玩家等级变化后上传 4:玩家选择完区服                                      |
-| extra    | json   | 这是角色具体信息，格式为Json，包括6种信息：roleId: 角色ID, roleName： 角色名，roleServer： 区服ID， serverName ：区服名字，roleLevel： 角色等级，vipLevel：角色Vip等级   |
+| 字段       | 类型     | 说明                                                                                                                      |
+| -------- | ------ | ----------------------------------------------------------------------------------------------------------------------- |
+| spotType | string | 事件类型，取值为：1：创建角色   2：完成新手引导 3：玩家等级变化后上传 4:玩家选择完区服                                                                        |
+| extra    | json   | 这是角色具体信息，格式为Json，包括6种信息：roleId: 角色ID, roleName： 角色名，roleServer： 区服ID， serverName ：区服名字，roleLevel： 角色等级，vipLevel：角色Vip等级 |
 
 **请注意，玩家选择完区服上报（spotType为4）必须接入，否则会影响SDK功能，其余上报不接入会影响打点数据准确性**
 调用示例：
+
 ```
 JSONObject spotJson = new JSONObject();
 try {
@@ -414,28 +447,29 @@ try {
     e.printStackTrace();
 }
 GMSDK.doSpot(spotJson.toString())
-
 ```
 
 ### 3.6发起分享接口
+
 当游戏需要拉起分享的时候，应调用此接口
 接口定义：
+
 ```
 GMSDK.share(String shareInfo)
 ```
 
 **shareInfo 示例**
 
-| 字段        | 类型     | 说明               |
-| --------- | ------ | ---------------- |
-| shareID   | int    | 分享内容Id(运营提供)   |
-| shareName | string | 分享内容Name(运营提供) |
-| uName     | string | 分享者游戏名           |
-| server    | string | 分享者所在区服          |
-| code      | string | 邀请码(可供接受分享者使用等)  |
-
+| 字段        | 类型     | 说明              |
+| --------- | ------ | --------------- |
+| shareID   | int    | 分享内容Id(运营提供)    |
+| shareName | string | 分享内容Name(运营提供)  |
+| uName     | string | 分享者游戏名          |
+| server    | string | 分享者所在区服         |
+| code      | string | 邀请码(可供接受分享者使用等) |
 
 调用示例：
+
 ```
 JSONObject shareinfo = new JSONObject();
 try {
@@ -451,54 +485,71 @@ GMSDK.doShare(shareinfo.toString());
 ```
 
 ### 3.7调起广告接口
+
 当游戏需要拉起广告的时候，应调用此接口
 接口定义：
+
 ```
 ADSDK.getInstance().doShowAD(String extra);
 ```
 
-| 字段名称        | 类型     | 属性           |
-| ----------- | ------ | ------------ |
-| adType       | int |  广告形式(目前仅支持激励视频，请直接传int型13)  |
-| extra      | String |广告透传参数，在成功的回调内，会原样返回    |
+| 字段名称   | 类型     | 属性                         |
+| ------ | ------ | -------------------------- |
+| adType | int    | 广告形式(目前仅支持激励视频，请直接传int型13) |
+| extra  | String | 广告透传参数，在成功的回调内，会原样返回       |
 
 调用示例：
+
 ```
 String extra = "{"adType":"13","info":"infos"}";
 ADSDK.getInstance().doShowAD(extra);
 ```
 
 ### 3.8游戏绑定账号接口
+
 游戏内需提供显示绑定账号页面的入口，点击入口时调用此接口
 接口定义：
+
 ```
 GMSDK.showBind();
 ```
+
 调用示例：
+
 ```
 GMSDK.showBind();
 ```
+
 调用后会给游戏对应的回调
 
 ### 3.9查询绑定账号接口
+
 游戏内需查询当前账号绑定状态时时调用此接口
 接口定义：
+
 ```
 GMSDK.doQueryBind();
 ```
+
 调用示例：
+
 ```
 GMSDK.doQueryBind();
 ```
+
 调用后会给游戏对应的回调
 
 ### 3.10查询当前游戏需要展示给用户查看的货币
+
 多语言环境下，当游戏需要查询当前游戏需要展示给用户查看的货币时调用次接口查询
 接口定义：
+
 ```
 GMSDK.getPurchaseList(GlobalCallback callback);
 ```
+
 调用示例：
+
 ```
  GMSDK.getPurchaseList(new GlobalCallback() {
                     @Override
@@ -521,6 +572,7 @@ GMSDK.getPurchaseList(GlobalCallback callback);
 | errorno      | string  | 仅在status 为false 的时候返回，    0：查询失败，游戏可以再次拉起查询，请不要一直尝试。  -1: 因为某些特殊原因，请显示默认货币 |
 
 purchaselist 示例:
+
 ```
 String purchaselist = "{"1001":"$0.99","1002":"$4.99"}";
 ```
@@ -531,7 +583,9 @@ String purchaselist = "{"1001":"$0.99","1002":"$4.99"}";
 | price     | string | 商品当前价格 带货币符号   ￥6/$0.99 |
 
 ### 3.11生命周期接入
+
 需要在游戏主Activity内重写以下生命周期方法并接入
+
 ```
 //重写的方法为
 onResume();
@@ -553,11 +607,13 @@ GMSDK.onDestroy();
 ```
 
 如果游戏没有对返回键进行处理，请重写以下方法
+
 ```
 onBackPressed();
 ```
 
 接入的方法为
+
 ```
 GMSDK.onBackPressed();
 ```
@@ -565,19 +621,22 @@ GMSDK.onBackPressed();
 ## 4.SDK方法选接文档
 
 以下接口为选接接口，按需求接入
+
 ### 4.1游戏内行为打点
 
 当游戏内发生相关行为后，应调用此接口，如需接入运营会提供打点表进行接入
 接口定义：
+
 ```
 GMSDK.doEventInfo(String eventInfo);
 ```
 
-| 字段        | 类型     | 说明               |
-| --------- | ------ | ---------------- |
+| 字段        | 类型     | 说明             |
+| --------- | ------ | -------------- |
 | eventInfo | string | 行为事件名(该值由运营提供) |
 
 调用示例：
+
 ```
 GMSDK.doEventInfo(eventInfo);
 ```
@@ -586,6 +645,7 @@ GMSDK.doEventInfo(eventInfo);
 
 当游戏需要将文字存入剪贴板时，可以调用此方法
 接口定义：
+
 ```
 GMSDK.doSetPasteboard(String extra);
 ```
@@ -595,21 +655,26 @@ GMSDK.doSetPasteboard(String extra);
 | extra | string | 需要存入剪贴板的文字 |
 
 调用示例：
+
 ```
 GMSDK.doEventInfo(extra);
 ```
+
 ### 4.3获取当前手机系统语言和地区
 
 当游戏需要区分当前手机系统语言时，可以调用此方法来获取
 接口定义：
+
 ```
 GMSDK.doLanguage();
 ```
 
 调用示例：
+
 ```
 String language = GMSDK.doLanguage();
 ```
+
 响应：
 返回示例: "zh-CN"。
 
@@ -619,11 +684,11 @@ String language = GMSDK.doLanguage();
 
 地区码的ISO标准：[ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
 
-
 ### 4.4翻译文本
 
 当游戏需要对任何语言进行翻译时，调用以下方法，该方法会返回源语言对应当前手机语言的翻译
 接口定义：
+
 ```
 GMSDK.translation2Text(String extra,String sourceText);
 ```
@@ -636,9 +701,11 @@ GMSDK.translation2Text(String extra,String sourceText);
 在翻译结束后，会给游戏相应的回调
 
 调用示例：
+
 ```
 GMSDK.translation2Text(extra, Hello);
 ```
+
 当翻译成功时，会返回一个Json字符串，形式如下：
 
 ```json
@@ -652,32 +719,37 @@ GMSDK.translation2Text(extra, Hello);
 ```
 
 ### 4.5打开外部网页接口（外部浏览器打开）
+
 当游戏需要通过外部浏览器打开一个网页时，可以使用此方法，包括但不限定打开Facebook粉丝页，Lobi，Twitter，巴哈姆特等
 调用示例：
+
 ```
 GMSDK.doOpenURLbyWeb(String url);
 ```
 
-| 字段  | 类型     | 说明        |
-| --- | ------ | --------- |
+| 字段  | 类型     | 说明          |
+| --- | ------ | ----------- |
 | url | string | 需要打开的外部网页地址 |
 
 ### 4.6打开webview网页接口（webview打开）
+
 当游戏需要通过webview打开一个网页时，可以使用此方法，请注意打开的url需要为https协议
 调用示例：
-```
+
+```java
 GMSDK.doOpenURLbyWebView(String url);
 ```
 
-| 字段  | 类型     | 说明        |
-| --- | ------ | --------- |
+| 字段  | 类型     | 说明               |
+| --- | ------ | ---------------- |
 | url | string | 需要打开的webview网页地址 |
 
 ### 4.7打开SDK客服中心界面
 
 当游戏内需要显示打开客服中心页面的入口，点击入口时调用此接口
 调用示例：
-```
+
+```java
 GMSDK.showServiceCenter();
 ```
 
@@ -685,6 +757,31 @@ GMSDK.showServiceCenter();
 
 当游戏内需要显示打开常见问题界面的入口，点击入口时调用此接口
 调用示例：
-```
+
+```java
 GMSDK.showQuestions();
 ```
+
+### 4.9查询预注册状态，申请发放预注册奖励
+
+该方法仅适用于游戏在谷歌启用了预注册功能。
+
+#### 4.9.1 查询预注册状态
+
+```java
+GMSDK.checkRegistrationType();
+```
+
+调用该方法后，可在最开始注册的接口回调内收到该手机上登录的Google Play账号的预注册状态。
+
+GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS ：表示当前登录的Google Play账号已申请了预注册奖励，且该奖励暂未领取。
+
+GMActionCode.ACTION_REGISTERATION_CHECK_FAILED ： 表示当前登录的Google Play账号未申请预注册奖励，或者该账号的预注册奖励已被领取。
+
+#### 4.9.2 申请发放预注册奖励
+
+```java
+GMSDK.sendRegistrationGift(String servierId,String roleId)
+```
+
+申请发放预注册奖励只能在收到预注册查询成功后调用(即：GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS)，调用该方法时，请携带当前登录用户所在的区服ID和角色ID。该方法仅供客户端调用来启动预注册奖励发放流程，具体的预注册奖励发放，请后续对接服务端接口。

@@ -32,8 +32,6 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 
-//import com.crashlytics.android.Crashlytics;
-
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private TextView mTvEnterQufu, mTvEnterRole, mTvEnterGame, mTvDoPay, mTvShare, mLogin, mTvToCustomer,
@@ -108,6 +106,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         break;
                     case GMActionCode.ACTION_TRANSLATION_FAILED://翻译失败
                         ToastHelper.toast(MainActivity.this, "翻译失败\n" + String.valueOf(msg.obj));
+
+                    case GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS://预注册查询成功
+
+                        break;
+                    case GMActionCode.ACTION_REGISTERATION_CHECK_FAILED://预注册查询失败
+
                         break;
                     default:
                         break;

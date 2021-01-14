@@ -1,5 +1,5 @@
 <config>
-    <gmsdk appId="1679" appMode="debug" appReleaseId="1679001" sdkVersion="1.3.4" />
+    <gmsdk appId="1679" appMode="debug" appReleaseId="1679001" sdkVersion="1.3.5" />
     <host url="https://mdemo.hkpctimes.com" />
     <!--    <host url="https://m-xmjen.hkpctimes.com" />-->
     <google
@@ -16,4 +16,6 @@
     <cafe id="29898282" clientId="OIhCJ9vYFH6BndmzZC9l" clientSecret="HTTlhK3V4l"/>
     <!--   是否需要ESgame标识-->
     <esgame confirm="0" />
+    <!--   接入预注册功能时使用-->
+    <register item_id="" item_price="" />
 </config>
