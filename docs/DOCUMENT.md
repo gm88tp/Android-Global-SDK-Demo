@@ -767,7 +767,14 @@ GMSDK.showQuestions();
 预注册奖励为游戏在Google Play申请的提前开放游戏预约下载功能，申请预注册的用户在游戏正式开放下载后，需要发放一份预注册奖励。
 该方法仅适用于游戏在谷歌启用了预注册功能。
 
+请注意，每个用户应该只能获得一份预注册奖励，且这里的用户指的是google用户，而非gm88用户或游戏角色，建议cp只为一个角色发放奖励，并做防止同一角色领取多份预注册奖励的判断
+按照google play的政策，如果一个已经预约游戏的google用户，没有获得应得的预注册奖励，可以向google投诉，google有权利在核实时下架该游戏，请谨慎处理
+
 #### 4.9.1 查询预注册状态
+
+建议在游戏启动或用户创角后，调用此接口，用于查询当前google用户是否应发放预注册奖励
+
+cp可以自行决定将奖励发放在哪个角色上，或者让用户选择
 
 ```java
 GMSDK.checkRegistrationType();
@@ -780,6 +787,8 @@ GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS ：表示当前登录的Google P
 GMActionCode.ACTION_REGISTERATION_CHECK_FAILED ： 表示当前登录的Google Play账号未申请预注册奖励，或者该账号的预注册奖励已被领取。
 
 #### 4.9.2 申请发放预注册奖励
+
+建议在cp决定向哪个用户角色发放奖励后，再调用此接口
 
 ```java
 GMSDK.sendRegistrationGift(String servierId,String roleId)
