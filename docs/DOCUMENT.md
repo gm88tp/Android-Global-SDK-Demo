@@ -1,6 +1,6 @@
-# GM88 Android海外游戏1.3.5版本SDK 对接文档
+# GM88 Android海外游戏1.4.0版本SDK 对接文档 2021/01/29
 
-***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入***
+***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 
 ## 1.相关依赖引入
 
@@ -28,7 +28,7 @@
 
 ```
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'Globalsdk_1.3.5', ext: 'aar')
+    implementation(name: 'Globalsdk_1.4.0', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -157,7 +157,7 @@ allprojects {
 
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
 
-1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id。
+1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id；sdkVersion为接入SDK版本。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
@@ -176,7 +176,8 @@ allprojects {
 
 ### 清单文件内容添加
 
-添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供
+添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供，FacebookContentProvider下{facebook_app_id}替换为facebook_app_id
+参数，并去掉括号；AdMob应用ID下的{AdMob_cpkey}替换为Google Admob cpkey并去掉括号
 
 ```
     <meta-data
@@ -185,7 +186,7 @@ allprojects {
     <!--todo  facebook广告参数-->
     <provider
         android:name="com.facebook.FacebookContentProvider"
-        android:authorities="com.facebook.app.FacebookContentProvider436121163675645"
+        android:authorities="com.facebook.app.FacebookContentProvider{facebook_app_id}"
         android:exported="true" />
     <activity
         android:name="com.facebook.CustomTabActivity"
@@ -203,7 +204,7 @@ allprojects {
     <!--todo  广告参数 AdMob应用ID-->
     <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="ca-app-pub-7496069579613989~1013034939" />
+        android:value="{AdMob_cpkey}" />
 ```
 
 在application节点内添加：
@@ -346,6 +347,12 @@ MSDK.setCallBack(new GMCallback() {
                         break;
                     case GMActionCode.ACTION_REGISTERATION_CHECK_FAILED://预注册查询失败
                     
+                        break;       
+                    case GMActionCode.ACTION_VIP_LEVEL_SUCCESS://GM VIP满足拉起VIP客服权限
+                    
+                        break;
+                    case GMActionCode.ACTION_VIP_LEVEL_FAILED://GM VIP不满足拉起VIP客服权限
+                                       
                         break;
                     default:
                         break;
@@ -451,11 +458,15 @@ GMSDK.doSpot(spotJson.toString())
 
 ### 3.6发起分享接口
 
-当游戏需要拉起分享的时候，应调用此接口
+SDK分享接口有三种选择，可从GM后台分享，或直接传入链接或图片进行分享。
+
+#### 3.6.1 GM后台分享
+
+当游戏需要拉起分享的时候，想从GM后台读取内容分享时，应调用此接口
 接口定义：
 
 ```
-GMSDK.share(String shareInfo)
+GMSDK.share(String shareInfo);
 ```
 
 **shareInfo 示例**
@@ -483,6 +494,41 @@ try {
 }
 GMSDK.doShare(shareinfo.toString());
 ```
+
+#### 3.6.2 直接分享（链接形式）
+
+当游戏需要拉起分享的时候，想直接分享链接时，应调用此接口，现阶段此接口支持分享到Facebook和Twitter
+接口定义：
+
+```
+GMSDK.doCPShareLink(String title, String content, String link);
+```
+
+** 传入参数示例**
+
+| 字段        | 类型     | 说明              |
+| --------- | ------ | --------------- |
+| title | string | 分享标题  |
+| content     | string | 分享内容          |
+| link    | string | 分享链接         |
+
+
+#### 3.6.3 直接分享（图片形式）
+
+当游戏需要拉起分享的时候，想直接分享图片时，应调用此接口，现阶段此接口支持分享到Facebook
+接口定义：
+
+```
+GMSDK.doCPShareImage(String title, String content, String photoUrl);
+```
+
+** 传入参数示例**
+
+| 字段        | 类型     | 说明              |
+| --------- | ------ | --------------- |
+| title | string | 分享标题  |
+| content     | string | 分享内容          |
+| photoUrl    | string | 分享图片url         |
 
 ### 3.7调起广告接口
 
@@ -744,14 +790,40 @@ GMSDK.doOpenURLbyWebView(String url);
 | --- | ------ | ---------------- |
 | url | string | 需要打开的webview网页地址 |
 
-### 4.7打开SDK客服中心界面
+### 4.7打开SDK客服中心
 
-当游戏内需要显示打开客服中心页面的入口，点击入口时调用此接口
+SDK客服中心分普通客服中心和VIP客服中心两种，普通客服中心可以直接调用接口拉起，VIP客服中心需要先查询用户VIP等级，VIP等级达标后拉起
+
+#### 4.7.1 普通客服中心界面
+
+当游戏内需要显示打开普通客服中心页面的入口，点击入口时调用此接口
 调用示例：
 
 ```java
 GMSDK.showServiceCenter();
 ```
+
+#### 4.7.2 VIP客服中心界面
+
+当游戏内需要显示打开VIP客服中心页面的入口，点击入口时需调用查询VIP等级接口
+
+调用示例：
+
+```java
+GMSDK.checkUserVipLevel();
+```
+
+在查询此接口后，SDK会回调查询结果，请监听GM回调结果
+
+GMActionCode.ACTION_VIP_LEVEL_SUCCESS：表示查询成功，用户VIP等级达标可以拉起VIP客服界面，可在此回调中调用打开VIP客服界面接口
+
+调用示例：
+
+```java
+GMSDK.showVipServiceCenter();
+```
+
+GMActionCode.ACTION_VIP_LEVEL_FAILED：表示查询失败，用户VIP等级不足，可在此回调中提示用户VIP等级不足
 
 ### 4.8打开SDK常见问题界面
 

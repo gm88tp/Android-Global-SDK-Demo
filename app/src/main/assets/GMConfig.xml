@@ -1,5 +1,5 @@
 <config>
-    <gmsdk appId="1679" appMode="debug" appReleaseId="1679001" sdkVersion="1.3.5" />
+    <gmsdk appId="1679" appMode="release" appReleaseId="1679004" sdkVersion="1.4.0" />
     <host url="https://mdemo.hkpctimes.com" />
     <!--    <host url="https://m-xmjen.hkpctimes.com" />-->
     <google
