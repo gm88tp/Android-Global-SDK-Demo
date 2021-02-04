@@ -18,4 +18,6 @@
     <esgame confirm="0" />
     <!--   接入预注册功能时使用-->
     <register item_id="" item_price="" />
+    <!--   水印标识-->
+    <sy confirm="1" />
 </config>

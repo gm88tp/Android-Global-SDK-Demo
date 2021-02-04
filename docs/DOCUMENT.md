@@ -176,8 +176,7 @@ allprojects {
 
 ### 清单文件内容添加
 
-添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供，FacebookContentProvider下{facebook_app_id}替换为facebook_app_id
-参数，并去掉括号；AdMob应用ID下的{AdMob_cpkey}替换为Google Admob cpkey并去掉括号
+添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供，FacebookContentProvider下{facebook_app_id}替换为facebook_app_id参数，并去掉括号；AdMob应用ID下的{AdMob_cpkey}替换为Google Admob cpkey并去掉括号
 
 ```
     <meta-data
