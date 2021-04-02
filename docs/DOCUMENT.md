@@ -1,4 +1,4 @@
-# GM88 Android海外游戏1.4.0版本SDK 对接文档 2021/01/29
+# GM88 Android海外游戏1.4.1版本SDK 对接文档 2021/04/02
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 
@@ -9,7 +9,7 @@
 ```
    defaultConfig{
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdkVersion 30
         multiDexEnabled true
     }
     sourceSets {
@@ -28,7 +28,7 @@
 
 ```
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'Globalsdk_1.4.0', ext: 'aar')
+    implementation(name: 'Globalsdk_1.4.1', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -40,10 +40,10 @@
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-    api 'com.google.gms:google-services:4.3.3'
+    api 'com.google.gms:google-services:4.3.5'
     api 'com.google.android.gms:play-services-analytics:17.0.0'
     api 'com.google.android.gms:play-services-auth:17.0.0'
-    api 'com.facebook.android:facebook-android-sdk:5.0.0'
+    api 'com.facebook.android:facebook-android-sdk:8.1.0'
     api 'org.apache.httpcomponents:httpcore:4.4.10'
     api 'com.google.android.gms:play-services-ads:19.0.0'
     implementation 'com.google.ads.mediation:applovin:9.11.2.0'
@@ -122,9 +122,9 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.6.4'
 
-        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.gms:google-services:4.3.5'
 
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
 
@@ -309,6 +309,9 @@ MSDK.setCallBack(new GMCallback() {
 
                         break;
                     case GMActionCode.ACTION_ADSHOW_FAILED:// 广告播放失败
+
+                        break;
+                    case GMActionCode.ACTION_ADSHOW_BANED:// 用户所在地区不支持播放广告
 
                         break;
                     case GMActionCode.ACTION_SHARE_SUCCESS://分享成功
@@ -531,7 +534,7 @@ GMSDK.doCPShareImage(String title, String content, String photoUrl);
 
 ### 3.7调起广告接口
 
-当游戏需要拉起广告的时候，应调用此接口
+当游戏需要拉起广告的时候，应调用此接口，播放广告时若播放失败，SDK会回调ACTION_ADSHOW_BANED或ACTION_ADSHOW_FAILED；播放完成时会回调ACTION_ADSHOW_SUCCESS
 接口定义：
 
 ```
@@ -789,11 +792,24 @@ GMSDK.doOpenURLbyWebView(String url);
 | --- | ------ | ---------------- |
 | url | string | 需要打开的webview网页地址 |
 
-### 4.7打开SDK客服中心
+### 4.7打开账号选择界面接口
+
+当游戏内需要显示打开账号选择界面页面的入口，点击入口时调用此接口
+调用示例：
+
+```java
+GMSDK.showLogin();
+```
+
+| 字段  | 类型     | 说明               |
+| --- | ------ | ---------------- |
+| url | string | 需要打开的webview网页地址 |
+
+### 4.8打开SDK客服中心
 
 SDK客服中心分普通客服中心和VIP客服中心两种，普通客服中心可以直接调用接口拉起，VIP客服中心需要先查询用户VIP等级，VIP等级达标后拉起
 
-#### 4.7.1 普通客服中心界面
+#### 4.8.1 普通客服中心界面
 
 当游戏内需要显示打开普通客服中心页面的入口，点击入口时调用此接口
 调用示例：
@@ -802,7 +818,7 @@ SDK客服中心分普通客服中心和VIP客服中心两种，普通客服中�
 GMSDK.showServiceCenter();
 ```
 
-#### 4.7.2 VIP客服中心界面
+#### 4.8.2 VIP客服中心界面
 
 当游戏内需要显示打开VIP客服中心页面的入口，点击入口时需调用查询VIP等级接口
 
@@ -824,7 +840,7 @@ GMSDK.showVipServiceCenter();
 
 GMActionCode.ACTION_VIP_LEVEL_FAILED：表示查询失败，用户VIP等级不足，可在此回调中提示用户VIP等级不足
 
-### 4.8打开SDK常见问题界面
+### 4.9打开SDK常见问题界面
 
 当游戏内需要显示打开常见问题界面的入口，点击入口时调用此接口
 调用示例：
@@ -833,7 +849,7 @@ GMActionCode.ACTION_VIP_LEVEL_FAILED：表示查询失败，用户VIP等级不�
 GMSDK.showQuestions();
 ```
 
-### 4.9查询预注册状态，申请发放预注册奖励
+### 4.10查询预注册状态，申请发放预注册奖励
 
 预注册奖励为游戏在Google Play申请的提前开放游戏预约下载功能，申请预注册的用户在游戏正式开放下载后，需要发放一份预注册奖励。
 该方法仅适用于游戏在谷歌启用了预注册功能。
@@ -841,7 +857,7 @@ GMSDK.showQuestions();
 请注意，每个用户应该只能获得一份预注册奖励，且这里的用户指的是google用户，而非gm88用户或游戏角色，建议cp只为一个角色发放奖励，并做防止同一角色领取多份预注册奖励的判断
 按照google play的政策，如果一个已经预约游戏的google用户，没有获得应得的预注册奖励，可以向google投诉，google有权利在核实时下架该游戏，请谨慎处理
 
-#### 4.9.1 查询预注册状态
+#### 4.10.1 查询预注册状态
 
 建议在游戏启动或用户创角后，调用此接口，用于查询当前google用户是否应发放预注册奖励
 
@@ -857,7 +873,7 @@ GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS ：表示当前登录的Google P
 
 GMActionCode.ACTION_REGISTERATION_CHECK_FAILED ： 表示当前登录的Google Play账号未申请预注册奖励，或者该账号的预注册奖励已被领取。
 
-#### 4.9.2 申请发放预注册奖励
+#### 4.10.2 申请发放预注册奖励
 
 建议在cp决定向哪个用户角色发放奖励后，再调用此接口
 
