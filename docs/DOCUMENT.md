@@ -83,8 +83,9 @@
     api 'com.google.firebase:firebase-dynamic-links:19.1.0'
     api 'com.google.firebase:firebase-analytics:17.2.3'
     implementation 'com.braintreepayments.api:braintree:2.+'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     //谷歌支付
-    implementation 'com.android.billingclient:billing:3.0.2'
+    implementation 'com.android.billingclient:billing:3.0.3'
 
     //推特登陆和分享相关
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
