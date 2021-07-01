@@ -45,25 +45,25 @@
         api 'com.google.android.gms:play-services-auth:17.0.0'
         api 'com.facebook.android:facebook-android-sdk:8.1.0'
         api 'org.apache.httpcomponents:httpcore:4.4.10'
-        api 'com.google.android.gms:play-services-ads:19.0.0'
-        implementation 'com.google.ads.mediation:applovin:9.11.2.0'
+        api 'com.google.android.gms:play-services-ads:20.2.0'
+        implementation 'com.google.ads.mediation:applovin:10.3.0.0'
         implementation 'com.google.ads.mediation:facebook:5.8.0.0'
         implementation 'com.google.ads.mediation:unity:3.4.2.0'
-        implementation 'com.google.ads.mediation:ironsource:6.14.0.0'
+        implementation 'com.google.ads.mediation:ironsource:7.1.6.0'
         implementation 'com.google.ads.mediation:vungle:6.7.0.0'
         implementation 'com.google.android.play:core:1.8.0'
         api 'androidx.multidex:multidex:2.0.1'
         //noinspection GradleCompatible
         api 'androidx.recyclerview:recyclerview:1.1.0'
         // Required Dependency by Audience Network SDK
-        api 'com.facebook.android:audience-network-sdk:5.6.0'
+        api 'com.facebook.android:audience-network-sdk:6.5.0'
         api 'com.alibaba:fastjson:1.1.70.android'
         //firebase
         // Add dependency crashlytics
         implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
         implementation 'com.google.firebase:firebase-analytics:17.6.0'
         // Check for v11.4.2 or higher
-        implementation 'com.google.firebase:firebase-core:17.2.0'
+        implementation 'com.google.firebase:firebase-core:19.0.0''
         // (Recommended) Add Analytics
         implementation platform('com.google.firebase:firebase-bom:25.12.0')
         api 'androidx.appcompat:appcompat:1.1.0'
@@ -71,7 +71,7 @@
         api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
         api 'androidx.legacy:legacy-support-v4:1.0.0'
         api 'androidx.core:core:1.2.0'
-        api 'com.google.firebase:firebase-core:17.2.3'
+        api 'com.google.firebase:firebase-core:19.0.0'
         api 'com.google.firebase:firebase-iid:20.1.0'
         api 'android.arch.work:work-runtime:1.0.1'
         api 'com.google.firebase:firebase-messaging:20.1.2'
@@ -82,7 +82,7 @@
         api 'com.google.firebase:firebase-perf:19.0.5'
         //Dynamic-links
         api 'com.google.firebase:firebase-dynamic-links:19.1.0'
-        api 'com.google.firebase:firebase-analytics:17.2.3'
+        api 'com.google.firebase:firebase-analytics:19.0.0'
         implementation 'com.braintreepayments.api:braintree:2.+'
         implementation 'com.squareup.okhttp3:okhttp:3.12.0'
         //谷歌支付
@@ -120,7 +120,7 @@ buildscript {
         }
         maven { url 'https://maven.google.com' }
         maven {
-            url "https://dl.bintray.com/ironsource-mobile/android-sdk"
+            url "https://android-sdk.is.com"
         }
 
     }
@@ -150,7 +150,7 @@ allprojects {
             name 'Google'
         }
         maven {
-            url 'https://dl.bintray.com/ironsource-mobile/android-sdk'
+            url 'https://android-sdk.is.com/'
         }
     }
 }
@@ -454,7 +454,7 @@ try {
     extra.put("roleServer","22");
     extra.put("serverName","1服");
     extra.put("vipLevel","1");
-    spotJson.put("extra",extra.toString());
+    spotJson.put("extra",extra);
 } catch (JSONException e) {
     e.printStackTrace();
 }
