@@ -21,6 +21,7 @@ import com.global.sdk.manager.GMCallback;
 import com.global.sdk.model.TranslationBean;
 import com.global.sdk.ui.dialog.DialogPresenter;
 import com.global.sdk.util.ConfigManager;
+import com.global.sdk.util.ToastUtil;
 import com.gm88.gmutils.SDKLog;
 import com.gm88.gmutils.ToastHelper;
 
@@ -36,11 +37,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private TextView mTvEnterQufu, mTvEnterRole, mTvEnterGame, mTvDoPay, mTvShare, mLogin, mTvToCustomer,
             mTvCreateRole, mTvOverBegin, mTvLevel, mFBReLoading, mTvShowBind, mTvSendEvent;
-    private TextView systemShare, mTvTranslation, mTvPayList, mTvSwitchAccount;
+    private TextView systemShare, mTvTranslation, mTvPayList, mTvSwitchAccount,mTvVideoPlayLand,mTvVideoPlayPortrait,mTvGetDeviceInfo;;
     private EditText mEtOrderName;
     private EditText mEtOrderPrice;
     private EditText mEtProductId;
     private EditText mEtTranslation;
+    private EditText mEtVideoUrl;
     private Spinner mEtEvent;
     private FrameLayout mMain;
     private static final String TAG = "MainActivity";
@@ -146,6 +148,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mEtEvent = findViewById(R.id.even_sp);
         systemShare = findViewById(R.id.tv_systemshare);
         mTvToCustomer = findViewById(R.id.game_create_deeplink);
+        mEtVideoUrl = findViewById(R.id.game_videoUrl);
+        mTvVideoPlayLand = findViewById(R.id.game_playVideo_land);
+        mTvVideoPlayPortrait = findViewById(R.id.game_playVideo_portrait);
+        mTvGetDeviceInfo = findViewById(R.id.game_getDeviceInfo);
         mTvTranslation.setOnClickListener(this);
         mLogin.setOnClickListener(this);
         findViewById(R.id.game_show_ad).setOnClickListener(this);
@@ -163,6 +169,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvOverBegin.setOnClickListener(this);
         mTvLevel.setOnClickListener(this);
         mFBReLoading.setOnClickListener(this);
+        mTvVideoPlayLand.setOnClickListener(this);
+        mTvVideoPlayPortrait.setOnClickListener(this);
+        mTvGetDeviceInfo.setOnClickListener(this);
 
         mEtOrderName = findViewById(R.id.game_order);
         mEtOrderPrice = findViewById(R.id.game_price);
@@ -258,6 +267,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.game_create_deeplink:
                 GMSDK.showServiceCenter();
+                break;
+
+            case R.id.game_playVideo_land:
+                String videoUrl = mEtVideoUrl.getText().toString().trim();
+                GMSDK.playVideo(videoUrl,0);
+                break;
+            case R.id.game_playVideo_portrait:
+                String videoUrl2 = mEtVideoUrl.getText().toString().trim();
+                GMSDK.playVideo(videoUrl2, 1);
+                break;
+            case R.id.game_getDeviceInfo:
+                String deviceInfo = GMSDK.getDeviceInfo();
+                ToastUtil.toast(this,deviceInfo);
                 break;
             default:
                 break;

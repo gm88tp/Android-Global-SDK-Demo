@@ -424,6 +424,48 @@
                 android:text="获取商品列表"
                 android:textColor="@android:color/white" />
 
+            <EditText
+                android:id="@+id/game_videoUrl"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="输入视频地址"
+                android:text="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/game_playVideo_land"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="播放视频(横屏)"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_playVideo_portrait"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="播放视频(竖屏)"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/game_getDeviceInfo"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="获取系统信息"
+                android:textColor="@android:color/white" />
+
         </LinearLayout>
 
     </ScrollView>
