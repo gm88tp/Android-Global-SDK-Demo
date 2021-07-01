@@ -883,3 +883,51 @@ GMSDK.sendRegistrationGift(String servierId,String roleId)
 ```
 
 申请发放预注册奖励只能在收到预注册查询成功后调用(即：GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS)，否则会抛出异常。调用该方法时，请携带当前登录用户所在的区服ID和角色ID。该方法仅供客户端调用来启动预注册奖励发放流程，具体的预注册奖励发放，请后续对接服务端接口。
+
+
+
+#### 4.11 播放视频
+
+当游戏内需要播放视频，可调用此接口。视频播放支持网络播放和本地播放，支持基本常见的视频格式。
+
+GMSDK.playVideo(String videoUrl, int oritation)
+
+| 字段     | 类型   | 说明                                                         |
+| -------- | ------ | ------------------------------------------------------------ |
+| videoUrl | String | 网络视频播放地址格式："http://com.test.mp4",本地:/test.mp4" (对应存储位置的路径) |
+| oritation|  int	| 0横屏播放,1竖屏播放|
+
+GMActionCode.ACTION_VIDEO_PLAY_CLOSE ：表示视频播放被用户关闭。
+
+GMActionCode.ACTION_VIDEO_PLAY_COMPLETE ：表示视频播放完成。
+
+GMActionCode.ACTION_VIDEO_PLAY_ERROR ：表示视频播放出现异常，一般需要检查视频地址参数是否正确。
+
+
+
+
+
+#### 4.12 获取设备系统信息
+
+当需要获取用户设备的系统信息时，可调用此接口。
+
+GMSDK.getDeviceInfo()
+
+返回字段示例：
+
+{"gaid":"9ebd931d-a62d-4d72-8ddd-8eb9a8cdbeb2", //设备gaid
+
+"version":"7.1.2", // 系统版本
+
+"device":"HTC 2Q4R100" //设备型号
+}
+
+
+
+
+
+
+
+
+
+
