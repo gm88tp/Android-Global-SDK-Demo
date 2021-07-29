@@ -967,7 +967,7 @@ GMSDK.getDeviceInfo()
 以下是谷歌商店包转QOO商店包的接入流程
 
 1.引入QOO商店qooapp-opensdk-v1.1.1.aar包
-2.在GMConfig.xml下添加标签<qoo confirm="1" />来标识此包是QOO商店包
+2.在GMConfig.xml下添加标签qoo confirm="1"来标识此包是QOO商店包
 3.在Manifest下做出如下添加APP_ID和PUBLIC_KEY填入运营提供的相关参数
 
 ```
