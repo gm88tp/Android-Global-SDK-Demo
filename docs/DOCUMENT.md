@@ -837,10 +837,6 @@ GMSDK.doOpenURLbyWebView(String url);
 GMSDK.showLogin();
 ```
 
-| 字段  | 类型     | 说明               |
-| --- | ------ | ---------------- |
-| url | string | 需要打开的webview网页地址 |
-
 ### 4.8打开SDK客服中心
 
 SDK客服中心分普通客服中心和VIP客服中心两种，普通客服中心可以直接调用接口拉起，VIP客服中心需要先查询用户VIP等级，VIP等级达标后拉起
