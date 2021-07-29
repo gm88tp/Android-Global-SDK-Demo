@@ -271,11 +271,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             case R.id.game_playVideo_land:
                 String videoUrl = mEtVideoUrl.getText().toString().trim();
-                GMSDK.playVideo(videoUrl,0);
+                GMSDK.playVideo(videoUrl, "",0);
                 break;
             case R.id.game_playVideo_portrait:
                 String videoUrl2 = mEtVideoUrl.getText().toString().trim();
-                GMSDK.playVideo(videoUrl2, 1);
+                GMSDK.playVideo(videoUrl2, "",1);
                 break;
             case R.id.game_getDeviceInfo:
                 String deviceInfo = GMSDK.getDeviceInfo();

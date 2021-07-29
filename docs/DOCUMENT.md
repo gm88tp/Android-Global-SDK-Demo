@@ -1,4 +1,4 @@
-# GM88 Android海外游戏1.4.3版本SDK 对接文档 2021/07/01
+# GM88 Android海外游戏1.4.4版本SDK 对接文档 2021/07/27
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 
@@ -8,7 +8,7 @@
 
 ```
    defaultConfig{
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true
     }
@@ -28,7 +28,7 @@
 
 ```
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation(name: 'Globalsdk_1.4.3', ext: 'aar')
+        implementation(name: 'Globalsdk_1.4.4', ext: 'aar')
         implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
         implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
         implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -48,7 +48,7 @@
         api 'com.google.android.gms:play-services-ads:20.2.0'
         implementation 'com.google.ads.mediation:applovin:10.3.0.0'
         implementation 'com.google.ads.mediation:facebook:5.8.0.0'
-        implementation 'com.google.ads.mediation:unity:3.4.2.0'
+        implementation 'com.google.ads.mediation:unity:3.7.4.0'
         implementation 'com.google.ads.mediation:ironsource:7.1.6.0'
         implementation 'com.google.ads.mediation:vungle:6.7.0.0'
         implementation 'com.google.android.play:core:1.8.0'
@@ -175,7 +175,7 @@ allprojects {
 
 ### 添加libs下相关aar依赖
 
-请添加并引入libs内的全部aar依赖
+请添加并引入libs内的全部aar依赖，如果不是QOO渠道包，则不引入qooapp-opensdk-v1.1.1.aar，QOO渠道包对接方法见文档末尾
 
 ### 清单文件内容添加
 
@@ -329,7 +329,7 @@ MSDK.setCallBack(new GMCallback() {
                     case GMActionCode.ACTION_QUERY_NOTBIND://未绑定
 
                         break;
-                    case GMActionCode.ACTION_QUERY_BIND_FAILED://绑定失败
+                    case GMActionCode.ACTION_QUERY_BIND_FAILED://查询绑定失败
 
                         break;
                     case GMActionCode.ACTION_QUERY_ISBIND://已绑定
@@ -518,7 +518,7 @@ GMSDK.doCPShareLink(String title, String content, String link);
 | link    | string | 分享链接         |
 
 
-#### 3.6.3 直接分享（图片形式）
+#### 3.6.3 直接分享（网络图片形式）
 
 当游戏需要拉起分享的时候，想直接分享图片时，应调用此接口，现阶段此接口支持分享到Facebook
 接口定义：
@@ -534,6 +534,24 @@ GMSDK.doCPShareImage(String title, String content, String photoUrl);
 | title | string | 分享标题  |
 | content     | string | 分享内容          |
 | photoUrl    | string | 分享图片url         |
+
+#### 3.6.3 直接分享（本地图片形式）
+
+当游戏需要拉起分享的时候，想直接分享手机本地图片时，应调用此接口，请注意本地分享只能分享包名路径下的地址，例如/data/data/<包名>/files/Screenshot/Share.png
+接口定义：
+
+```
+GMSDK.doCPShareLocalImage(String title, String content, String photoUrl);
+```
+
+** 传入参数示例**
+
+| 字段        | 类型     | 说明              |
+| --------- | ------ | --------------- |
+| title | string | 分享标题  |
+| content     | string | 分享内容          |
+| photoUrl    | string | 分享图片本地地址        |
+
 
 ### 3.7调起广告接口
 
@@ -711,7 +729,7 @@ GMSDK.doSetPasteboard(String extra);
 GMSDK.doEventInfo(extra);
 ```
 
-### 4.3获取当前手机系统语言和地区
+### 4.3获取当前手机系统语言和地区、获取当前手机时区
 
 当游戏需要区分当前手机系统语言时，可以调用此方法来获取
 接口定义：
@@ -734,6 +752,21 @@ String language = GMSDK.doLanguage();
 语言码的ISO标准：[ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
 地区码的ISO标准：[ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
+
+当游戏需要获取当前用户手机时间所在时区时，可以调用此方法来获取
+
+```
+GMSDK.doTimeZone();
+```
+
+调用示例：
+
+```
+String timeZone = GMSDK.doTimeZone();
+```
+
+响应：
+返回示例: "+8"。(表示东八区)
 
 ### 4.4翻译文本
 
@@ -890,15 +923,16 @@ GMSDK.sendRegistrationGift(String servierId,String roleId)
 
 ### 4.11 播放视频
 
-当游戏内需要播放视频，可调用此接口。视频播放支持网络播放和本地播放，支持基本常见的视频格式。
+当游戏内需要播放视频，可调用此接口。视频播放支持网络播放和本地播放，支持基本常见的视频格式，此接口会优先播放本地路径下的视频，若不存在会播放网络地址视频，如不需要播放本地视频，参数传空即可。
 
 ```java
-GMSDK.playVideo(String videoUrl, int oritation)
+GMSDK.playVideo(String videoUrl, String videoPath, int oritation)
 ```
 
 | 字段     | 类型   | 说明                                                         |
 | -------- | ------ | ------------------------------------------------------------ |
-| videoUrl | String | 网络视频播放地址格式："http://com.test.mp4",本地:/test.mp4" (对应存储位置的路径) |
+| videoUrl | String | 网络视频播放地址格式："http://com.test.mp4"|
+| videoUrl | String | 本地视频播放地址格式：assets/video/test.mp4" (对应存储位置的路径, 现在此接口暂时只支持/data/user/0/com.xm.paoyou.zmg.test/files/games/路径下)|
 | oritation|  int	| 0横屏播放,1竖屏播放
 
 GMActionCode.ACTION_VIDEO_PLAY_CLOSE ：表示视频播放被用户关闭。
@@ -920,13 +954,55 @@ GMSDK.getDeviceInfo()
 
 返回字段示例：
 
-{"gaid":"9ebd931d-a62d-4d72-8ddd-8eb9a8cdbeb2", //设备gaid
+{"deviceId":"9ebd931d-a62d-4d72-8ddd-8eb9a8cdbeb2", //设备gaid
 
-"version":"7.1.2", // 系统版本
+"system":"7.1.2", // 系统版本
 
-"device":"HTC 2Q4R100" //设备型号
+"model":"HTC 2Q4R100" //设备BRAND+MODEL
 }
 
+
+## 5.集成SDK出谷歌商店外的渠道
+
+**SDK1.4.4版本后支持上线QOO渠道，后续可能开放更多商店渠道**
+
+此条只适用于上线QOO渠道的游戏，接入时可咨询我方运营，若游戏无上线QOO商店的打算，无需阅读以下内容
+
+以下是谷歌商店包转QOO商店包的接入流程
+
+1.引入QOO商店qooapp-opensdk-v1.1.1.aar包
+2.在GMConfig.xml下添加标签<qoo confirm="1" />来标识此包是QOO商店包
+3.在Manifest下做出如下添加APP_ID和PUBLIC_KEY填入运营提供的相关参数
+
+```
+    <meta-data
+        android:name="com.qooapp.APP_ID" android:value="{APP_ID}" />
+    <meta-data
+        android:name="com.qooapp.PUBLIC_KEY" android:value="{PUBLIC_KEY}" />
+    <!-- Only If your  targetSdkVersion >= 30 -->
+    <queries>
+        <package android:name="com.qooapp.qoohelper" />
+    </queries>
+
+```
+4.由于QOO商店和Google商店相对独立，主SDK有部分接口在QOO商店渠道变得不可用，CP需要在QOO渠道下禁用部分接口，并关闭游戏内相关接口入口
+我们提供两种方式供CP判断：
+1）CP自行对接口进行判断，当出QOO商店包时，禁用下列接口
+| 接口名称     | 代码名称  | 禁用原因                                                       |
+| -------- | ------ | ------------------------------------------------------------ |
+| 游戏绑定账号接口 | GMSDK.showBind();| 该接口用于对于游戏账号进行绑定邮箱的操作，这种操作只对怪猫账号有效，在Qoo渠道中并没有怪猫账号的概念 |
+| 查询绑定账号接口 | GMSDK.doQueryBind();| 同上                            |
+| 查询当前游戏需求展示给用户查看的货币接口 | GMSDK.getPurchaseList(GlobalCallback callback);| 该接口用于在用户显示不同的货币，Qoo渠道固定显示美金  |
+| 查询预注册状态，申请发放预注册奖励 | GMSDK.checkRegistrationType(); GMSDK.sendRegistrationGift(); | 这2个接口都是Google Play专用接口      |
+
+2)通过接口的方式供CP查询，在初始化成功后，可调用查询禁用接口列表接口进行查询，此接口会返回禁用接口的列表
+
+
+```java
+GMSDK.getDisableInterfaces();
+```
+
+同时，CP可监听GMActionCode.ACTION_CALL_DISABLED_INTERFACE回调，当禁用接口被调用时会无效并收到此回调
 
 
 
