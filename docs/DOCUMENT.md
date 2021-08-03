@@ -61,7 +61,6 @@
         //firebase
         // Add dependency crashlytics
         implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-        implementation 'com.google.firebase:firebase-analytics:17.6.0'
         // Check for v11.4.2 or higher
         implementation 'com.google.firebase:firebase-core:19.0.0''
         // (Recommended) Add Analytics
