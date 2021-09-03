@@ -37,7 +37,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private TextView mTvEnterQufu, mTvEnterRole, mTvEnterGame, mTvDoPay, mTvShare, mLogin, mTvToCustomer,
             mTvCreateRole, mTvOverBegin, mTvLevel, mFBReLoading, mTvShowBind, mTvSendEvent;
-    private TextView systemShare, mTvTranslation, mTvPayList, mTvSwitchAccount,mTvVideoPlayLand,mTvVideoPlayPortrait,mTvGetDeviceInfo;;
+    private TextView systemShare, mTvTranslation, mTvPayList, mTvSwitchAccount,mTvVideoPlayLand,mTvVideoPlayPortrait,mTvGetDeviceInfo,mTvOderRepair;
     private EditText mEtOrderName;
     private EditText mEtOrderPrice;
     private EditText mEtProductId;
@@ -152,6 +152,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvVideoPlayLand = findViewById(R.id.game_playVideo_land);
         mTvVideoPlayPortrait = findViewById(R.id.game_playVideo_portrait);
         mTvGetDeviceInfo = findViewById(R.id.game_getDeviceInfo);
+        mTvOderRepair = findViewById(R.id.game_orderRepair);
         mTvTranslation.setOnClickListener(this);
         mLogin.setOnClickListener(this);
         findViewById(R.id.game_show_ad).setOnClickListener(this);
@@ -172,6 +173,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvVideoPlayLand.setOnClickListener(this);
         mTvVideoPlayPortrait.setOnClickListener(this);
         mTvGetDeviceInfo.setOnClickListener(this);
+        mTvOderRepair.setOnClickListener(this);
 
         mEtOrderName = findViewById(R.id.game_order);
         mEtOrderPrice = findViewById(R.id.game_price);
@@ -280,6 +282,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.game_getDeviceInfo:
                 String deviceInfo = GMSDK.getDeviceInfo();
                 ToastUtil.toast(this,deviceInfo);
+                break;
+            case R.id.game_orderRepair:
+                GMSDK.showOrderRepair();
                 break;
             default:
                 break;

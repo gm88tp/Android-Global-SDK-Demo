@@ -179,6 +179,16 @@
                 android:text="调用支付"
                 android:textColor="@android:color/white" />
 
+            <TextView
+                android:id="@+id/game_orderRepair"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lion_btn_bg"
+                android:gravity="center"
+                android:text="订单修复"
+                android:textColor="@android:color/white" />
+
 
 
             <TextView

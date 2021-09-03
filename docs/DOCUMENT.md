@@ -1,10 +1,11 @@
-# GM88 Android海外游戏1.4.4版本SDK 对接文档 2021/07/27
+# GM88 Android海外游戏1.4.5版本SDK 对接文档 2021/09/03
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 
 ## 1.相关依赖引入
 
 在工程级别的build.gradle 的android 内加入以下代码
+注：当前Google市场上架必须targetSdkVersion>=30
 
 ```
    defaultConfig{
@@ -28,7 +29,7 @@
 
 ```
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation(name: 'Globalsdk_1.4.4', ext: 'aar')
+        implementation(name: 'Globalsdk_1.4.5', ext: 'aar')
         implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
         implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
         implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -43,7 +44,7 @@
         api 'com.google.gms:google-services:4.3.5'
         api 'com.google.android.gms:play-services-analytics:17.0.0'
         api 'com.google.android.gms:play-services-auth:17.0.0'
-        api 'com.facebook.android:facebook-android-sdk:8.1.0'
+        api 'com.facebook.android:facebook-android-sdk:11.1.0'
         api 'org.apache.httpcomponents:httpcore:4.4.10'
         api 'com.google.android.gms:play-services-ads:20.2.0'
         implementation 'com.google.ads.mediation:applovin:10.3.0.0'
@@ -250,7 +251,7 @@ android:networkSecurityConfig="@xml/network_security_config"
 
 ### 3.1Application内的初始化
 
-首先使项目中的Application继承PSDKApplication，若项目无Application，请自定义创建，并在清单文件中注册。(参考demo)
+
 在Application的onCreate方法中实现以下：
 
 ```
@@ -955,6 +956,15 @@ GMSDK.getDeviceInfo()
 
 "model":"HTC 2Q4R100" //设备BRAND+MODEL
 }
+
+### 4.13 打开支付订单修复界面
+
+在用户使用Google完成订单支付后，因网络不稳定等特殊情况，会有极低概率导致无法通知到后台造成丢单。
+
+调用此接口，会提供所有未成功通知到后台的订单集合界面，让用户进行相应的订单修复。
+```java
+GMSDK.showOrderRepair()
+```
 
 
 ## 5.集成SDK出谷歌商店外的渠道
