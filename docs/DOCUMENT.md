@@ -1,6 +1,9 @@
-# GM88 Android海外游戏1.4.5版本SDK 对接文档 2021/09/03
+# GM88 Android海外游戏1.4.6版本SDK 对接文档 2021/10/20
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
+
+v1.4.6更新:增加xsolla支付。升级谷歌支付sdk。(请注意!将谷歌支付远端依赖库版本号更新至4.0.0，否则启动初始化时会出现异常闪退。)
+
 
 ## 1.相关依赖引入
 
@@ -29,7 +32,7 @@
 
 ```
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation(name: 'Globalsdk_1.4.5', ext: 'aar')
+        implementation(name: 'Globalsdk_1.4.6', ext: 'aar')
         implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
         implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
         implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -86,7 +89,7 @@
         implementation 'com.braintreepayments.api:braintree:2.+'
         implementation 'com.squareup.okhttp3:okhttp:3.12.0'
         //谷歌支付
-        implementation 'com.android.billingclient:billing:3.0.3'
+        implementation 'com.android.billingclient:billing:4.0.0'
 
 
         //推特登陆和分享相关
