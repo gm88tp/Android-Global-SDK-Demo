@@ -38,6 +38,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private TextView mTvEnterQufu, mTvEnterRole, mTvEnterGame, mTvDoPay, mTvShare, mLogin, mTvToCustomer,
             mTvCreateRole, mTvOverBegin, mTvLevel, mFBReLoading, mTvShowBind, mTvSendEvent;
     private TextView systemShare, mTvTranslation, mTvPayList, mTvSwitchAccount,mTvVideoPlayLand,mTvVideoPlayPortrait,mTvGetDeviceInfo,mTvOderRepair;
+    private TextView mTvUsercenter;
     private EditText mEtOrderName;
     private EditText mEtOrderPrice;
     private EditText mEtProductId;
@@ -153,6 +154,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvVideoPlayPortrait = findViewById(R.id.game_playVideo_portrait);
         mTvGetDeviceInfo = findViewById(R.id.game_getDeviceInfo);
         mTvOderRepair = findViewById(R.id.game_orderRepair);
+        mTvUsercenter = findViewById(R.id.game_usercenter);
         mTvTranslation.setOnClickListener(this);
         mLogin.setOnClickListener(this);
         findViewById(R.id.game_show_ad).setOnClickListener(this);
@@ -174,6 +176,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvVideoPlayPortrait.setOnClickListener(this);
         mTvGetDeviceInfo.setOnClickListener(this);
         mTvOderRepair.setOnClickListener(this);
+        mTvUsercenter.setOnClickListener(this);
 
         mEtOrderName = findViewById(R.id.game_order);
         mEtOrderPrice = findViewById(R.id.game_price);
@@ -285,6 +288,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.game_orderRepair:
                 GMSDK.showOrderRepair();
+                break;
+            case R.id.game_usercenter:
+                GMSDK.showUserCenter();
                 break;
             default:
                 break;

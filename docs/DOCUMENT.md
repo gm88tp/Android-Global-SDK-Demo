@@ -1,9 +1,20 @@
-# GM88 Android海外游戏1.4.7版本SDK 对接文档 2021/10/26
+# GM88 Android海外游戏2.0版本SDK 对接文档 2021/11/18
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 
-v1.4.7更新: 增加payssion支付
-v1.4.6更新: 增加xsolla支付。升级谷歌支付sdk。(注意!1.4.6请将谷歌支付远端依赖库版本号更新至4.0.0，否则启动初始化时会出现异常闪退。)
+v2.0  更新:
+1.全面更新横版、竖版所有界面ui。
+2.增加帮助中心、问题反馈、用户中心、订单管理模块。
+3.增加部分游戏事件。
+注意添加新依赖：
+implementation "org.java-websocket:Java-WebSocket:1.4.0"
+implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
+
+v1.4.7更新:
+增加payssion支付
+
+v1.4.6更新:
+增加xsolla支付。升级谷歌支付sdk。(注意!1.4.6请将谷歌支付远端依赖库版本号更新至4.0.0，否则启动初始化时会出现异常闪退。)
 
 
 ## 1.相关依赖引入
@@ -33,7 +44,7 @@ v1.4.6更新: 增加xsolla支付。升级谷歌支付sdk。(注意!1.4.6请将�
 
 ```
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation(name: 'Globalsdk_1.4.7', ext: 'aar')
+        implementation(name: 'Globalsdk_2.0', ext: 'aar')
         implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
         implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
         implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -99,6 +110,9 @@ v1.4.6更新: 增加xsolla支付。升级谷歌支付sdk。(注意!1.4.6请将�
         implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
         //line
         api 'com.linecorp:linesdk:5.0.1'
+
+        implementation "org.java-websocket:Java-WebSocket:1.4.0"
+        implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
 ```
 
 在工程级别的build.gradle 文件内增加以下插件
@@ -430,7 +444,8 @@ payinfo.put("extra", System.currentTimeMillis() / 1000 + "");
 GMSDK.doPay(payJson);
 ```
 
-### 3.5角色变更接口
+### 3.5 相关游戏内接口
+3.5.1 角色变更接口
 
 当游戏内角色状态变化时，应调用此接口
 接口定义：
@@ -464,6 +479,42 @@ try {
 }
 GMSDK.doSpot(spotJson.toString())
 ```
+
+
+3.5.2 游戏进入状态更变接口
+当开始进入游戏（加载前）时，调用此接口
+
+调用示例：
+```
+GMSDK.doSpotStartLoading();
+```
+
+当游戏完成加载时，可调用此接口。参数传入实际加载时间（注意参数spendSecond单位为秒）
+调用示例：
+```
+GMSDK.doGameEndLoading(int spendSecond)
+```
+
+调用示例：
+当游戏进入选服页时，可调用此接口。
+```
+GMSDK.doGameEnterSelectServer()
+```
+
+3.5.3 游戏内游戏币消耗事件接口
+当游戏内发生获得游戏币或者消耗游戏币的事件时，调用此接口
+
+调用示例：
+```
+GMSDK.doGameCoin(int type,String coinName,int coin)
+```
+
+| 字段      | 类型    | 说明            |
+| --------- | ------ | --------------- |
+| type | int | 事件类型:0为获得游戏币，1为消耗游戏币|
+| coinName | String | 游戏币名称       |
+| coin | int | 游戏币数量         |
+
 
 ### 3.6发起分享接口
 
@@ -841,48 +892,27 @@ GMSDK.doOpenURLbyWebView(String url);
 GMSDK.showLogin();
 ```
 
-### 4.8打开SDK客服中心
+### 4.8打开帮助中心（原客服中心）
 
-SDK客服中心分普通客服中心和VIP客服中心两种，普通客服中心可以直接调用接口拉起，VIP客服中心需要先查询用户VIP等级，VIP等级达标后拉起
+sdk2.0版本之后，将原faq、普通客服、vip客服整合在帮助中心页面。
+帮助中心集成了faq、用户意见反馈、与后台客服即时聊天功能。
+原vip客服showVipServiceCenter()、showQuestions();方法也已合并至帮助中心(方法目前仍保留，提供过渡)。请全部统一改为以下方法。
 
-#### 4.8.1 普通客服中心界面
 
-当游戏内需要显示打开普通客服中心页面的入口，点击入口时调用此接口
 调用示例：
-
 ```java
 GMSDK.showServiceCenter();
 ```
 
-#### 4.8.2 VIP客服中心界面
 
-当游戏内需要显示打开VIP客服中心页面的入口，点击入口时需调用查询VIP等级接口
 
-调用示例：
 
-```java
-GMSDK.checkUserVipLevel();
-```
-
-在查询此接口后，SDK会回调查询结果，请监听GM回调结果
-
-GMActionCode.ACTION_VIP_LEVEL_SUCCESS：表示查询成功，用户VIP等级达标可以拉起VIP客服界面，可在此回调中调用打开VIP客服界面接口
+### 4.9打开SDK常见问题界面（已合并至帮助中心）
+原faq界面接口也已合并至帮助中心，方法保留提供过渡使用。
 
 调用示例：
-
 ```java
-GMSDK.showVipServiceCenter();
-```
-
-GMActionCode.ACTION_VIP_LEVEL_FAILED：表示查询失败，用户VIP等级不足，可在此回调中提示用户VIP等级不足
-
-### 4.9打开SDK常见问题界面
-
-当游戏内需要显示打开常见问题界面的入口，点击入口时调用此接口
-调用示例：
-
-```java
-GMSDK.showQuestions();
+showQuestions()
 ```
 
 ### 4.10查询预注册状态，申请发放预注册奖励
@@ -966,8 +996,21 @@ GMSDK.getDeviceInfo()
 在用户使用Google完成订单支付后，因网络不稳定等特殊情况，会有极低概率导致无法通知到后台造成丢单。
 
 调用此接口，会提供所有未成功通知到后台的订单集合界面，让用户进行相应的订单修复。
+
+2.0版本之后，页面同时集成了已完成的订单信息供查看
 ```java
 GMSDK.showOrderRepair()
+```
+
+
+### 4.13 打开个人中心界面
+
+用户中心界面包含了展示用户账号绑定信息、绑定账号、修改密码、切换账号、查看最新订单、反馈的功能。
+注：个人中心应该在已登录状态下调用。
+
+调用示例
+```java
+GMSDK.showUserCenter()
 ```
 
 
