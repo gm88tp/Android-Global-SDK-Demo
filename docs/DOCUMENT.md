@@ -183,7 +183,7 @@ allprojects {
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
 5）如果游戏是韩国版本，需要修改café标签内的相关参数为运营提供的参数。
-6）出正式包时请修改host标签内的url链接为正式服链接，地址为https://m-xmjen.hkpctimes.com。
+6）出正式包时请修改host标签内的url链接为正式服链接，GMSDK采用每个项目独立的域名的形式，具体项目使用域名会由运营提供
 7）如果游戏需要启用预注册奖励功能，请修改register标签下的item_id和item_price值，相关参数由运营提供
 
 ### 拷贝运营提供的google-services.json文件
