@@ -178,7 +178,7 @@ allprojects {
 
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
 
-1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id；sdkVersion为接入SDK版本。
+1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id；。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
@@ -289,7 +289,7 @@ MultiDex.install(this);
 SDK使用统一的Callback，在MainActivity(游戏主Activity)的onCreate方法内实现以下(监听回调根据所需添加)：
 
 ```
-MSDK.setCallBack(new GMCallback() {
+GMSDK.setCallBack(new GMCallback() {
             @Override
             public void onCallBack(final Message msg) {
                 switch (msg.what) {
@@ -912,7 +912,7 @@ GMSDK.showServiceCenter();
 
 调用示例：
 ```java
-showQuestions()
+GMSDK.showQuestions()
 ```
 
 ### 4.10查询预注册状态，申请发放预注册奖励
