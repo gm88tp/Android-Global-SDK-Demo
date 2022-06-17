@@ -1,12 +1,16 @@
-# GM88 Android海外游戏2.0版本SDK 对接文档 2021/11/18
+# GM88 Android海外游戏2.2版本SDK 对接文档 2022/06/17
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
+v2.2更新:
+1.新增公告功能
+2.分享功能更新
+3.调整游客生成逻辑
 
-v2.0  更新:
+v2.0 更新:
 1.全面更新横版、竖版所有界面ui。
 2.增加帮助中心、问题反馈、用户中心、订单管理模块。
 3.增加部分游戏事件。
-注意添加新依赖：
+注意添加新依赖:
 implementation "org.java-websocket:Java-WebSocket:1.4.0"
 implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
 
@@ -44,7 +48,7 @@ v1.4.6更新:
 
 ```
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation(name: 'Globalsdk_2.0', ext: 'aar')
+        implementation(name: 'Globalsdk_2.2', ext: 'aar')
         implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
         implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
         implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -63,7 +67,7 @@ v1.4.6更新:
         api 'org.apache.httpcomponents:httpcore:4.4.10'
         api 'com.google.android.gms:play-services-ads:20.2.0'
         implementation 'com.google.ads.mediation:applovin:10.3.0.0'
-        implementation 'com.google.ads.mediation:facebook:5.8.0.0'
+        implementation 'com.google.ads.mediation:facebook:6.5.0.0'
         implementation 'com.google.ads.mediation:unity:3.7.4.0'
         implementation 'com.google.ads.mediation:ironsource:7.1.6.0'
         implementation 'com.google.ads.mediation:vungle:6.7.0.0'
@@ -178,13 +182,14 @@ allprojects {
 
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
 
-1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id；。
+1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
-4）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
-5）如果游戏是韩国版本，需要修改café标签内的相关参数为运营提供的参数。
-6）出正式包时请修改host标签内的url链接为正式服链接，GMSDK采用每个项目独立的域名的形式，具体项目使用域名会由运营提供
-7）如果游戏需要启用预注册奖励功能，请修改register标签下的item_id和item_price值，相关参数由运营提供
+4）twitter标签内的参数，修改为运营提供的相应的twitter参数。
+5）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
+6）如果游戏是韩国版本，需要修改café标签内的相关参数为运营提供的参数。
+7）出正式包时请修改host标签内的url链接为正式服链接，GMSDK采用每个项目独立的域名的形式，具体项目使用域名会由运营提供
+8）如果游戏需要启用预注册奖励功能，请修改register标签下的item_id和item_price值，相关参数由运营提供
 
 ### 拷贝运营提供的google-services.json文件
 
@@ -394,11 +399,12 @@ GMSDK.setCallBack(new GMCallback() {
 GMSDK.doLogin();
 ```
 
-登录成功或者失败，都可以在回调中得到结果。返回token，示例:
+登录成功或者失败，都可以在回调中得到结果。返回token和怪猫唯一uid，示例:
 
 ```
 JSONObject loginResult = new JSONObject(String.valueOf(msg.obj));
 String token = loginResult.getString("token");
+String uid =loginResult.getString("uid");
 ```
 
 请使用token调用后端接口获得用户标识，收到回调的token，建议通过服务端验证token，获取用户id，详情查看服务端文档
@@ -418,7 +424,7 @@ GMSDK.doPay(Map<String, String> payJson)
 | ------------ | ------ | ---------------------------------- |
 | productId    | string | 商品ID                               |
 | productName  | string | 商品名称，会显示在相应支付界面上                   |
-| productPrice | float  | 商品价格                               |
+| productPrice | string | 商品价格, 价格必须传美金单位                              |
 | extra        | string | 订单透传参数，这些参数会在支付回调时一并回传给CP，请CP自行解析  |
 | roleId       | string | 待支付角色ID                            |
 | roleName     | string | 待支付角色名                             |
@@ -579,7 +585,7 @@ GMSDK.doCPShareLink(String title, String content, String link);
 接口定义：
 
 ```
-GMSDK.doCPShareImage(String title, String content, String photoUrl);
+GMSDK.doCPShareImage(String title, String content, String imageUrl);
 ```
 
 ** 传入参数示例**
@@ -588,15 +594,15 @@ GMSDK.doCPShareImage(String title, String content, String photoUrl);
 | --------- | ------ | --------------- |
 | title | string | 分享标题  |
 | content     | string | 分享内容          |
-| photoUrl    | string | 分享图片url         |
+| imageUrl    | string | 分享图片url         |
 
-#### 3.6.3 直接分享（本地图片形式）
+#### 3.6.4 直接分享（本地图片形式）
 
 当游戏需要拉起分享的时候，想直接分享手机本地图片时，应调用此接口，请注意本地分享只能分享包名路径下的地址，例如/data/data/包名/files/Screenshot/Share.png
 接口定义：
 
 ```
-GMSDK.doCPShareLocalImage(String title, String content, String photoUrl);
+GMSDK.doCPShareLocalImage(String title, String content, String imageUrl);
 ```
 
 ** 传入参数示例**
@@ -606,6 +612,26 @@ GMSDK.doCPShareLocalImage(String title, String content, String photoUrl);
 | title | string | 分享标题  |
 | content     | string | 分享内容          |
 | photoUrl    | string | 分享图片本地地址        |
+
+#### 3.6.5 单独渠道直接分享（本地图片形式）
+
+当游戏需要直接拉起某一分享渠道进行分享的时候，应调用此接口，请注意本地分享只能分享包名路径下的地址，例如/data/data/包名/files/Screenshot/Share.png
+接口定义：
+
+```
+GMSDK.doShareImage(int type, String imageUrl, String link, String text, String tag);
+```
+
+** 传入参数示例**
+
+| 字段        | 类型     | 说明              |
+| --------- | ------ | --------------- |
+| type | int | 分享渠道  | type = 1为facebook 2为ins 3为twitter 4为line  |
+| imageUrl    | string | 分享图片本地地址        |
+| link     | string | 分享携带的链接          |
+| text    | string | 分享携带的文本       |
+| tag    | string | 分享携带的话题标签       |
+
 
 
 ### 3.7调起广告接口
@@ -643,6 +669,21 @@ GMSDK.showBind();
 ```
 GMSDK.showBind();
 ```
+
+### 3.8.1游戏单独绑定某一渠道接口
+
+游戏内想要自制绑定界面，可调用此接口用来单独拉起某一绑定渠道
+接口定义：
+
+```
+GMSDK.doBind(int type);
+```
+** 传入参数示例**
+
+| 字段        | 类型     | 说明              |
+| --------- | ------ | --------------- |
+| type | int | 绑定渠道  | type = 1为google 2为fb 3为twitter 4为line  5为邮箱绑定   |
+
 
 调用后会给游戏对应的回调
 
@@ -1014,7 +1055,7 @@ GMSDK.showUserCenter()
 ```
 
 
-## 5.集成SDK出谷歌商店外的渠道
+## 5.集成SDK除谷歌商店外的渠道
 
 **SDK1.4.4版本后支持上线QOO渠道，后续可能开放更多商店渠道**
 
