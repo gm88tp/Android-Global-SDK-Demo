@@ -39,7 +39,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    implementation(name: 'Globalsdk_1.4.7', ext: 'aar')
-    implementation(name: 'Globalsdk_2.0', ext: 'aar')
+    implementation(name: 'Globalsdk_2.2', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
