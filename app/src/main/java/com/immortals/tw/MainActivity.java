@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                         ConfigManager.getInstance().getFcmToken();
                         //ADSDK.getInstance().loadAd();
-                        String spot = "{\"spotType\":4,\"extra\":{\"roleName\":\"IleanaJudd\",\"vipLevel\":3,\"serverName\":1服,\"roleServer\":55,\"roleLevel\":1,\"roleId\":1234567" + "}}";
+                        String spot = "{\"spotType\":4,\"extra\":{\"roleName\":\"IleanaJudd\",\"vipLevel\":3,\"serverName\":1服,\"zone\":001,\"roleServer\":55,\"roleLevel\":1,\"roleId\":1234567,\"globalRoleId\":gm88_70_10691603" + "}}";
                         GMSDK.doSpot(spot);
                         JSONObject result = (JSONObject) msg.obj;
                         Log.e(TAG, "登录成功" + result.toString());
