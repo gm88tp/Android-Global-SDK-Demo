@@ -1,6 +1,10 @@
 # GM88 Android海外游戏2.2版本SDK 对接文档 2022/06/17
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
+v2.3 更新:
+1. 角色登录接口新增大区id和全局唯一角色id两个字段
+2. 全局唯一角色id第三方平台打点
+3. 首次付费打点
 v2.2更新:
 1.新增公告功能
 2.分享功能更新
@@ -463,7 +467,7 @@ GMSDK.doSpot(String spotJson)
 | 字段       | 类型     | 说明                                                                                                                      |
 | -------- | ------ | ----------------------------------------------------------------------------------------------------------------------- |
 | spotType | string | 事件类型，取值为：1：创建角色   2：完成新手引导 3：玩家等级变化后上传 4:玩家选择完区服                                                                        |
-| extra    | json   | 这是角色具体信息，格式为Json，包括6种信息：roleId: 角色ID, roleName： 角色名，roleServer： 区服ID， serverName ：区服名字，roleLevel： 角色等级，vipLevel：角色Vip等级 |
+| extra    | json   | 这是角色具体信息，格式为Json，包括6种信息：roleId: 角色ID, roleName： 角色名，roleServer： 区服ID， serverName ：区服名字，roleLevel： 角色等级，vipLevel：角色Vip等级，zone：大区ID，globalRoleId：全局唯一的角色ID |
 
 **请注意，玩家选择完区服上报（spotType为4）必须接入，否则会影响SDK功能，其余上报不接入会影响打点数据准确性**
 调用示例：
@@ -479,6 +483,8 @@ try {
     extra.put("roleServer","22");
     extra.put("serverName","1服");
     extra.put("vipLevel","1");
+    extra.put("zone","1");
+    extra.put("globalRoleId","gm88_70_10691603");
     spotJson.put("extra",extra);
 } catch (JSONException e) {
     e.printStackTrace();
