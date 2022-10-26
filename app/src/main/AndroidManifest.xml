@@ -50,7 +50,6 @@
             </intent-filter>
         </activity>
 
-
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -80,6 +79,21 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7496069579613989~1013034939" />
+        <activity
+            android:name="com.global.sdk.ui.AuthorizedLoginActivity"
+            android:exported="true">
+            <intent-filter
+                android:autoVerify="true"
+                tools:targetApi="m">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https"
+                    android:host="immortal-login.onelink.me"
+                    android:pathPrefix="/Bx5a" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -4,12 +4,11 @@ android {
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.immortaltaoists.en"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
-        versionCode 41
-        versionName "1.4.6"
+        versionCode 42
+        versionName "1.4.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
 
         multiDexEnabled true
     }
@@ -39,8 +38,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    implementation(name: 'Globalsdk_1.4.7', ext: 'aar')
-    implementation(name: 'Globalsdk_2.3', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
+    implementation(name: 'Globalsdk_2.4', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -108,6 +107,9 @@ dependencies {
 
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
     implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
+
+    //AndroidX 版本
+    implementation 'com.king.zxing:zxing-lite:2.0.3'
 }
 
 apply plugin: 'com.google.firebase.crashlytics'

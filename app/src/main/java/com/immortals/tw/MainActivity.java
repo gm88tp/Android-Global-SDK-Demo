@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private TextView mTvEnterQufu, mTvEnterRole, mTvEnterGame, mTvDoPay, mTvShare, mLogin, mTvToCustomer,
-            mTvCreateRole, mTvOverBegin, mTvLevel, mFBReLoading, mTvShowBind, mTvSendEvent;
+            mTvCreateRole, mTvOverBegin, mTvLevel, mFBReLoading, mTvShowBind, mTvSendEvent, mTvScan;
     private TextView systemShare, mTvTranslation, mTvPayList, mTvSwitchAccount,mTvVideoPlayLand,mTvVideoPlayPortrait,mTvGetDeviceInfo,mTvOderRepair;
     private TextView mTvUsercenter;
     private EditText mEtOrderName;
@@ -155,6 +155,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvGetDeviceInfo = findViewById(R.id.game_getDeviceInfo);
         mTvOderRepair = findViewById(R.id.game_orderRepair);
         mTvUsercenter = findViewById(R.id.game_usercenter);
+        mEtOrderName = findViewById(R.id.game_order);
+        mEtOrderPrice = findViewById(R.id.game_price);
+        mEtProductId = findViewById(R.id.game_productid);
+        mTvScan = findViewById(R.id.tv_scan);
         mTvTranslation.setOnClickListener(this);
         mLogin.setOnClickListener(this);
         findViewById(R.id.game_show_ad).setOnClickListener(this);
@@ -177,10 +181,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvGetDeviceInfo.setOnClickListener(this);
         mTvOderRepair.setOnClickListener(this);
         mTvUsercenter.setOnClickListener(this);
-
-        mEtOrderName = findViewById(R.id.game_order);
-        mEtOrderPrice = findViewById(R.id.game_price);
-        mEtProductId = findViewById(R.id.game_productid);
+        mTvScan.setOnClickListener(this);
 
     }
 
@@ -272,6 +273,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.game_create_deeplink:
                 GMSDK.showServiceCenter();
+                break;
+            case R.id.tv_scan:
+                GMSDK.scanLogin(this);
                 break;
 
             case R.id.game_playVideo_land:

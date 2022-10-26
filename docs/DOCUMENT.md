@@ -1,6 +1,9 @@
 # GM88 Android海外游戏2.2版本SDK 对接文档 2022/06/17
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
+v2.4 更新:
+1. 添加跨端登录方法，web端可直接拉起授权页
+2. 添加扫码登录
 v2.3 更新:
 1. 角色登录接口新增大区id和全局唯一角色id两个字段
 2. 全局唯一角色id第三方平台打点
@@ -32,7 +35,7 @@ v1.4.6更新:
 
 ```
    defaultConfig{
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         multiDexEnabled true
     }
@@ -52,7 +55,7 @@ v1.4.6更新:
 
 ```
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation(name: 'Globalsdk_2.2', ext: 'aar')
+        implementation(name: 'Globalsdk_2.4', ext: 'aar')
         implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
         implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
         implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -121,6 +124,8 @@ v1.4.6更新:
 
         implementation "org.java-websocket:Java-WebSocket:1.4.0"
         implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
+
+        implementation 'com.king.zxing:zxing-lite:2.0.3'
 ```
 
 在工程级别的build.gradle 文件内增加以下插件
@@ -1050,7 +1055,7 @@ GMSDK.showOrderRepair()
 ```
 
 
-### 4.13 打开个人中心界面
+### 4.14 打开个人中心界面
 
 用户中心界面包含了展示用户账号绑定信息、绑定账号、修改密码、切换账号、查看最新订单、反馈的功能。
 注：个人中心应该在已登录状态下调用。
@@ -1060,6 +1065,14 @@ GMSDK.showOrderRepair()
 GMSDK.showUserCenter()
 ```
 
+
+### 4.15 打开扫码登录
+
+2.4版本后，集成了扫码登录接口
+
+调用示例
+```java
+GMSDK.scanLogin(activity);
 
 ## 5.集成SDK除谷歌商店外的渠道
 
