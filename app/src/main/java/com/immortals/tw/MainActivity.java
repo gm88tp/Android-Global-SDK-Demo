@@ -74,8 +74,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         finish();
                         break;
                     case GMActionCode.ACTION_LOGIN_SUCC://登录成功
-
-                        ConfigManager.getInstance().getFcmToken();
                         //ADSDK.getInstance().loadAd();
                         String spot = "{\"spotType\":4,\"extra\":{\"roleName\":\"IleanaJudd\",\"vipLevel\":3,\"serverName\":1服,\"zone\":001,\"roleServer\":55,\"roleLevel\":1,\"roleId\":1234567,\"globalRoleId\":gm88_70_10691603" + "}}";
                         GMSDK.doSpot(spot);

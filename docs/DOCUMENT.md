@@ -1,42 +1,22 @@
-# GM88 Android海外游戏2.2版本SDK 对接文档 2022/06/17
+# GM88 Android海外游戏2.5版本SDK 对接文档 2022/11/28
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
-v2.4 更新:
-1. 添加跨端登录方法，web端可直接拉起授权页
-2. 添加扫码登录
-v2.3 更新:
-1. 角色登录接口新增大区id和全局唯一角色id两个字段
-2. 全局唯一角色id第三方平台打点
-3. 首次付费打点
-v2.2更新:
-1.新增公告功能
-2.分享功能更新
-3.调整游客生成逻辑
-
-v2.0 更新:
-1.全面更新横版、竖版所有界面ui。
-2.增加帮助中心、问题反馈、用户中心、订单管理模块。
-3.增加部分游戏事件。
-注意添加新依赖:
-implementation "org.java-websocket:Java-WebSocket:1.4.0"
-implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
-
-v1.4.7更新:
-增加payssion支付
-
-v1.4.6更新:
-增加xsolla支付。升级谷歌支付sdk。(注意!1.4.6请将谷歌支付远端依赖库版本号更新至4.0.0，否则启动初始化时会出现异常闪退。)
-
+v2.5 更新:
+从老版本迁移时请注意下列更新操作
+1.更新targetSdkVersion为31
+2.升级依赖
+3.新增aihelp客服功能, 请注意修改GMConfig文件
+4.fb新版SDK登录需要添加ClientToken参数, 如果没有此参数请联系怪猫运营提供并添加到包内, 添加方法见文档内2.相关资源引入部分
 
 ## 1.相关依赖引入
 
 在工程级别的build.gradle 的android 内加入以下代码
-注：当前Google市场上架必须targetSdkVersion>=30
+注：从2022年11月1日起, 在Google市场上架或更新应用时必须targetSdkVersion>=31
 
 ```
    defaultConfig{
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion 21 //minSdkVersion根据游戏需求制定, 最好大于等于21
+        targetSdkVersion 31
         multiDexEnabled true
     }
     sourceSets {
@@ -54,78 +34,69 @@ v1.4.6更新:
 引入以下依赖：
 
 ```
-        implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation(name: 'Globalsdk_2.4', ext: 'aar')
-        implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
-        implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
-        implementation 'androidx.appcompat:appcompat:1.0.0'
-        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-        // Required -- JUnit 4 framework
-        testImplementation 'junit:junit:4.12'
-        // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
-        testImplementation 'org.mockito:mockito-core:2.19.0'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-        androidTestImplementation 'androidx.test:runner:1.2.0'
-        androidTestImplementation 'androidx.test:rules:1.2.0'
-        api 'com.google.gms:google-services:4.3.5'
-        api 'com.google.android.gms:play-services-analytics:17.0.0'
-        api 'com.google.android.gms:play-services-auth:17.0.0'
-        api 'com.facebook.android:facebook-android-sdk:11.1.0'
-        api 'org.apache.httpcomponents:httpcore:4.4.10'
-        api 'com.google.android.gms:play-services-ads:20.2.0'
-        implementation 'com.google.ads.mediation:applovin:10.3.0.0'
-        implementation 'com.google.ads.mediation:facebook:6.5.0.0'
-        implementation 'com.google.ads.mediation:unity:3.7.4.0'
-        implementation 'com.google.ads.mediation:ironsource:7.1.6.0'
-        implementation 'com.google.ads.mediation:vungle:6.7.0.0'
-        implementation 'com.google.android.play:core:1.8.0'
-        api 'androidx.multidex:multidex:2.0.1'
-        //noinspection GradleCompatible
-        api 'androidx.recyclerview:recyclerview:1.1.0'
-        // Required Dependency by Audience Network SDK
-        api 'com.facebook.android:audience-network-sdk:6.5.0'
-        api 'com.alibaba:fastjson:1.1.70.android'
-        //firebase
-        // Add dependency crashlytics
-        implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-        // Check for v11.4.2 or higher
-        implementation 'com.google.firebase:firebase-core:19.0.0''
-        // (Recommended) Add Analytics
-        implementation platform('com.google.firebase:firebase-bom:25.12.0')
-        api 'androidx.appcompat:appcompat:1.1.0'
-        api 'androidx.annotation:annotation:1.1.0'
-        api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
-        api 'androidx.legacy:legacy-support-v4:1.0.0'
-        api 'androidx.core:core:1.2.0'
-        api 'com.google.firebase:firebase-core:19.0.0'
-        api 'com.google.firebase:firebase-iid:20.1.0'
-        api 'android.arch.work:work-runtime:1.0.1'
-        api 'com.google.firebase:firebase-messaging:20.1.2'
-        api 'com.google.guava:guava:28.0-jre'
-        api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(name: 'Globalsdk_2.5', ext: 'aar')
+    implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
+    implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    api 'com.google.gms:google-services:4.3.14'
+    api 'com.google.android.gms:play-services-analytics:18.0.2'
+    api 'com.google.android.gms:play-services-auth:20.4.0'
+    api 'com.facebook.android:facebook-android-sdk:latest.release'
+    api 'org.apache.httpcomponents:httpcore:4.4.10'
+    api 'com.google.android.gms:play-services-ads:21.3.0'
+    api 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.annotation:annotation:1.1.0'
+    api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.core:core:1.2.0'
+    api 'android.arch.work:work-runtime:1.0.1'
+    api 'com.google.guava:guava:28.0-jre'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //noinspection GradleCompatible
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    // Required Dependency by Audience Network SDK
+    implementation 'com.google.ads.mediation:applovin:11.5.5.0'
+    implementation 'com.google.ads.mediation:unity:4.4.1.0'
+    implementation 'com.google.ads.mediation:ironsource:7.2.5.0'
+    implementation 'com.google.ads.mediation:vungle:6.12.0.0'
+    implementation 'com.google.ads.mediation:facebook:6.12.0.0'
+    implementation 'com.google.android.play:core:1.10.3'
+    api 'com.facebook.android:audience-network-sdk:6.11.0'
+    api 'com.alibaba:fastjson:1.1.70.android'
+    api 'com.google.guava:guava:28.0-jre'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-perf'
+    implementation 'com.google.firebase:firebase-dynamic-links'
 
-        // Add the dependency for the Performance Monitoring library
-        api 'com.google.firebase:firebase-perf:19.0.5'
-        //Dynamic-links
-        api 'com.google.firebase:firebase-dynamic-links:19.1.0'
-        api 'com.google.firebase:firebase-analytics:19.0.0'
-        implementation 'com.braintreepayments.api:braintree:2.+'
-        implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-        //谷歌支付
-        implementation 'com.android.billingclient:billing:4.0.0'
+    implementation 'com.braintreepayments.api:braintree:2.22.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.8.0'
+    //谷歌支付
+    implementation 'com.android.billingclient:billing:4.0.0'
 
 
-        //推特登陆和分享相关
-        implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
-        implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
-        implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
-        //line
-        api 'com.linecorp:linesdk:5.0.1'
+    //推特登陆和分享相关
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    //line
+    api 'com.linecorp:linesdk:5.0.1'
 
-        implementation "org.java-websocket:Java-WebSocket:1.4.0"
-        implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
+    implementation "org.java-websocket:Java-WebSocket:1.4.0"
+    implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
 
-        implementation 'com.king.zxing:zxing-lite:2.0.3'
+    //AndroidX 版本
+    implementation 'com.github.jenly1314:zxing-lite:2.2.1'
+    //aihelp
+    implementation 'net.aihelp:android-aihelp-aar:3.3.2'
 ```
 
 在工程级别的build.gradle 文件内增加以下插件
@@ -142,9 +113,13 @@ v1.4.6更新:
 buildscript {
     repositories {
         google()
-        jcenter()
-
         mavenCentral()
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/jcenter/'
+        }
         maven {
             url 'https://maven.google.com/'
             name 'Google'
@@ -156,23 +131,22 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.4'
-
-        classpath 'com.google.gms:google-services:4.3.5'
-
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
-
-        // Add the dependency for the Performance Monitoring plugin
-        classpath 'com.google.firebase:perf-plugin:1.3.1'  // Performance Monitoring plugin
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:7.0.4' //推荐版本
+        classpath 'com.google.gms:google-services:4.3.14'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+        classpath 'com.google.firebase:perf-plugin:1.
     }
 }
 allprojects {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/jcenter/'
+        }
         flatDir {
             dirs 'libs'
         }
@@ -191,13 +165,13 @@ allprojects {
 
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
 
-1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id。
-2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥。
+1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id(必须)。
+2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥(必须)。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）twitter标签内的参数，修改为运营提供的相应的twitter参数。
-5）googlead和fbad标签内的内容，修改为运营提供的相应的广告变现参数。
+5）aihelp标签内的参数，修改为运营提供的相应的aihelp参数(必须)。
 6）如果游戏是韩国版本，需要修改café标签内的相关参数为运营提供的参数。
-7）出正式包时请修改host标签内的url链接为正式服链接，GMSDK采用每个项目独立的域名的形式，具体项目使用域名会由运营提供
+7）出正式包时请修改host标签内的url链接为正式服链接，GMSDK采用每个项目独立的域名的形式，具体项目使用域名会由运营提供(必须)
 8）如果游戏需要启用预注册奖励功能，请修改register标签下的item_id和item_price值，相关参数由运营提供
 
 ### 拷贝运营提供的google-services.json文件
@@ -214,10 +188,13 @@ allprojects {
 添加Demo内的清单文件内容到游戏Manifest内，并修改To-do标签内的相关value，具体value值运营会提供，FacebookContentProvider下{facebook_app_id}替换为facebook_app_id参数，并去掉括号；AdMob应用ID下的{AdMob_cpkey}替换为Google Admob cpkey并去掉括号
 
 ```
+    <!--todo  facebook参数-->
     <meta-data
         android:name="com.facebook.sdk.ApplicationId"
         android:value="@string/facebook_app_id" />
-    <!--todo  facebook广告参数-->
+    <meta-data
+        android:name="com.facebook.sdk.ClientToken"
+        android:value="@string/facebook_client_token"/>
     <provider
         android:name="com.facebook.FacebookContentProvider"
         android:authorities="com.facebook.app.FacebookContentProvider{facebook_app_id}"
@@ -275,6 +252,7 @@ android:networkSecurityConfig="@xml/network_security_config"
 ```
 <string name="facebook_app_id">facebook_app_id</string>
 <string name="fb_login_protocol_scheme">fbfacebook_app_id</string>
+<string name="facebook_client_token">fb_client_token</string>
 ```
 
 **请注意，请将facebook_app_id，替换为运营提供的id，fb_login_protocol_scheme中须保留fb开头**
@@ -304,99 +282,99 @@ SDK使用统一的Callback，在MainActivity(游戏主Activity)的onCreate方法
 
 ```
 GMSDK.setCallBack(new GMCallback() {
-            @Override
-            public void onCallBack(final Message msg) {
-                switch (msg.what) {
-                    case GMActionCode.ACTION_INIT_SUCC://初始化成功
+    @Override
+    public void onCallBack(final Message msg) {
+        switch (msg.what) {
+            case GMActionCode.ACTION_INIT_SUCC://初始化成功
 
-                        break;
-                    case GMActionCode.ACTION_INIT_FAILED://初始化失败
+                break;
+            case GMActionCode.ACTION_INIT_FAILED://初始化失败
 
-                        break;
-                    case GMActionCode.ACTION_LOGIN_SUCC://登录成功，返回User
+                break;
+            case GMActionCode.ACTION_LOGIN_SUCC://登录成功，返回User
 
-                        break;
-                    case GMActionCode.ACTION_LOGIN_CANCEL://退出登录
+                break;
+            case GMActionCode.ACTION_LOGIN_CANCEL://退出登录
 
-                        break;
-                    case GMActionCode.ACTION_LOGIN_FAILED://登录失败
+                break;
+            case GMActionCode.ACTION_LOGIN_FAILED://登录失败
 
-                        break;
-                    case GMActionCode.ACTION_LOGOUT_SUCC://登出成功
+                break;
+            case GMActionCode.ACTION_LOGOUT_SUCC://登出成功
 
-                        break;
-                    case GMActionCode.ACTION_GAME_EXIT://退出游戏
-                 
-                        break;
-                    case GMActionCode.ACTION_LOGOUT_FAILED://登出失败，一般不会出现，出现代表有问题
+                break;
+            case GMActionCode.ACTION_GAME_EXIT://退出游戏
+         
+                break;
+            case GMActionCode.ACTION_LOGOUT_FAILED://登出失败，一般不会出现，出现代表有问题
 
-                        break;
-                    case GMActionCode.ACTION_PAY_SUCC://支付成功
+                break;
+            case GMActionCode.ACTION_PAY_SUCC://支付成功
 
-                        break;
-                    case GMActionCode.ACTION_PAY_CANCEL://用户退出支付
+                break;
+            case GMActionCode.ACTION_PAY_CANCEL://用户退出支付
 
-                        break;
-                    case GMActionCode.ACTION_PAY_FAILED://支付失败
+                break;
+            case GMActionCode.ACTION_PAY_FAILED://支付失败
 
-                        break;
-                    case GMActionCode.ACTION_ADSHOW_SUCCESS://广告播放完成
+                break;
+            case GMActionCode.ACTION_ADSHOW_SUCCESS://广告播放完成
 
-                        break;
-                    case GMActionCode.ACTION_ADSHOW_FAILED:// 广告播放失败
+                break;
+            case GMActionCode.ACTION_ADSHOW_FAILED:// 广告播放失败
 
-                        break;
-                    case GMActionCode.ACTION_ADSHOW_BANED:// 用户所在地区不支持播放广告
+                break;
+            case GMActionCode.ACTION_ADSHOW_BANED:// 用户所在地区不支持播放广告
 
-                        break;
-                    case GMActionCode.ACTION_SHARE_SUCCESS://分享成功
+                break;
+            case GMActionCode.ACTION_SHARE_SUCCESS://分享成功
 
-                        break;
-                    case GMActionCode.ACTION_SHARE_FAILED://分享失败
+                break;
+            case GMActionCode.ACTION_SHARE_FAILED://分享失败
 
-                        break;
-                    case GMActionCode.ACTION_SHARE_CANCEL://分享取消
+                break;
+            case GMActionCode.ACTION_SHARE_CANCEL://分享取消
 
-                        break;
-                    case GMActionCode.ACTION_QUERY_NOTBIND://未绑定
+                break;
+            case GMActionCode.ACTION_QUERY_NOTBIND://未绑定
 
-                        break;
-                    case GMActionCode.ACTION_QUERY_BIND_FAILED://查询绑定失败
+                break;
+            case GMActionCode.ACTION_QUERY_BIND_FAILED://查询绑定失败
 
-                        break;
-                    case GMActionCode.ACTION_QUERY_ISBIND://已绑定
+                break;
+            case GMActionCode.ACTION_QUERY_ISBIND://已绑定
 
-                        break;
-                    case GMActionCode.ACTION_BIND_SUCCESS://绑定成功
+                break;
+            case GMActionCode.ACTION_BIND_SUCCESS://绑定成功
 
-                        break;
-                    case GMActionCode.ACTION_BIND_FAILED://绑定失败
+                break;
+            case GMActionCode.ACTION_BIND_FAILED://绑定失败
 
-                        break;
-                    case GMActionCode.ACTION_TRANSLATION_SUCCESS://翻译成功
-                    
-                        break;
-                    case GMActionCode.ACTION_TRANSLATION_FAILED://翻译失败
-                    
-                        break;
-                    case GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS://预注册查询成功
-                    
-                        break;
-                    case GMActionCode.ACTION_REGISTERATION_CHECK_FAILED://预注册查询失败
-                    
-                        break;       
-                    case GMActionCode.ACTION_VIP_LEVEL_SUCCESS://GM VIP满足拉起VIP客服权限
-                    
-                        break;
-                    case GMActionCode.ACTION_VIP_LEVEL_FAILED://GM VIP不满足拉起VIP客服权限
-                                       
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        GMSDK.initMainActivity(OverSeaGameActivity.this);
+                break;
+            case GMActionCode.ACTION_TRANSLATION_SUCCESS://翻译成功
+            
+                break;
+            case GMActionCode.ACTION_TRANSLATION_FAILED://翻译失败
+            
+                break;
+            case GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS://预注册查询成功
+            
+                break;
+            case GMActionCode.ACTION_REGISTERATION_CHECK_FAILED://预注册查询失败
+            
+                break;       
+            case GMActionCode.ACTION_VIP_LEVEL_SUCCESS://GM VIP满足拉起VIP客服权限
+            
+                break;
+            case GMActionCode.ACTION_VIP_LEVEL_FAILED://GM VIP不满足拉起VIP客服权限
+                               
+                break;
+            default:
+                break;
+        }
+    }
+});
+GMSDK.initMainActivity(OverSeaGameActivity.this);
 ```
 
 ### 3.3发起登录
@@ -469,10 +447,10 @@ GMSDK.doPay(payJson);
 GMSDK.doSpot(String spotJson)
 ```
 
-| 字段       | 类型     | 说明                                                                                                                      |
-| -------- | ------ | ----------------------------------------------------------------------------------------------------------------------- |
-| spotType | string | 事件类型，取值为：1：创建角色   2：完成新手引导 3：玩家等级变化后上传 4:玩家选择完区服                                                                        |
-| extra    | json   | 这是角色具体信息，格式为Json，包括6种信息：roleId: 角色ID, roleName： 角色名，roleServer： 区服ID， serverName ：区服名字，roleLevel： 角色等级，vipLevel：角色Vip等级，zone：大区ID，globalRoleId：全局唯一的角色ID |
+| 字段       | 类型     | 说明                                                                                                                                                                                                                                                             |
+| -------- | ------ |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| spotType | string | 事件类型,取值为:1:创建角色 2:完成新手引导 3:玩家等级变化后上传 4:玩家选择完区服                                                                                                                                                                                                                 |
+| extra    | json   | 这是角色具体信息,格式为Json,包括信息:roleId:角色ID(必传),roleName:角色名(必传),roleServer:区服ID(必传),serverName:区服名字(必传),roleLevel:角色等级(必传),vipLevel:角色Vip等级(无vip系统可传0),zone:大区ID(游戏有大区分区例如东西区,传入大区id,游戏没有此设定可不传),zoneName:大区名(同大区id),globalRoleId:全局唯一的角色ID(游戏唯一角色id,如果角色id是唯一的可传如角色id) |
 
 **请注意，玩家选择完区服上报（spotType为4）必须接入，否则会影响SDK功能，其余上报不接入会影响打点数据准确性**
 调用示例：
@@ -489,6 +467,7 @@ try {
     extra.put("serverName","1服");
     extra.put("vipLevel","1");
     extra.put("zone","1");
+    extra.put("zoneName","东区");
     extra.put("globalRoleId","gm88_70_10691603");
     spotJson.put("extra",extra);
 } catch (JSONException e) {
@@ -727,18 +706,17 @@ GMSDK.getPurchaseList(GlobalCallback callback);
 调用示例：
 
 ```
- GMSDK.getPurchaseList(new GlobalCallback() {
-                    @Override
-                    public void onSuccess(String o) {
-                        SDKLog.d(TAG, "doPurchaseListDone=" + o);
-                    }
+GMSDK.getPurchaseList(new GlobalCallback() {
+    @Override
+    public void onSuccess(String o) {
+        SDKLog.d(TAG, "doPurchaseListDone=" + o);
+    }   
 
-                    @Override
-                    public void onFailed(String msg) {
-                        SDKLog.d(TAG, "doPurchaseListDone=" + msg);
-                    }
-                });
-            }
+    @Override
+    public void onFailed(String msg) {
+        SDKLog.d(TAG, "doPurchaseListDone=" + msg);
+    }
+});
 ```
 
 | 字段           | 类型      | 说明                                                                         |
@@ -927,20 +905,24 @@ GMSDK.doOpenURLbyWeb(String url);
 当游戏需要通过webview打开一个网页时，可以使用此方法，请注意打开的url需要为https协议
 调用示例：
 
-```java
+```
 GMSDK.doOpenURLbyWebView(String url);
+GMSDK.doOpenURLbyWebView(String url, ScreenOrientation orientation);
 ```
 
-| 字段  | 类型     | 说明               |
-| --- | ------ | ---------------- |
-| url | string | 需要打开的webview网页地址 |
+| 字段  | 类型     | 说明                                        |
+| --- | ------ |-------------------------------------------|
+| url | string | 需要打开的webview网页地址                          |
+| orientation | ScreenOrientation | 可选参数,如果不指定打开webview方向则默认打开和游戏方向一致的webview |
+
+
 
 ### 4.7打开账号选择界面接口
 
 当游戏内需要显示打开账号选择界面页面的入口，点击入口时调用此接口
 调用示例：
 
-```java
+```
 GMSDK.showLogin();
 ```
 
@@ -952,7 +934,7 @@ sdk2.0版本之后，将原faq、普通客服、vip客服整合在帮助中心�
 
 
 调用示例：
-```java
+```
 GMSDK.showServiceCenter();
 ```
 
@@ -963,8 +945,8 @@ GMSDK.showServiceCenter();
 原faq界面接口也已合并至帮助中心，方法保留提供过渡使用。
 
 调用示例：
-```java
-GMSDK.showQuestions()
+```
+GMSDK.showQuestions();
 ```
 
 ### 4.10查询预注册状态，申请发放预注册奖励
@@ -981,7 +963,7 @@ GMSDK.showQuestions()
 
 cp可以自行决定将奖励发放在哪个角色上，或者让用户选择
 
-```java
+```
 GMSDK.checkRegistrationType();
 ```
 
@@ -995,8 +977,8 @@ GMActionCode.ACTION_REGISTERATION_CHECK_FAILED ： 表示当前登录的Google P
 
 建议在cp决定向哪个用户角色发放奖励后，再调用此接口
 
-```java
-GMSDK.sendRegistrationGift(String servierId,String roleId)
+```
+GMSDK.sendRegistrationGift(String servierId,String roleId);
 ```
 
 申请发放预注册奖励只能在收到预注册查询成功后调用(即：GMActionCode.ACTION_REGISTERATION_CHECK_SUCCESS)，否则会抛出异常。调用该方法时，请携带当前登录用户所在的区服ID和角色ID。该方法仅供客户端调用来启动预注册奖励发放流程，具体的预注册奖励发放，请后续对接服务端接口。
@@ -1007,16 +989,15 @@ GMSDK.sendRegistrationGift(String servierId,String roleId)
 
 当游戏内需要播放视频，可调用此接口。视频播放支持网络播放和本地播放，支持基本常见的视频格式，此接口会优先播放本地路径下的视频，若不存在会播放网络地址视频，如不需要播放本地视频，参数传空即可。
 
-```java
-GMSDK.playVideo(String videoUrl, String videoPath, int oritation)
+```
+GMSDK.playVideo(String videoUrl, String videoPath, int oritation);
 ```
 
 | 字段     | 类型   | 说明                                                         |
 | -------- | ------ | ------------------------------------------------------------ |
 | videoUrl | String | 网络视频播放地址格式："http://com.test.mp4"|
 | videoUrl | String | 本地视频播放地址格式：assets/video/test.mp4" (对应存储位置的路径, 现在此接口暂时只支持/data/user/0/com.xm.paoyou.zmg.test/files/games/路径下)|
-| oritation|  int	| 0横屏播放,1竖屏播放
-
+| oritation|  int	| 0横屏播放,1竖屏播放|
 GMActionCode.ACTION_VIDEO_PLAY_CLOSE ：表示视频播放被用户关闭。
 
 GMActionCode.ACTION_VIDEO_PLAY_COMPLETE ：表示视频播放完成。
@@ -1030,8 +1011,8 @@ GMActionCode.ACTION_VIDEO_PLAY_ERROR ：表示视频播放出现异常，一般�
 ### 4.12 获取设备系统信息
 
 当需要获取用户设备的系统信息时，可调用此接口。
-```java
-GMSDK.getDeviceInfo()
+```
+GMSDK.getDeviceInfo();
 ```
 
 返回字段示例：
@@ -1050,8 +1031,8 @@ GMSDK.getDeviceInfo()
 调用此接口，会提供所有未成功通知到后台的订单集合界面，让用户进行相应的订单修复。
 
 2.0版本之后，页面同时集成了已完成的订单信息供查看
-```java
-GMSDK.showOrderRepair()
+```
+GMSDK.showOrderRepair();
 ```
 
 
@@ -1061,8 +1042,8 @@ GMSDK.showOrderRepair()
 注：个人中心应该在已登录状态下调用。
 
 调用示例
-```java
-GMSDK.showUserCenter()
+```
+GMSDK.showUserCenter();
 ```
 
 
@@ -1071,10 +1052,11 @@ GMSDK.showUserCenter()
 2.4版本后，集成了扫码登录接口
 
 调用示例
-```java
+```
 GMSDK.scanLogin(activity);
+```
 
-## 5.集成SDK除谷歌商店外的渠道
+### 5.集成SDK除谷歌商店外的渠道
 
 **SDK1.4.4版本后支持上线QOO渠道，后续可能开放更多商店渠道**
 
@@ -1111,7 +1093,7 @@ GMSDK.scanLogin(activity);
 2)通过接口的方式供CP查询，在初始化成功后，可调用查询禁用接口列表接口进行查询，此接口会返回禁用接口的列表
 
 
-```java
+```
 GMSDK.getDisableInterfaces();
 ```
 

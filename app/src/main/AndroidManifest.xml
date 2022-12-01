@@ -33,6 +33,7 @@
         <activity
             android:screenOrientation="portrait"
             android:name="com.immortals.tw.MainActivity"
+            android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
@@ -53,11 +54,13 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
+        <!--todo  facebook参数-->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <!--todo  facebook广告参数-->
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token"/>
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider436121163675645"
@@ -79,6 +82,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7496069579613989~1013034939" />
+        <!--todo  网页授权登录配置,如果不需要此功能可以不添加-->
         <activity
             android:name="com.global.sdk.ui.AuthorizedLoginActivity"
             android:exported="true">
