@@ -134,7 +134,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.0.4' //推荐版本
         classpath 'com.google.gms:google-services:4.3.14'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
-        classpath 'com.google.firebase:perf-plugin:1.
+        classpath 'com.google.firebase:perf-plugin:1.4.2'
     }
 }
 allprojects {
@@ -165,7 +165,7 @@ allprojects {
 
 ### 创建assets文件夹。拷贝资源内的GMConfig.xml
 
-1）请修改gmsdk标签内的appId参数为运营提供的游戏id；appReleaseId为提供的发布记录id(必须)。
+1）请修改gmsdk标签内的appId参数为运营提供的游戏id，appReleaseId为提供的发布记录id(必须)。
 2）Google标签内的clientId，为运营提供的谷歌ClientID；billing为Google支付秘钥(必须)。
 3）line标签内的channel，为运营提供的Line登录LineChannelID。
 4）twitter标签内的参数，修改为运营提供的相应的twitter参数。
@@ -255,11 +255,11 @@ android:networkSecurityConfig="@xml/network_security_config"
 <string name="facebook_client_token">fb_client_token</string>
 ```
 
-**请注意，请将facebook_app_id，替换为运营提供的id，fb_login_protocol_scheme中须保留fb开头**
+**请注意，请将facebook_app_id，替换为运营提供的id，fb_login_protocol_scheme中须保留fb开头, facebook_client_token替换为运营提供的token**
 
 ## 3.SDK方法文档
 
-### 3.1Application内的初始化
+### 3.1Application内的初始化(必接)
 
 
 在Application的onCreate方法中实现以下：
@@ -276,7 +276,7 @@ AudienceNetworkAds.initialize(this);
 MultiDex.install(this);
 ```
 
-### 3.2MainActivity内的初始化
+### 3.2MainActivity内的初始化(必接)
 
 SDK使用统一的Callback，在MainActivity(游戏主Activity)的onCreate方法内实现以下(监听回调根据所需添加)：
 
@@ -377,7 +377,7 @@ GMSDK.setCallBack(new GMCallback() {
 GMSDK.initMainActivity(OverSeaGameActivity.this);
 ```
 
-### 3.3发起登录
+### 3.3发起登录(必接)
 
 当游戏收到初始化成功后，可发起登录
 接口定义：
@@ -396,7 +396,7 @@ String uid =loginResult.getString("uid");
 
 请使用token调用后端接口获得用户标识，收到回调的token，建议通过服务端验证token，获取用户id，详情查看服务端文档
 
-### 3.4发起支付
+### 3.4发起支付(必接)
 
 当游戏内需发起支付时，应调用此接口
 接口定义：
@@ -438,7 +438,7 @@ GMSDK.doPay(payJson);
 ```
 
 ### 3.5 相关游戏内接口
-3.5.1 角色变更接口
+3.5.1 角色变更接口(必接)
 
 当游戏内角色状态变化时，应调用此接口
 接口定义：
@@ -736,7 +736,7 @@ String purchaselist = "{"1001":"$0.99","1002":"$4.99"}";
 | productId | string | 商品id                    |
 | price     | string | 商品当前价格 带货币符号   ￥6/$0.99 |
 
-### 3.11生命周期接入
+### 3.11生命周期接入(必接)
 
 需要在游戏主Activity内重写以下生命周期方法并接入
 
