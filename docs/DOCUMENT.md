@@ -1,4 +1,4 @@
-# GM88 Android海外游戏2.5版本SDK 对接文档 2022/12/02
+# GM88 Android海外游戏2.5版本SDK 对接文档 2023/03/01
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 v2.5 更新:
@@ -181,7 +181,7 @@ allprojects {
 
 ### 添加libs下相关aar依赖
 
-请添加并引入libs内的全部aar依赖，如果不是QOO渠道包，则不引入qooapp-opensdk-v1.1.1.aar，QOO渠道包对接方法见文档末尾
+请添加并引入libs内的全部aar依赖，如果不是QOO渠道包，则不引入qooapp-opensdk-2.0.6.aar，QOO渠道包对接方法见文档末尾
 
 ### 清单文件内容添加
 
@@ -1064,7 +1064,7 @@ GMSDK.scanLogin(activity);
 
 以下是谷歌商店包转QOO商店包的接入流程
 
-1.引入QOO商店qooapp-opensdk-v1.1.1.aar包
+1.引入QOO商店qooapp-opensdk-2.0.6.aar包
 2.在GMConfig.xml下添加标签qoo confirm="1"来标识此包是QOO商店包
 3.在Manifest下做出如下添加APP_ID和PUBLIC_KEY填入运营提供的相关参数
 

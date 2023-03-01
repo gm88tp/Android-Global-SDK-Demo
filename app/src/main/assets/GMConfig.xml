@@ -21,5 +21,7 @@
     <register item_id="" item_price="" />
     <!--   水印标识-->
     <sy confirm="1" />
+    <!--   Qoo 渠道标识, 如果包是Qoo渠道包放开此条注释-->
+    <!--    <qoo confirm="1" />-->
     <appflyers key="g7ZP9TqQ4S8AF9zeQD9Koe" />
 </config>
