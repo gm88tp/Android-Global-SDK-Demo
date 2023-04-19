@@ -1,6 +1,7 @@
 <config>
     <!--   appId参数为运营提供的游戏id, appReleaseId为提供的发布记录id, 必填-->
     <gmsdk appId="1679" appMode="release" appReleaseId="1679004"/>
+    <!--   游戏项目域名, 必须修改为运营提供的域名, 必填-->
     <host url="https://mdemo.hkpctimes.com" />
     <!--   google登录、支付参数, 必填-->
     <google

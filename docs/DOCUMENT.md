@@ -1,4 +1,4 @@
-# GM88 Android海外游戏2.5版本SDK 对接文档 2023/03/01
+# GM88 Android海外游戏2.5版本SDK 对接文档 2023/04/19
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 v2.5 更新:
@@ -40,7 +40,7 @@ v2.5 更新:
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    api 'com.google.gms:google-services:4.3.14'
+    api 'com.google.gms:google-services:4.3.15'
     api 'com.google.android.gms:play-services-analytics:18.0.2'
     api 'com.google.android.gms:play-services-auth:20.4.0'
     api 'com.facebook.android:facebook-android-sdk:latest.release'
@@ -64,7 +64,7 @@ v2.5 更新:
     implementation 'com.google.ads.mediation:vungle:6.12.0.0'
     implementation 'com.google.ads.mediation:facebook:6.12.0.0'
     implementation 'com.google.android.play:core:1.10.3'
-    api 'com.facebook.android:audience-network-sdk:6.11.0'
+    api 'com.facebook.android:audience-network-sdk:6.12.0'
     api 'com.alibaba:fastjson:1.1.70.android'
     api 'com.google.guava:guava:28.0-jre'
     // Import the BoM for the Firebase platform
@@ -96,7 +96,7 @@ v2.5 更新:
     //AndroidX 版本
     implementation 'com.github.jenly1314:zxing-lite:2.2.1'
     //aihelp
-    implementation 'net.aihelp:android-aihelp-aar:3.3.2'
+    implementation 'net.aihelp:android-aihelp-aar:4.2.+'
 ```
 
 在工程级别的build.gradle 文件内增加以下插件
@@ -177,7 +177,7 @@ allprojects {
 ### 拷贝运营提供的google-services.json文件
 
 拷贝运营提供的google-services.json文件到工程级别的主目录。如果是android studio开发，拷贝到app目录下即可
-**请注意，demo中没有添加google-services.json，漏加会影响运行、登录**
+**请注意，demo中没有添加google-services.json，漏加会影响项目编译**
 
 ### 添加libs下相关aar依赖
 
@@ -363,12 +363,6 @@ GMSDK.setCallBack(new GMCallback() {
             case GMActionCode.ACTION_REGISTERATION_CHECK_FAILED://预注册查询失败
             
                 break;       
-            case GMActionCode.ACTION_VIP_LEVEL_SUCCESS://GM VIP满足拉起VIP客服权限
-            
-                break;
-            case GMActionCode.ACTION_VIP_LEVEL_FAILED://GM VIP不满足拉起VIP客服权限
-                               
-                break;
             default:
                 break;
         }
