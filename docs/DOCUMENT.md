@@ -1,6 +1,12 @@
-# GM88 Android海外游戏2.5版本SDK 对接文档 2023/04/19
+# GM88 Android海外游戏2.5.1版本SDK 对接文档 2023/07/28
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
+v2.5.1 更新:
+从2.5版本迁移时请注意下列更新操作
+1.更新targetSdkVersion为33, 请注意适配其他代码
+2.更新Google IAPsdk版本为com.android.billingclient:billing:6.0.1
+3.升级其他远程依赖
+
 v2.5 更新:
 从老版本迁移时请注意下列更新操作
 1.更新targetSdkVersion为31
@@ -10,13 +16,13 @@ v2.5 更新:
 
 ## 1.相关依赖引入
 
-在工程级别的build.gradle 的android 内加入以下代码
-注：从2022年11月1日起, 在Google市场上架或更新应用时必须targetSdkVersion>=31
+在工程级别的build.gradle 的android内加入以下代码
+注：从2023年8月2日起, 在Google市场上架应用时必须targetSdkVersion>=33, 2023年11月1日起, 在Google市场更新应用时必须targetSdkVersion>=33, 详细[适配文档](https://developer.android.com/about/versions/13/behavior-changes-13?hl=zh-cn)
 
 ```
    defaultConfig{
         minSdkVersion 21 //minSdkVersion根据游戏需求制定, 最好大于等于21
-        targetSdkVersion 31
+        targetSdkVersion 33
         multiDexEnabled true
     }
     sourceSets {
@@ -35,17 +41,16 @@ v2.5 更新:
 
 ```
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'Globalsdk_2.5', ext: 'aar')
+    implementation(name: 'Globalsdk_2.5.1', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     api 'com.google.gms:google-services:4.3.15'
-    api 'com.google.android.gms:play-services-analytics:18.0.2'
-    api 'com.google.android.gms:play-services-auth:20.4.0'
+    api 'com.google.android.gms:play-services-analytics:18.0.3'
+    api 'com.google.android.gms:play-services-auth:20.6.0'
     api 'com.facebook.android:facebook-android-sdk:latest.release'
     api 'org.apache.httpcomponents:httpcore:4.4.10'
-    api 'com.google.android.gms:play-services-ads:21.3.0'
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.appcompat:appcompat:1.1.0'
     api 'androidx.annotation:annotation:1.1.0'
@@ -58,17 +63,16 @@ v2.5 更新:
     //noinspection GradleCompatible
     api 'androidx.recyclerview:recyclerview:1.1.0'
     // Required Dependency by Audience Network SDK
-    implementation 'com.google.ads.mediation:applovin:11.5.5.0'
-    implementation 'com.google.ads.mediation:unity:4.4.1.0'
-    implementation 'com.google.ads.mediation:ironsource:7.2.5.0'
-    implementation 'com.google.ads.mediation:vungle:6.12.0.0'
-    implementation 'com.google.ads.mediation:facebook:6.12.0.0'
+    api 'com.google.android.gms:play-services-ads:22.2.0'
+    implementation 'com.google.ads.mediation:applovin:11.11.1.0'
+    implementation 'com.google.ads.mediation:vungle:6.12.1.1'
+    implementation 'com.google.ads.mediation:facebook:6.14.0.0'
     implementation 'com.google.android.play:core:1.10.3'
-    api 'com.facebook.android:audience-network-sdk:6.12.0'
+    api 'com.facebook.android:audience-network-sdk:6.14.0'
     api 'com.alibaba:fastjson:1.1.70.android'
     api 'com.google.guava:guava:28.0-jre'
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    implementation platform('com.google.firebase:firebase-bom:32.2.0')
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
@@ -79,8 +83,8 @@ v2.5 更新:
 
     implementation 'com.braintreepayments.api:braintree:2.22.0'
     implementation 'com.squareup.okhttp3:okhttp:4.8.0'
-    //谷歌支付
-    implementation 'com.android.billingclient:billing:4.0.0'
+    //谷歌支付6.0.1版本需要搭配SDK2.5.1或以上版本
+    implementation 'com.android.billingclient:billing:6.0.1'
 
 
     //推特登陆和分享相关
@@ -131,9 +135,9 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4' //推荐版本
-        classpath 'com.google.gms:google-services:4.3.14'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+        classpath 'com.android.tools.build:gradle:7.0.4' //推荐最低版本
+        classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.7'
         classpath 'com.google.firebase:perf-plugin:1.4.2'
     }
 }

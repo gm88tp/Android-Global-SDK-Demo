@@ -45,14 +45,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private EditText mEtTranslation;
     private EditText mEtVideoUrl;
     private Spinner mEtEvent;
-    private FrameLayout mMain;
     private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//隐藏状态栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
@@ -74,7 +73,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         finish();
                         break;
                     case GMActionCode.ACTION_LOGIN_SUCC://登录成功
-                        //ADSDK.getInstance().loadAd();
                         String spot = "{\"spotType\":4,\"extra\":{\"roleName\":\"IleanaJudd\",\"vipLevel\":3,\"serverName\":1服,\"zone\":001,\"roleServer\":55,\"roleLevel\":1,\"roleId\":1234567,\"globalRoleId\":gm88_70_10691603" + "}}";
                         GMSDK.doSpot(spot);
                         JSONObject result = (JSONObject) msg.obj;
@@ -91,7 +89,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                        toast("登出成功");
                         break;
                     case GMActionCode.ACTION_GAME_EXIT://退出游戏
-                        finish();
+//                        toast("退出游戏");
                         break;
                     case GMActionCode.ACTION_LOGOUT_FAILED://登出失败，一般不会出现，出现代表有问题
                         break;
@@ -120,13 +118,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         });
         GMSDK.initMainActivity(MainActivity.this);
-
     }
 
     private void initView() {
-
         mLogin = findViewById(R.id.game_login);
-        mMain = findViewById(R.id.fl_main);
         mTvEnterQufu = findViewById(R.id.game_qufu);
         mTvEnterRole = findViewById(R.id.game_createrole);
         mTvEnterGame = findViewById(R.id.game_in);
@@ -137,10 +132,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mTvLevel = findViewById(R.id.game_level);
         mTvShowBind = findViewById(R.id.game_showbind);
         mTvPayList = findViewById(R.id.game_get_pay_list);
-
         mTvSendEvent = findViewById(R.id.game_send_affb);
         mFBReLoading = findViewById(R.id.game_load_fb_initad);
-
         mTvTranslation = findViewById(R.id.game_translation);
         mTvSwitchAccount = findViewById(R.id.game_switch_account);
         mEtTranslation = findViewById(R.id.game_translation_targettext);
