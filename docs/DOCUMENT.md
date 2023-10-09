@@ -1,4 +1,4 @@
-# GM88 Android海外游戏2.5.1版本SDK 对接文档 2023/09/06
+# GM88 Android海外游戏2.5.1版本SDK 对接文档 2023/10/09
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 v2.5.1 更新:
@@ -44,11 +44,9 @@ v2.5 更新:
     implementation(name: 'Globalsdk_2.5.1', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     api 'com.google.gms:google-services:4.3.15'
     api 'com.google.android.gms:play-services-analytics:18.0.3'
-    api 'com.google.android.gms:play-services-auth:20.6.0'
+    api 'com.google.android.gms:play-services-auth:20.7.0'
     api 'com.facebook.android:facebook-android-sdk:latest.release'
     api 'org.apache.httpcomponents:httpcore:4.4.10'
     api 'androidx.multidex:multidex:2.0.1'
@@ -63,16 +61,16 @@ v2.5 更新:
     //noinspection GradleCompatible
     api 'androidx.recyclerview:recyclerview:1.1.0'
     // Required Dependency by Audience Network SDK
-    api 'com.google.android.gms:play-services-ads:22.2.0'
-    implementation 'com.google.ads.mediation:applovin:11.11.1.0'
-    implementation 'com.google.ads.mediation:vungle:6.12.1.1'
-    implementation 'com.google.ads.mediation:facebook:6.14.0.0'
+    api 'com.google.android.gms:play-services-ads:22.4.0'
+    implementation 'com.google.ads.mediation:applovin:11.11.3.0'
+    implementation 'com.google.ads.mediation:vungle:7.0.0.0'
+    implementation 'com.google.ads.mediation:facebook:6.16.0.0'
     implementation 'com.google.android.play:core:1.10.3'
-    api 'com.facebook.android:audience-network-sdk:6.14.0'
+    api 'com.facebook.android:audience-network-sdk:6.16.0'
     api 'com.alibaba:fastjson:1.1.70.android'
     api 'com.google.guava:guava:28.0-jre'
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:32.2.0')
+    implementation platform('com.google.firebase:firebase-bom:32.3.1')
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
@@ -137,7 +135,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4' //推荐最低版本
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.7'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
         classpath 'com.google.firebase:perf-plugin:1.4.2'
     }
 }
@@ -185,7 +183,7 @@ allprojects {
 
 ### 添加libs下相关aar依赖
 
-请添加并引入libs内的全部aar依赖，如果不是QOO渠道包，则不引入qooapp-opensdk-2.0.6.aar，QOO渠道包对接方法见文档末尾
+请添加并引入libs内的全部aar依赖，如果不是QOO渠道包，则无需引入qooapp-opensdk-2.0.6.aar，QOO渠道包对接方法见文档末尾
 
 ### 清单文件内容添加
 
@@ -405,17 +403,17 @@ GMSDK.doPay(Map<String, String> payJson)
 
 **payJson参数**
 
-| 字段           | 类型     | 说明                                              |
-| ------------ | ------ |-------------------------------------------------|
-| productId    | string | 商品ID                                            |
-| productName  | string | 商品名称，会显示在相应支付界面上                                |
-| productPrice | string | 商品价格, 价格必须传美金单位                                 |
-| extra        | string | 订单透传参数，这些参数会在支付回调时一并回传给CP，请CP自行解析（透传参数每笔订单需要变化） |
-| roleId       | string | 待支付角色ID                                         |
-| roleName     | string | 待支付角色名                                          |
-| serverId     | string | 待支付角色区服ID                                       |
-| serverName   | string | 待支付角色区服名称                                       |
-| notifyUrl    | string | 支付通知地址，没有的话请不要传递该参数(请求信息内不需要该参数为空)              |
+| 字段           | 类型     | 说明                                                                     |
+| ------------ | ------ |------------------------------------------------------------------------|
+| productId    | string | 商品ID                                                                   |
+| productName  | string | 商品名称，会显示在相应支付界面上                                                       |
+| productPrice | string | 商品价格, 价格必须传美金单位                                                        |
+| extra        | string | 订单透传参数，这些参数会在支付回调时一并回传给CP，请CP自行解析（透传参数每笔订单需要变化，否则无法重复拉起支付）             |
+| roleId       | string | 待支付角色ID                                                                |
+| roleName     | string | 待支付角色名                                                                 |
+| serverId     | string | 待支付角色区服ID                                                              |
+| serverName   | string | 待支付角色区服名称                                                              |
+| notifyUrl    | string | 支付通知地址，对接支付时请将通知地址告知我方运营进行配置，我方后台配置后通知地址后将以后台配置为准这里无需传入，如果这里传入则以传入地址为准 |
 
 **请注意，productName、productId需按照计费表内数据传入，否则不会创建订单**
 
@@ -435,8 +433,7 @@ payinfo.put("extra", System.currentTimeMillis() / 1000 + "");
 GMSDK.doPay(payJson);
 ```
 
-### 3.5 相关游戏内接口
-3.5.1 角色变更接口(必接)
+### 3.5角色变更接口(必接)
 
 当游戏内角色状态变化时，应调用此接口
 接口定义：
@@ -447,7 +444,7 @@ GMSDK.doSpot(String spotJson)
 
 | 字段       | 类型     | 说明                                                                                                                                                                                                                                                             |
 | -------- | ------ |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| spotType | string | 事件类型,取值为:1:创建角色 2:完成新手引导 3:玩家等级变化后上传 4:玩家选择完区服进入游戏                                                                                                                                                                                                             |
+| spotType | string | 事件类型,取值为:1:创建角色 2:完成新手引导 3:玩家等级变化后上传（升级） 4:玩家选择完区服进入游戏                                                                                                                                                                                                         |
 | extra    | json   | 这是角色具体信息,格式为Json,包括信息:roleId:角色ID(必传),roleName:角色名(必传),roleServer:区服ID(必传),serverName:区服名字(必传),roleLevel:角色等级(必传),vipLevel:角色Vip等级(无vip系统可传0),zone:大区ID(游戏有大区分区例如东西区,传入大区id,游戏没有此设定可不传),zoneName:大区名(同大区id),globalRoleId:全局唯一的角色ID(游戏唯一角色id,如果角色id是唯一的可传如角色id) |
 
 **请注意，玩家选择完区服上报进入游戏 （spotType为4）必须接入，否则会影响SDK功能，其余上报不接入会影响打点数据准确性**
@@ -474,8 +471,45 @@ try {
 GMSDK.doSpot(spotJson.toString())
 ```
 
+### 3.6生命周期接入(必接)
 
-3.5.2 游戏进入状态更变接口
+需要在游戏主Activity内重写以下生命周期方法并接入
+
+```
+//重写的方法为
+onResume();
+onPause();
+onStop();
+onActivityResult(int requestCode, int resultCode, Intent data);
+onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
+onDestroy();
+```
+
+```
+//接入的方法为
+GMSDK.onResume();
+GMSDK.onPause();
+GMSDK.onStop();
+GMSDK.onActivityResult(int requestCode, int resultCode, Intent data);
+GMSDK.onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
+GMSDK.onDestroy();
+```
+
+如果游戏没有对返回键进行处理，请重写以下方法
+
+```
+onBackPressed();
+```
+
+接入的方法为
+
+```
+GMSDK.onBackPressed();
+```
+
+
+### 3.7 相关游戏内接口
+3.7.1 游戏进入状态更变接口
 当开始进入游戏（加载前）时，调用此接口
 
 调用示例：
@@ -495,7 +529,7 @@ GMSDK.doGameEndLoading(int spendSecond)
 GMSDK.doGameEnterSelectServer()
 ```
 
-3.5.3 游戏内游戏币消耗事件接口
+3.7.2 游戏内游戏币消耗事件接口
 当游戏内发生获得游戏币或者消耗游戏币的事件时，调用此接口
 
 调用示例：
@@ -510,11 +544,11 @@ GMSDK.doGameCoin(int type,String coinName,int coin)
 | coin | int | 游戏币数量         |
 
 
-### 3.6发起分享接口
+### 3.8发起分享接口
 
 SDK分享接口有三种选择，可从GM后台分享，或直接传入链接或图片进行分享。
 
-#### 3.6.1 GM后台分享
+#### 3.8.1 GM后台分享
 
 当游戏需要拉起分享的时候，想从GM后台读取内容分享时，应调用此接口
 接口定义：
@@ -549,7 +583,7 @@ try {
 GMSDK.doShare(shareinfo.toString());
 ```
 
-#### 3.6.2 直接分享（链接形式）
+#### 3.8.2 直接分享（链接形式）
 
 当游戏需要拉起分享的时候，想直接分享链接时，应调用此接口，现阶段此接口支持分享到Facebook和Twitter
 接口定义：
@@ -567,7 +601,7 @@ GMSDK.doCPShareLink(String title, String content, String link);
 | link    | string | 分享链接         |
 
 
-#### 3.6.3 直接分享（网络图片形式）
+#### 3.8.3 直接分享（网络图片形式）
 
 当游戏需要拉起分享的时候，想直接分享图片时，应调用此接口，现阶段此接口支持分享到Facebook
 接口定义：
@@ -584,7 +618,7 @@ GMSDK.doCPShareImage(String title, String content, String imageUrl);
 | content     | string | 分享内容          |
 | imageUrl    | string | 分享图片url         |
 
-#### 3.6.4 直接分享（本地图片形式）
+#### 3.8.4 直接分享（本地图片形式）
 
 当游戏需要拉起分享的时候，想直接分享手机本地图片时，应调用此接口，请注意本地分享只能分享包名路径下的地址，例如/data/data/包名/files/Screenshot/Share.png
 接口定义：
@@ -601,7 +635,7 @@ GMSDK.doCPShareLocalImage(String title, String content, String imageUrl);
 | content     | string | 分享内容          |
 | photoUrl    | string | 分享图片本地地址        |
 
-#### 3.6.5 单独渠道直接分享（本地图片形式）
+#### 3.8.5 单独渠道直接分享（本地图片形式）
 
 当游戏需要直接拉起某一分享渠道进行分享的时候，应调用此接口，请注意本地分享只能分享包名路径下的地址，例如/data/data/包名/files/Screenshot/Share.png
 接口定义：
@@ -622,7 +656,7 @@ GMSDK.doShareImage(int type, String imageUrl, String link, String text, String t
 
 
 
-### 3.7调起广告接口
+### 3.9调起广告接口
 
 当游戏需要拉起广告的时候，应调用此接口，播放广告时若播放失败，SDK会回调ACTION_ADSHOW_BANED或ACTION_ADSHOW_FAILED；播放完成时会回调ACTION_ADSHOW_SUCCESS
 接口定义：
@@ -643,7 +677,7 @@ String extra = "{"adType":"13","info":"infos"}";
 ADSDK.getInstance().doShowAD(extra);
 ```
 
-### 3.8游戏绑定账号接口
+### 3.10游戏绑定账号接口
 
 游戏内需提供显示绑定账号页面的入口，点击入口时调用此接口
 接口定义：
@@ -658,7 +692,7 @@ GMSDK.showBind();
 GMSDK.showBind();
 ```
 
-### 3.8.1游戏单独绑定某一渠道接口
+### 3.10.1游戏单独绑定某一渠道接口
 
 游戏内想要自制绑定界面，可调用此接口用来单独拉起某一绑定渠道
 接口定义：
@@ -675,7 +709,7 @@ GMSDK.doBind(int type);
 
 调用后会给游戏对应的回调
 
-### 3.9查询绑定账号接口
+### 3.11查询绑定账号接口
 
 游戏内需查询当前账号绑定状态时时调用此接口
 接口定义：
@@ -692,7 +726,7 @@ GMSDK.doQueryBind();
 
 调用后会给游戏对应的回调
 
-### 3.10查询当前游戏需要展示给用户查看的货币
+### 3.12查询当前游戏需要展示给用户查看的货币
 
 多语言环境下，当游戏需要查询当前游戏需要展示给用户查看的货币时调用次接口查询
 接口定义：
@@ -733,42 +767,6 @@ String purchaselist = "{"1001":"$0.99","1002":"$4.99"}";
 | --------- | ------ | ----------------------- |
 | productId | string | 商品id                    |
 | price     | string | 商品当前价格 带货币符号   ￥6/$0.99 |
-
-### 3.11生命周期接入(必接)
-
-需要在游戏主Activity内重写以下生命周期方法并接入
-
-```
-//重写的方法为
-onResume();
-onPause();
-onStop();
-onActivityResult(int requestCode, int resultCode, Intent data);
-onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
-onDestroy();
-```
-
-```
-//接入的方法为
-GMSDK.onResume();
-GMSDK.onPause();
-GMSDK.onStop();
-GMSDK.onActivityResult(int requestCode, int resultCode, Intent data);
-GMSDK.onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
-GMSDK.onDestroy();
-```
-
-如果游戏没有对返回键进行处理，请重写以下方法
-
-```
-onBackPressed();
-```
-
-接入的方法为
-
-```
-GMSDK.onBackPressed();
-```
 
 ## 4.SDK方法选接文档
 
