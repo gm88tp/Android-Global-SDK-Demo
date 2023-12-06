@@ -1,6 +1,10 @@
-# GM88 Android海外游戏2.5.1版本SDK 对接文档 2023/10/09
+# GM88 Android海外游戏2.5.2版本SDK 对接文档 2023/12/02
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
+v2.5.2 更新:
+从2.5.1版本迁移时请注意下列更新操作
+1.更新Globalsdk_2.5.2.aar SDK文件
+
 v2.5.1 更新:
 从2.5版本迁移时请注意下列更新操作
 1.更新targetSdkVersion为33, 请注意适配其他代码
@@ -41,7 +45,7 @@ v2.5 更新:
 
 ```
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(name: 'Globalsdk_2.5.1', ext: 'aar')
+    implementation(name: 'Globalsdk_2.5.2', ext: 'aar')
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     api 'com.google.gms:google-services:4.3.15'

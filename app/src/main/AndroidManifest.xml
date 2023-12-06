@@ -81,22 +81,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7496069579613989~1013034939" />
-        <!--todo  网页授权登录配置,如果不需要此功能可以不添加-->
-        <activity
-            android:name="com.global.sdk.ui.AuthorizedLoginActivity"
-            android:exported="true">
-            <intent-filter
-                android:autoVerify="true"
-                tools:targetApi="m">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"
-                    android:host="immortal-login.onelink.me"
-                    android:pathPrefix="/Bx5a" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
