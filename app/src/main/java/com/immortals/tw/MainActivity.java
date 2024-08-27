@@ -24,6 +24,7 @@ import com.global.sdk.util.ConfigManager;
 import com.global.sdk.util.ToastUtil;
 import com.gm88.gmutils.SDKLog;
 import com.gm88.gmutils.ToastHelper;
+import com.immortaltaoists.en.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -184,111 +185,92 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.game_login:
-                SDKLog.e(TAG, "点击登录");
-                GMSDK.doLogin();
-                break;
-            case R.id.game_pay:
-                SDKLog.e(TAG, "点击支付");
-                Map<String, String> payinfo = new HashMap<>();
-                if (mEtOrderName.getText().toString().trim().isEmpty()) {
-                    payinfo.put("productName", "1001-60元寶");
-                } else {
-                    payinfo.put("productName", mEtOrderName.getText().toString().trim());
-                }
-                if (mEtOrderPrice.getText().toString().trim().isEmpty()) {
-                    payinfo.put("productPrice", "0.99");
-                } else {
-                    payinfo.put("productPrice", mEtOrderPrice.getText().toString().trim());
-                }
-                if (mEtProductId.getText().toString().trim().isEmpty()) {
-                    payinfo.put("productId", "1001");
-                } else {
-                    payinfo.put("productId", mEtProductId.getText().toString().trim());
-                }
-                payinfo.put("roleId", "1");
-                payinfo.put("roleName", "1");
-                payinfo.put("serverId", "1");
-                payinfo.put("serverName", "1");
-                payinfo.put("notifyUrl", "");
-                payinfo.put("extra", System.currentTimeMillis() / 1000 + "");
-                GMSDK.doPay(payinfo);
-                break;
-            case R.id.game_share:
+        //ToDo update 2.6.0 在新的gradle版本中，不建议使用Switch-case的方式直接对资源进行判断，demo修改为if-else方式
+        int id = v.getId();
 
-                JSONObject jsonObject1 = new JSONObject();
-                try {
-                    jsonObject1.put("shareID", "1");
-                    jsonObject1.put("shareName", "分享");
-                    jsonObject1.put("uName", "11");
-                    jsonObject1.put("server", "2");
-                    jsonObject1.put("code", "3");
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        if (id == R.id.game_login) {
+            SDKLog.e(TAG, "点击登录");
+            GMSDK.doLogin();
+        } else if (id == R.id.game_pay) {
+            SDKLog.e(TAG, "点击支付");
+            Map<String, String> payinfo = new HashMap<>();
+            if (mEtOrderName.getText().toString().trim().isEmpty()) {
+                payinfo.put("productName", "1001-60元寶");
+            } else {
+                payinfo.put("productName", mEtOrderName.getText().toString().trim());
+            }
+            if (mEtOrderPrice.getText().toString().trim().isEmpty()) {
+                payinfo.put("productPrice", "0.99");
+            } else {
+                payinfo.put("productPrice", mEtOrderPrice.getText().toString().trim());
+            }
+            if (mEtProductId.getText().toString().trim().isEmpty()) {
+                payinfo.put("productId", "1001");
+            } else {
+                payinfo.put("productId", mEtProductId.getText().toString().trim());
+            }
+            payinfo.put("roleId", "1");
+            payinfo.put("roleName", "1");
+            payinfo.put("serverId", "1");
+            payinfo.put("serverName", "1");
+            payinfo.put("notifyUrl", "");
+            payinfo.put("extra", System.currentTimeMillis() / 1000 + "");
+            GMSDK.doPay(payinfo);
+        } else if (id == R.id.game_share) {
+            JSONObject jsonObject1 = new JSONObject();
+            try {
+                jsonObject1.put("shareID", "1");
+                jsonObject1.put("shareName", "分享");
+                jsonObject1.put("uName", "11");
+                jsonObject1.put("server", "2");
+                jsonObject1.put("code", "3");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            GMSDK.doShare(jsonObject1.toString());
+        } else if (id == R.id.game_showbind) {
+            GMSDK.showBind();
+        } else if (id == R.id.game_show_ad) {
+            ADSDK.getInstance().setShow(true);
+            if (DialogPresenter.loadingDialog(MainActivity.this) != null && !DialogPresenter.loadingDialog(MainActivity.this).isShowing())
+                DialogPresenter.loadingDialog(MainActivity.this).show();
+            String extra = "{\"adType\":\"13\",\"info\":\"asdfasdf\"}";
+            ADSDK.getInstance().doShowAD(extra);
+        } else if (id == R.id.game_get_pay_list) {
+            GMSDK.getPurchaseList(new GlobalCallback() {
+                @Override
+                public void onSuccess(String o) {
+                    ToastHelper.toast(MainActivity.this, o);
+                    SDKLog.d(TAG, "doPurchaseListDone=" + o);
                 }
-                GMSDK.doShare(jsonObject1.toString());
-                break;
-            case R.id.game_showbind:
-                GMSDK.showBind();
-                break;
-            case R.id.game_show_ad:
-                ADSDK.getInstance().setShow(true);
-                if (DialogPresenter.loadingDialog(MainActivity.this) != null && !DialogPresenter.loadingDialog(MainActivity.this).isShowing())
-                    DialogPresenter.loadingDialog(MainActivity.this).show();
-                String extra = "{\"adType\":\"13\",\"info\":\"asdfasdf\"}";
-                ADSDK.getInstance().doShowAD(extra);
-                break;
-            case R.id.game_get_pay_list:
-                GMSDK.getPurchaseList(new GlobalCallback() {
-                    @Override
-                    public void onSuccess(String o) {
-                        ToastHelper.toast(MainActivity.this, o);
-                        SDKLog.d(TAG, "doPurchaseListDone=" + o);
-                    }
-
-                    @Override
-                    public void onFailed(String msg) {
-                        SDKLog.d(TAG, "doPurchaseListDone=" + msg);
-                    }
-                });
-                break;
-            case R.id.game_translation:
-                GMSDK.translation2Text("111", mEtTranslation.getText().toString().isEmpty() ? "hello" : mEtTranslation.getText().toString());
-                break;
-            case R.id.game_switch_account:
-                GMSDK.showLogin();
-                break;
-            case R.id.game_send_affb:
-                GMSDK.doEventInfo(mEtEvent.getSelectedItem().toString());
-                break;
-            case R.id.game_create_deeplink:
-                GMSDK.showServiceCenter();
-                break;
-            case R.id.tv_scan:
-                GMSDK.scanLogin(this);
-                break;
-
-            case R.id.game_playVideo_land:
-                String videoUrl = mEtVideoUrl.getText().toString().trim();
-                GMSDK.playVideo(videoUrl, "",0);
-                break;
-            case R.id.game_playVideo_portrait:
-                String videoUrl2 = mEtVideoUrl.getText().toString().trim();
-                GMSDK.playVideo(videoUrl2, "",1);
-                break;
-            case R.id.game_getDeviceInfo:
-                String deviceInfo = GMSDK.getDeviceInfo();
-                ToastUtil.toast(this,deviceInfo);
-                break;
-            case R.id.game_orderRepair:
-                GMSDK.showOrderRepair();
-                break;
-            case R.id.game_usercenter:
-                GMSDK.showUserCenter();
-                break;
-            default:
-                break;
+                @Override
+                public void onFailed(String msg) {
+                    SDKLog.d(TAG, "doPurchaseListDone=" + msg);
+                }
+            });
+        } else if (id == R.id.game_translation) {
+            GMSDK.translation2Text("111", mEtTranslation.getText().toString().isEmpty() ? "hello" : mEtTranslation.getText().toString());
+        } else if (id == R.id.game_switch_account) {
+            GMSDK.showLogin();
+        } else if (id == R.id.game_send_affb) {
+            GMSDK.doEventInfo(mEtEvent.getSelectedItem().toString());
+        } else if (id == R.id.game_create_deeplink) {
+            GMSDK.showServiceCenter();
+        } else if (id == R.id.tv_scan) {
+            GMSDK.scanLogin(this);
+        } else if (id == R.id.game_playVideo_land) {
+            String videoUrl = mEtVideoUrl.getText().toString().trim();
+            GMSDK.playVideo(videoUrl, "", 0);
+        } else if (id == R.id.game_playVideo_portrait) {
+            String videoUrl2 = mEtVideoUrl.getText().toString().trim();
+            GMSDK.playVideo(videoUrl2, "", 1);
+        } else if (id == R.id.game_getDeviceInfo) {
+            String deviceInfo = GMSDK.getDeviceInfo();
+            ToastUtil.toast(this, deviceInfo);
+        } else if (id == R.id.game_orderRepair) {
+            GMSDK.showOrderRepair();
+        } else if (id == R.id.game_usercenter) {
+            GMSDK.showUserCenter();
         }
     }
 
