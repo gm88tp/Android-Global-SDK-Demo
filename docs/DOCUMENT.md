@@ -2,6 +2,18 @@
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 
+v2.6.4 更新:
+1.SDK版本升级：
+将compileSdkVersion和targetSdkVersion从34升级到35
+更新Gradle插件版本从8.0.0到8.5.0以支持API35
+2.依赖库版本升级：
+Google Play Services Analytics: 18.0.3 → 18.0.4
+Google Ads SDK: 23.3.0 → 24.4.0
+Facebook Audience Network SDK: 6.16.0 → 6.20.0
+Billing Client: 6.0.1 → 7.0.0
+Twitter Core SDK: 3.1.1 → 3.3.0
+AIHelp SDK: 4.2.+ → 5.5.+
+
 v2.6.1 更新:
 1.更新Globalsdk_2.6.1.aar SDK文件
 解决Google上架新报的“设备和网络滥用”违规政策问题
@@ -59,26 +71,27 @@ v2.5 更新:
 ```
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
-    //ToDo update2.6.0 更新SDK版本主要需要更新此aar包
-    implementation(name: 'Globalsdk_2.6.0', ext: 'aar')
+    //ToDo update2.6.4 更新SDK版本主要需要更新此aar包
+    implementation(name: 'GlobalSdk_2.6.4', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     api 'com.google.gms:google-services:4.3.15'
     api 'com.google.android.gms:play-services-analytics:18.0.3'
     api 'com.google.android.gms:play-services-auth:20.7.0'
     api 'com.facebook.android:facebook-android-sdk:latest.release'
     api 'org.apache.httpcomponents:httpcore:4.4.10'
-    //ToDo update2.6.0 谷歌广告相关SDK版本更新
-    api 'com.google.android.gms:play-services-ads:23.3.0'
+    //ToDo update2.6.4 谷歌广告相关SDK版本更新
+    api 'com.google.android.gms:play-services-ads:24.4.0'
     implementation 'com.google.ads.mediation:applovin:12.6.0.0'
     implementation 'com.google.ads.mediation:vungle:7.0.0.0'
     implementation 'com.google.ads.mediation:facebook:6.16.0.0'
-    //ToDo update2.6.0 谷歌核心服务替换更新
+    //ToDo update2.6.4 谷歌核心服务替换更新
     implementation 'com.google.android.play:review:2.0.1'
     api 'androidx.multidex:multidex:2.0.1'
     //noinspection GradleCompatible
     api 'androidx.recyclerview:recyclerview:1.1.0'
     // Required Dependency by Audience Network SDK
-    api 'com.facebook.android:audience-network-sdk:6.16.0'
+    // ToDo update2.6.4 更新Facebook Audience Network SDK到最新版本
+    api 'com.facebook.android:audience-network-sdk:6.20.0'
     api 'com.alibaba:fastjson:1.1.70.android'
     // Import the BoM for the Firebase platform
     //ToDo update2.6.0 firebase相关SDK版本更新
@@ -91,7 +104,7 @@ v2.5 更新:
     implementation 'com.google.firebase:firebase-perf:21.0.1'
     implementation 'com.google.firebase:firebase-dynamic-links:22.1.0'
 
-    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.appcompat:appcompat:1.3.0-alpha02'
     api 'androidx.annotation:annotation:1.1.0'
     api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -101,12 +114,14 @@ v2.5 更新:
     api 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.braintreepayments.api:braintree:2.22.0'
     implementation 'com.squareup.okhttp3:okhttp:4.8.0'
-    //谷歌支付6.0.1版本需要搭配SDK2.5.1或以上版本
-    implementation 'com.android.billingclient:billing:6.0.1'
+    // ToDo update2.6.4 更新Billing Client到最新版本
+    implementation 'com.android.billingclient:billing:7.0.0'
+
 
 
     //推特登陆和分享相关
-    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    // ToDo update2.6.4 更新Twitter SDK到较新版本
+    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
     implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
     implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
     //line
@@ -117,8 +132,9 @@ v2.5 更新:
 
     //AndroidX 版本
     implementation 'com.github.jenly1314:zxing-lite:2.2.1'
-    //aihelp
-    implementation 'net.aihelp:android-aihelp-aar:4.2.+'
+    // ToDo update2.6.4 更新AIHelp SDK到最新版本
+    implementation 'net.aihelp:android-aihelp-aar:5.5.+'
+
 ```
 
 在工程级别的build.gradle 文件内增加以下插件
@@ -153,8 +169,8 @@ buildscript {
 
     }
     dependencies {
-        //ToDo update2.6.0 请根据开发IDE的版本选择符合API34的gradle插件版本
-        classpath 'com.android.tools.build:gradle:8.1.0'
+        //ToDo update2.6.4 请根据开发IDE的版本选择符合API35的gradle插件版本
+        classpath 'com.android.tools.build:gradle:8.5.0'
         classpath 'com.google.gms:google-services:4.4.2'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
         // Add the dependency for the Performance Monitoring plugin

@@ -8,7 +8,7 @@
         billing="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApzg1S2ZxpPnGgd9n6oFb3e0OgCuyGO84gUG+Y4p3Lsl1ONe74540Z6SE1rJbUHzJEUwYyRzKHYwPzYi0UyFiI109lQEqicA04RCzQZmUtxH3UsMbmO4NGX97kEQsa6D+o0akvDh1WPMNaS9XIJPw6VWvVJkLp5OADX3es9eBPbhruZa7Lr0gnZDG689P/BL5jSA7TpRhju5ZsETVbgtXO+yhdbO8qD9Bjm2ZeeVLDmgyGj9s9fgzY9tifA0QVYjgFv9OEtk0UAB9vDmqxXN9sPLgKi1QGJT8zDkZ1SnW8hg0Jy7uwpoFFuLydxrzVQCuRNcLfo0cztNA/KI5L//O2QIDAQAB" />
     <google clientId="636297321157-teit40f0rndq0je3ek688smtr02npehr.apps.googleusercontent.com" />
     <!--   aihelp参数, 必填-->
-    <aihelp domain="" appId="" appKey=""/>
+    <aihelp domain="immortaltaoists.aihelp.net" appId="immortaltaoists_platform_bf5e92cf7e2b3b9f2a58486e123476c4" appKey="immortaltaoists_app_a27205882a404d72ad922e33de529173"/>
     <!--   line登录参数, 没有line登录方式可以不填-->
     <line channel="1653436611" />
     <!--   twitter登录参数, 没有twitter登录方式可以不填-->

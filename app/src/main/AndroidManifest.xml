@@ -22,6 +22,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:resizeableActivity="false"
+        tools:replace="android:networkSecurityConfig"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         <meta-data
             android:name="android.max_aspect"
