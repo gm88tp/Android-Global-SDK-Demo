@@ -8,10 +8,13 @@ v2.6.4 更新:
 更新Gradle插件版本从8.0.0到8.5.0以支持API35
 2.依赖库版本升级：
 Google Play Services Analytics: 18.0.3 → 18.0.4
-Google Ads SDK: 23.3.0 → 24.4.0
-Facebook Audience Network SDK: 6.16.0 → 6.20.0
+Google Ads SDK: 23.3.0 → 25.1.0
+Facebook Audience Network SDK: 6.16.0 → 6.21.0.1
+Applovin SDK: 12.6.0.0 → 13.5.1.0
+Vungle SDK: 7.0.0.0 → 7.7.1.0
 Billing Client: 6.0.1 → 7.0.0
 Twitter Core SDK: 3.1.1 → 3.3.0
+Paypal SDK: 2.22.0 → 4.31.0
 AIHelp SDK: 4.2.+ → 5.5.+
 
 v2.6.1 更新:
@@ -80,10 +83,10 @@ v2.5 更新:
     api 'com.facebook.android:facebook-android-sdk:latest.release'
     api 'org.apache.httpcomponents:httpcore:4.4.10'
     //ToDo update2.6.4 谷歌广告相关SDK版本更新
-    api 'com.google.android.gms:play-services-ads:24.4.0'
-    implementation 'com.google.ads.mediation:applovin:12.6.0.0'
-    implementation 'com.google.ads.mediation:vungle:7.0.0.0'
-    implementation 'com.google.ads.mediation:facebook:6.16.0.0'
+    api 'com.google.android.gms:play-services-ads:25.1.0'
+    implementation 'com.google.ads.mediation:applovin:13.5.1.0'
+    implementation 'com.google.ads.mediation:vungle:7.7.1.0'
+    implementation 'com.google.ads.mediation:facebook:6.21.0.1'
     //ToDo update2.6.4 谷歌核心服务替换更新
     implementation 'com.google.android.play:review:2.0.1'
     api 'androidx.multidex:multidex:2.0.1'

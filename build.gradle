@@ -21,6 +21,8 @@ buildscript {
         maven {
             url 'https://android-sdk.is.com/'
         }
+        maven { url "https://braintree.github.io/braintree_android_sdk" }
+
     }
     dependencies {
         //ToDo update2.6.0 请根据开发IDE的版本选择符合API34的gradle插件版本
@@ -59,6 +61,8 @@ allprojects {
         maven {
             url 'https://android-sdk.is.com/'
         }
+        maven { url "https://braintree.github.io/braintree_android_sdk" }
+
     }
 }
 
