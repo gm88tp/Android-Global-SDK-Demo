@@ -2,6 +2,30 @@
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
 
+v2.6.5 更新:
+1.广告SDK版本升级：
+com.google.android.gms:play-services-ads:  24.4.0  ->  25.1.0
+com.google.ads.mediation:applovin:  12.6.0.0  ->  13.5.1.0
+com.google.ads.mediation:vungle:  7.0.0.0  ->  7.7.1.0
+com.google.ads.mediation:facebook:  6.16.0.0  ->  6.21.0.1
+2.Android CameraSDK升级:
+将原代码
+implementation 'com.github.jenly1314:zxing-lite:2.2.1'
+替换为：
+implementation('com.github.jenly1314:zxing-lite:3.4.1') {
+exclude group: 'androidx.camera', module: 'camera-core'
+exclude group: 'androidx.camera', module: 'camera-camera2'
+exclude group: 'androidx.camera', module: 'camera-lifecycle'
+exclude group: 'androidx.camera', module: 'camera-view'
+exclude group: 'androidx.camera', module: 'camera-video'
+exclude group: 'androidx.camera.featurecombinationquery', module: 'featurecombinationquery'
+}
+implementation 'androidx.camera:camera-core:1.4.2'
+implementation 'androidx.camera:camera-camera2:1.4.2'
+implementation 'androidx.camera:camera-lifecycle:1.4.2'
+implementation 'androidx.camera:camera-view:1.4.2'
+implementation 'androidx.camera:camera-video:1.4.2'
+
 v2.6.4 更新:
 1.SDK版本升级：
 将compileSdkVersion和targetSdkVersion从34升级到35
@@ -550,27 +574,9 @@ GMSDK.onBackPressed();
 
 
 ### 3.7 相关游戏内接口
-3.7.1 游戏进入状态更变接口
-当开始进入游戏（加载前）时，调用此接口
-
-调用示例：
-```
-GMSDK.doSpotStartLoading();
 ```
 
-当游戏完成加载时，可调用此接口。参数传入实际加载时间（注意参数spendSecond单位为秒）
-调用示例：
-```
-GMSDK.doGameEndLoading(int spendSecond)
-```
-
-调用示例：
-当游戏进入选服页时，可调用此接口。
-```
-GMSDK.doGameEnterSelectServer()
-```
-
-3.7.2 游戏内游戏币消耗事件接口
+3.7.1 游戏内游戏币消耗事件接口
 当游戏内发生获得游戏币或者消耗游戏币的事件时，调用此接口
 
 调用示例：

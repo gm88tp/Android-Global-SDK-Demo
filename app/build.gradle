@@ -14,6 +14,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
     }
 
     buildTypes {
@@ -96,8 +99,8 @@ allprojects {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation(name: 'cafeSdk-4.4.1', ext: 'aar')
-    //ToDo update2.6.4 更新SDK版本主要需要更新此aar包
-    implementation(name: 'GlobalSdk_2.6.4', ext: 'aar')
+    //ToDo update2.6.5 更新SDK版本主要需要更新此aar包
+    implementation(name: 'GlobalSdk_2.6.5', ext: 'aar')
     implementation(name: 'sos_library-1.1.3.4', ext: 'aar')
     api 'com.appsflyer:af-android-sdk:6.16.0'
     api 'com.google.gms:google-services:4.3.15'
@@ -105,11 +108,12 @@ dependencies {
     api 'com.google.android.gms:play-services-auth:20.7.0'
     api 'com.facebook.android:facebook-android-sdk:latest.release'
     api 'org.apache.httpcomponents:httpcore:4.4.10'
-    //ToDo update2.6.4 谷歌广告相关SDK版本更新
-    api 'com.google.android.gms:play-services-ads:24.4.0'
-    implementation 'com.google.ads.mediation:applovin:12.6.0.0'
-    implementation 'com.google.ads.mediation:vungle:7.0.0.0'
-    implementation 'com.google.ads.mediation:facebook:6.16.0.0'
+    //ToDo update2.6.5 谷歌广告相关SDK版本更新
+    api 'com.google.android.gms:play-services-ads:25.1.0'
+    implementation 'com.google.ads.mediation:applovin:13.5.1.0'
+//    implementation 'com.google.ads.mediation:ironsource:7.3.1.0'
+    implementation 'com.google.ads.mediation:vungle:7.7.1.0'
+    implementation 'com.google.ads.mediation:facebook:6.21.0.1'
     //ToDo update2.6.4 谷歌核心服务替换更新
     implementation 'com.google.android.play:review:2.0.1'
     api 'androidx.multidex:multidex:2.0.1'
@@ -156,8 +160,20 @@ dependencies {
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
     implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
 
-    //AndroidX 版本
-    implementation 'com.github.jenly1314:zxing-lite:2.2.1'
+    // ToDo update2.6.5 更新zxing与Android camera SDK到最新版本
+    implementation('com.github.jenly1314:zxing-lite:3.4.1') {
+        exclude group: 'androidx.camera', module: 'camera-core'
+        exclude group: 'androidx.camera', module: 'camera-camera2'
+        exclude group: 'androidx.camera', module: 'camera-lifecycle'
+        exclude group: 'androidx.camera', module: 'camera-view'
+        exclude group: 'androidx.camera', module: 'camera-video'
+        exclude group: 'androidx.camera.featurecombinationquery', module: 'featurecombinationquery'
+    }
+    implementation 'androidx.camera:camera-core:1.4.2'
+    implementation 'androidx.camera:camera-camera2:1.4.2'
+    implementation 'androidx.camera:camera-lifecycle:1.4.2'
+    implementation 'androidx.camera:camera-view:1.4.2'
+    implementation 'androidx.camera:camera-video:1.4.2'
     // ToDo update2.6.4 更新AIHelp SDK到最新版本
     implementation 'net.aihelp:android-aihelp-aar:5.5.+'
 
