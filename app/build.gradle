@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    //todo update2.6.4 升级到api35需要将namespace写入gradle文件，同理删除位于AndroidManifest.xml文件的对应内容
+    //todo update2.6.6 升级到api36
     namespace 'com.immortaltaoists.en'
-    compileSdkVersion 35
+    compileSdkVersion 36
     defaultConfig {
         applicationId "com.immortaltaoists.en"
         minSdkVersion 26
         //noinspection EditedTargetSdkVersion
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 49
         versionName "1.4.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -144,8 +144,8 @@ dependencies {
     api 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.braintreepayments.api:paypal:4.31.0'
     implementation 'com.squareup.okhttp3:okhttp:4.8.0'
-    // ToDo update2.6.4 更新Billing Client到最新版本
-    implementation 'com.android.billingclient:billing:7.0.0'
+    // ToDo update2.6.6 更新Billing Client到最新版本
+    implementation 'com.android.billingclient:billing:8.0.0'
 
 
 

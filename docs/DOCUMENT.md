@@ -1,6 +1,23 @@
-# GM88 Android海外游戏2.6.0版本SDK 对接文档 2024/9/25
+# GM88 Android海外游戏2.6.6版本SDK 对接文档 2026/8/20
 
 ***请注意：demo内的所有参数均是为了方便展示，接入时请使用运营提供的参数进行接入，在SDK1.4.0版本后横屏、竖屏的界面会有所不同，请接入出包时锁定横竖屏***
+
+v2.6.6 更新:
+1.SDK版本升级：
+将compileSdkVersion和targetSdkVersion从35升级到36
+更新Billing Client到最新版本8.0.0
+2.依赖库版本升级：
+compileSdkVersion: 35 → 36
+targetSdkVersion: 35 → 36
+Google Pay Billing SDK: 7.0.0 → 8.0.0
+升级改动涉及：
+//todo update2.6.6 升级到api36
+compileSdkVersion 36
+...
+targetSdkVersion 36
+
+// ToDo update2.6.6 更新Billing Client到最新版本
+implementation 'com.android.billingclient:billing:8.0.0'
 
 v2.6.5 更新:
 1.广告SDK版本升级：
